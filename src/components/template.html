@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vue Template · Bootstrap</title>
+  <!-- Bootstrap core CSS -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font-awesome icon -->
+  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/all.css" />
+  <!-- Custom styles for this template -->
+  <link href="assets/css/starter-template.css" rel="stylesheet" />
+
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      font-family: SF Pro Display;
+
+    }
+
+    .navbar .navbar-toggler {
+      top: .50rem;
+      right: 1rem;
+    }
+
+    .text-muted {
+      font-size: 0.8em;
+      font-family: SF Pro Display;
+    }
+
+    .list-group-item my-0 {
+      font-family: SF Pro Display;
+    }
+
+    .acct-list {
+      /* height: 100vh; */
+      /* position: fixed; */
+      /* z-index: 100; */
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light navbar-expand-md justify-content-md-start  px-0 pb-2 border-bottom">
+    <a class="navbar-brand">
+      <img class="" style="width: 320px;height: 32px" src="assets/img/aboutlogins.svg" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="col-md-4 px-0 ml-md-5">
+      <input class="form-control " type="search" placeholder="Search" />
+    </div>
+  </nav>
+
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+
+      <nav id="sidebarMenu" class="nav col-md-5 col-lg-3 d-md-block px-0 bg-light border collapse">
+        <!-- 1st child -->
+        <div class=" d-flex align-items-center pt-1 ">
+          <span class=" text-muted pl-3">Sort by:</span>
+          <span class="text-muted">
+            <select class="custom-select custom-select-sm border-0 bg-light">
+              <option>Name (A-Z)</option>
+            </select>
+          </span>
+          <span class="ml-auto text-muted mr-2">2 logins</span>
+        </div>
+        <!-- 2nd child -->
+        <!-- TRIAL -->
+        <div class="d-flex flex-column h-100">
+          <div>
+            <ol class=" list-group bg-light list-group-flush border-bottom">
+              <li class="list-group-item d-flex justify-content-start py-2">
+                <div class="d-flex align-items-center mr-3">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>lazada.com.ph</span>
+                  <span class="text-muted ">ronny.gabi@gmail.com</span>
+                </div>
+              </li>
+              <!-- 2 of 2 -->
+              <li class="list-group-item d-flex justify-content-start">
+                <div class="d-flex align-items-center mr-3">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>lazada.com.ph</span>
+                  <span class="text-muted ">ronny.gabi@gmail.com</span>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <!-- 3rd Child -->
+          <div class="bg-light border border-right-0 p-3 mt-auto">
+            <button type="button" class="btn btn-secondary btn-block btn-sm" data-toggle="modal"
+              data-target="#exampleModal" data-backdrop="false">Create New Account</button>
+          </div>
+
+        </div>
+      </nav>
+
+      <!-- Account info -->
+      <main class="col-md-7 px-md-5 pt-5 pb-5 border h-100">
+        <header class="d-lg-flex align-items-center">
+          <h4 class="mr-auto mb-0">
+            <i class="fas fa-globe mr-2"></i>
+            lazada.com.ph</h4>
+          <hr class="d-block d-lg-none">
+          <div class="mb-3 mb-lg-0">
+            <button type="button" class="btn btn-light mx-1">
+              <span class="text-muted">
+                <i class="fas fa-pencil-alt px-2"></i>Edit
+              </span>
+            </button>
+            <button type="button" class="btn btn-light mx-1">
+              <span class="text-muted ">
+                <i class="fas fa-trash px-2"></i>Remove
+              </span>
+            </button>
+          </div>
+        </header>
+        <!-- Header End -->
+        <hr class="d-none d-lg-block"><!-- Line Seperator -->
+        <form id="frm">
+          <div class="mb-3">
+            <label class="col-form-label">website address</label>
+            <div>
+              <a href="https://www.linkedin.com" style="font-size: 15px">https://www.linkedin.com</a>
+            </div>
+          </div>
+          <!-- UserName -->
+          <div class="mb-3">
+            <label class="col-form-label">Username</label>
+            <div class="form-row flex-nowrap align-items-center">
+              <div class="col-auto">
+                <input type="text" readonly class="form-control-plaintext mr-2 mr-lg-0" id="username"
+                  value="ronny.gabi@gmail.com">
+                <!--  <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div> -->
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-light px-lg-5 ml-lg-5 ml-4">
+                  <span class="text-muted ">
+                    Copy
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="col-form-label">Password</label>
+            <div class="form-row align-items-center">
+              <div class="col-auto">
+                <input type="Password" readonly class="form-control-plaintext" id="username" value="ro">
+                <!--  <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div> -->
+              </div>
+              <div class="form-check form-check-inline mx-2 mx-lg-3">
+                <input class="form-check-input m-0" type="checkbox">
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-light px-lg-5">
+                  <span class="text-muted ">Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <hr class="mx-0" style="width:40px"><!-- Line Seperator Small -->
+          <!-- Information -->
+          <div class="mb-3">
+            <p class="mb-1"><small>Created: September 3, 2020</small></p>
+            <p class="mb-1"><small>Last modified: September 22, 2020</small></p>
+            <p class="mb-1"><small>Last used: September 3, 2020</small></p>
+          </div>
+        </form>
+      </main> <!--  Main End-->
+    </div>
+  </div>
+
+
+
+  <!-- container-fluid -->
+
+
+
+
+
+
+
+  <!-- Jquery  -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- app js VUE -->
+  <script src="assets/js/app.js"></script>
+</body>
+
+</html>
