@@ -13,32 +13,101 @@
         <span class="ml-auto mr-2">2 logins</span>
       </div>
       <!-- List acct. -->
-      <div class="d-flex flex-column">
+      <div id="acct__list-item" class="d-flex flex-column ">
         <!-- TODO: only border bottom is present -->
-        <ol class="list-group bg-light">
-          <li class="list-group-item d-flex justify-content-start py-2">
-            <div class="d-flex align-items-center mr-3">
-              <font-awesome-icon icon="globe" />
+        <ol id="acct-lists" class="list-group bg-light">
+
+          <li class="acct-item d-flex justify-content-start ">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted">ronny.gabi@gmail.com</span>
             </div>
+          </li>
+
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
             <div class="d-flex flex-column">
               <span>lazada.com.ph</span>
               <span class="text-muted ">ronny.gabi@gmail.com</span>
             </div>
           </li>
 
-          <li class="list-group-item d-flex justify-content-start">
-            <div class="d-flex align-items-center mr-3">
-              <font-awesome-icon icon="globe" />
-            </div>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
             <div class="d-flex flex-column">
               <span>lazada.com.ph</span>
               <span class="text-muted ">ronny.gabi@gmail.com</span>
             </div>
           </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+          <li class="acct-item d-flex justify-content-start">
+            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+            <div class="d-flex flex-column">
+              <span>lazada.com.ph</span>
+              <span class="text-muted ">ronny.gabi@gmail.com</span>
+            </div>
+          </li>
+
         </ol>
 
       </div>
-      <div class="bg-light border border-right-0 p-3">
+      <div class="new-acct border-right-0 p-3">
         <button type="button" class="btn btn-secondary btn-block btn-sm">
           Create New Account
         </button>
@@ -55,6 +124,12 @@ export default {
 
 
 <style scoped>
+@media (max-width: 768px) {
+  #sidebarMenu {
+    height: calc(100vh - 135px);
+  }
+}
+
 #sidebarMenu {
   height: calc(100vh - 65px);
 }
@@ -66,6 +141,22 @@ export default {
 .sidebar-header > span {
   font-size: 0.8rem;
   color: #6c757d;
+}
+#acct__list-item ol {
+  max-height: 450px;
+  overflow: auto;
+}
+
+#acct-lists > li {
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.new-acct {
+  position: relative;
+  border: 1px solid #dee2e6;
+  top: 6%;
 }
 
 .list-group-item {
