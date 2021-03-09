@@ -3,11 +3,14 @@
   <!-- READ the NAV tag in bootstrap -->
   <nav class="navbar navbar-light bg-light navbar-expand-md justify-content-md-start  px-0 pb-2 border-bottom">
     <a class="navbar-brand">
-      <img class="" style="width: 32px;" src="../assets/logo.png" />
+      <img class="img-fluid" style="width: 32px;" src="../assets/logo.png" />
     </a>
+    <!-- button toggler -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <!-- ./end -->
+    <!-- search input -->
     <div class="col-md-4 px-0 ml-md-5">
       <input class="form-control " type="search" placeholder="Search" />
     </div>
