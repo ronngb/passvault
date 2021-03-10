@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <Sidebar></Sidebar>
-
+        <Acctinfo></Acctinfo>
       </div>
     </div>
   </div>
@@ -13,12 +13,14 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Acctinfo from "./components/Acctinfo.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
     Sidebar,
+    Acctinfo,
   },
 };
 </script>

@@ -5,11 +5,11 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faGlobe)
+library.add(faGlobe, faPencilAlt, faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-3 px-0 border">
-    <nav id="sidebarMenu" class=" navbar-collapse">
+    <nav id="sidebarMenu" class="collapse navbar-collapse">
       <!-- 1st child -->
       <div class="sidebar-header d-flex align-items-center">
         <span class="pl-2">Sort by:</span>
@@ -18,7 +18,7 @@
         <ol id="acct-lists" class="list-group bg-light">
 
           <li class="acct-item d-flex justify-content-start ">
-            <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+
             <div class="d-flex flex-column">
               <span>lazada.com.ph</span>
               <span class="text-muted">ronny.gabi@gmail.com</span>
