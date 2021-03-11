@@ -1,5 +1,5 @@
 <template>
-  <nav id="acct-list" class="col-md-3">
+  <nav id="acct-list" class="col-lg-3 col-sm-4">
     <div class="acct-list__header d-flex align-items-center">
       <span class="pl-2">Sort by:</span>
       <span class="">
