@@ -17,7 +17,7 @@
       <ol id="acct-lists" class="list-group bg-light">
 
         <li class="acct-item d-flex justify-content-start ">
-
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>lazada.com.ph</span>
             <span class="text-muted">ronny.gabi@gmail.com</span>
@@ -31,7 +31,78 @@
             <span class="text-muted ">ronny.gabi@gmail.com</span>
           </div>
         </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
 
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
+        <li class="acct-item d-flex justify-content-start">
+          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
+          <div class="d-flex flex-column">
+            <span>lazada.com.ph</span>
+            <span class="text-muted ">ronny.gabi@gmail.com</span>
+          </div>
+        </li>
         <li class="acct-item d-flex justify-content-start">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
@@ -79,19 +150,25 @@ export default {
 }
 
 #acct-list {
-  height: calc(100vh - 65px);
+  height: calc(100vh - 60px);
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
 }
 
-acct-list__header {
+.acct-list__header {
   border-bottom: 1px solid #dee2e6;
 }
 
-acct-list__header > span {
+.acct-list__header > span {
   font-size: 0.8rem;
   color: #6c757d;
 }
+#acct__list-item {
+  height: 484px;
+}
+
 #acct__list-item ol {
-  max-height: 450px;
+  max-height: 484px;
   overflow: auto;
 }
 
@@ -103,8 +180,8 @@ acct-list__header > span {
 
 .new-acct {
   position: relative;
-  border: 1px solid #dee2e6;
-  top: 6%;
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
 }
 
 .list-group-item {
