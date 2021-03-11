@@ -1,6 +1,5 @@
 <template>
   <nav id="acct-list" class="col-md-3">
-    <!-- 1st child -->
     <div class="acct-list__header d-flex align-items-center">
       <span class="pl-2">Sort by:</span>
       <span class="">
@@ -127,7 +126,7 @@
 
       </ol>
     </div>
-    <div class="new-acct border-right-0 p-3">
+    <div class="new-acct p-3">
       <button type="button" class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
@@ -145,7 +144,10 @@ export default {
 <style scoped>
 @media (max-width: 768px) {
   #acct-list {
-    height: calc(100vh - 135px);
+    height: 100vh;
+    position: absolute;
+    background-color: #fff;
+    z-index: 100;
   }
 }
 
@@ -183,6 +185,8 @@ export default {
   position: relative;
   border-top: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-right: 0px;
 }
 
 .list-group-item {
