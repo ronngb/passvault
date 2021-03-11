@@ -1,5 +1,5 @@
 <template>
-  <nav id="acct-list" class="col-md-3 px-0 navbar-collapse">
+  <nav id="acct-list" class="col-md-3">
     <!-- 1st child -->
     <div class="acct-list__header d-flex align-items-center">
       <span class="pl-2">Sort by:</span>
@@ -151,6 +151,7 @@ export default {
 
 #acct-list {
   height: calc(100vh - 60px);
+  padding: 0;
   border-left: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
 }

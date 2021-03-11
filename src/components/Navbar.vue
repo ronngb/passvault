@@ -6,7 +6,7 @@
       <img class="img-fluid" style="width: 32px;" src="../assets/logo.png" />
     </a>
     <!-- button toggler -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#acct-list">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- ./end -->
