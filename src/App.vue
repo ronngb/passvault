@@ -3,7 +3,7 @@
     <Navbar></Navbar>
     <div class="container-fluid">
       <div class="row">
-        <Sidebar></Sidebar>
+        <Acctlist></Acctlist>
         <Acctinfo></Acctinfo>
       </div>
     </div>
@@ -12,14 +12,14 @@
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import Sidebar from "./components/Sidebar.vue";
+import Acctlist from "./components/Acctlist.vue";
 import Acctinfo from "./components/Acctinfo.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
-    Sidebar,
+    Acctlist,
     Acctinfo,
   },
 };
