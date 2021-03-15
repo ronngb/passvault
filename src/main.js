@@ -16,6 +16,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+/* eslint-disable vue/no-unused-components */
 new Vue({
   render: h => h(App),
 }).$mount('#app')

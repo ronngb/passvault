@@ -5,6 +5,7 @@
       <div class="row">
         <AccountList />
         <AccountInfo />
+        <!-- <AccountNew /> -->
       </div>
     </div>
   </div>
@@ -14,12 +15,14 @@
 import SearchBar from "./components/SearchBar.vue";
 import AccountList from "./components/AccountList.vue";
 import AccountInfo from "./components/AccountInfo.vue";
+// import AccountNew from "./components/AccountNew.vue";
 
 export default {
   name: "App",
   components: {
     SearchBar,
     AccountList,
+    // AccountNew,
     AccountInfo,
   },
 };

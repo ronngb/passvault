@@ -1,7 +1,8 @@
 <template>
+  <!-- Need to change the attr. ID, Class, name conflict(acct-info) -->
   <main id="acct-info" class="col-md-7 ">
     <div class="acct-info__header d-lg-flex align-items-center">
-
+      <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
         <font-awesome-icon icon="globe" class="mr-2" />
         lazada.com.ph
