@@ -1,6 +1,6 @@
 <template>
   <!-- Need to change the attr. ID, Class, name conflict(acct-new) -->
-  <main id="acct-new" class="col-md-7 ">
+  <div id="acct-new">
     <div class="acct-new__header d-lg-flex align-items-center">
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
@@ -54,7 +54,7 @@
 
       </div>
     </form>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -64,9 +64,9 @@ export default {
 </script>
 
 <style>
-#acct-new {
+/* #acct-new {
   padding: 3rem 3rem;
-}
+} */
 .acct-new__input {
   padding: 0rem !important;
   margin: 2.375rem 0rem;

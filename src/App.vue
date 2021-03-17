@@ -4,8 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <AccountList />
-        <AccountInfo />
-        <!-- <AccountNew /> -->
+        <AccountMain />
       </div>
     </div>
   </div>
@@ -14,16 +13,14 @@
 <script>
 import SearchBar from "./components/SearchBar.vue";
 import AccountList from "./components/AccountList.vue";
-import AccountInfo from "./components/AccountInfo.vue";
-import AccountNew from "./components/AccountNew.vue";
+import AccountMain from "./components/AccountMain.vue";
 
 export default {
   name: "App",
   components: {
     SearchBar,
     AccountList,
-    AccountNew,
-    AccountInfo,
+    AccountMain,
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <!-- Need to change the attr. ID, Class, name conflict(acct-info) -->
-  <main id="acct-info" class="col-md-7 ">
+  <div id="acct-info">
     <div class="acct-info__header d-lg-flex align-items-center">
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
@@ -74,7 +74,7 @@
       <p>Last modified: September 22, 2020</p>
       <p>Last used: September 3, 2020</p>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -84,9 +84,9 @@ export default {
 </script>
 
 <style>
-#acct-info {
+/* #acct-info {
   padding: 3rem 3rem;
-}
+} */
 
 @media (max-width: 768px) {
   #acct-info {
