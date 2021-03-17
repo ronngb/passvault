@@ -13,114 +13,14 @@
     <!-- List acct. -->
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
-      <ol id="acct-lists" class="list-group bg-light">
+      <ol id="acct-lists" class="list-group bg-light"
+          v-for="list in acctLists.acctData" :key="list.id">
 
         <li class="acct-item d-flex justify-content-start ">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
-          </div>
-        </li>
-        <li class="acct-item d-flex justify-content-start">
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>lazada.com.ph</span>
-            <span class="text-muted ">ronny.gabi@gmail.com</span>
+            <span>{{ list.website }}</span>
+            <span class="text-muted">{{ list.email}}</span>
           </div>
         </li>
 
@@ -135,8 +35,15 @@
 </template>
 
 <script>
+import { store } from "../store.js";
+
 export default {
   name: "Acctlist",
+  data() {
+    return {
+      acctLists: store.state,
+    };
+  },
 };
 </script>
 
