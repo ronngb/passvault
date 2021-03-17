@@ -5,5 +5,8 @@ import {
 export const store = {
     state: {
         acctData
+    },
+    getTotalAcct() {
+        return this.state.acctData.length;
     }
 }

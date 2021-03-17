@@ -8,7 +8,7 @@
           <option>Name (A-Z)</option>
         </select>
       </span>
-      <span class="ml-auto mr-2">2 logins</span>
+      <span class="ml-auto mr-2">{{ getTotalAcct() }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct__list-item" class="d-flex flex-column ">
@@ -43,6 +43,11 @@ export default {
     return {
       acctLists: store.state,
     };
+  },
+  methods: {
+    getTotalAcct() {
+      return store.state.acctData.length;
+    },
   },
 };
 </script>
