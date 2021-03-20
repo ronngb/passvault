@@ -4,9 +4,17 @@ import {
 
 export const store = {
     state: {
-        acctData
+        acctData,
+        isOpen: true
     },
     getTotalAcct() {
         return this.state.acctData.length;
+    },
+
+    setIsOpen() {
+        this.state.isOpen = !this.state.isOpen;
     }
+
+
+
 }

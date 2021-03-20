@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import App from './App.vue'
 
@@ -15,8 +17,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-/* eslint-disable vue/no-unused-components */
+Vue.prototype.$EventBus = new Vue()
+
 new Vue({
   render: h => h(App),
 }).$mount('#app')
