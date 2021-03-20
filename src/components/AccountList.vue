@@ -27,7 +27,7 @@
       </ol>
     </div>
     <div class="new-acct p-3">
-      <button type="button" class="btn btn-secondary btn-block btn-sm">
+      <button :disabled=" isDisable == true" @click="createAcct()" type="button" class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
     </div>
@@ -41,13 +41,25 @@ export default {
   name: "Acctlist",
   data() {
     return {
-      acctLists: store.state,
+      acctLists: store.state.acctData,
+      isDisable: ''
     };
+  },
+  mounted() {
+    //no data disable
+    if (this.acctLists.length == 0) {
+      this.isDisable = true;
+    }
   },
   methods: {
     getTotalAcct() {
-      return store.state.acctData.length;
+      return this.acctLists.length;
     },
+    //Create a function that will always be True
+    createAcct() {
+      // this.$EventBus.$emit('createAcct', true);
+      console.log('dasd')
+    }
   },
 };
 </script>
@@ -92,7 +104,7 @@ export default {
   background-color: #fff;
   border-bottom: 1px solid #dee2e6;
 }
-
+/* BUGS on this button class */
 .new-acct {
   position: relative;
   border-top: 1px solid #dee2e6;
