@@ -1,7 +1,7 @@
 <template>
   <main id="acct-main" class="col-md-7 ">
     <!-- <AccountInfo /> -->
-    <AccountNew v-if="isBool" />
+    <AccountNew v-if="isBool" :isDisable="isBool" />
   </main>
 </template>
 <!-- eslint-disable -->

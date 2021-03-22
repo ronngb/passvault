@@ -1,6 +1,4 @@
-import {
-    acctData
-} from './data/acct.js';
+import { acctData } from './data/acct.js';
 
 export const store = {
     state: {
@@ -13,6 +11,9 @@ export const store = {
 
     setIsOpen() {
         this.state.isOpen = !this.state.isOpen;
+    },
+    storeAcct(newAcct) {
+        this.state.acctData.push(newAcct);
     }
 
 

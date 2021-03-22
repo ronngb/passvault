@@ -8,19 +8,18 @@
           <option>Name (A-Z)</option>
         </select>
       </span>
-      <span class="ml-auto mr-2">{{ getTotalAcct() }} logins</span>
+      <span class="ml-auto mr-2">{{ acctTotal }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
-      <ol id="acct-lists" class="list-group bg-light"
-          v-for="list in acctLists.acctData" :key="list.id">
-
-        <li class="acct-item d-flex justify-content-start ">
+      <ol id="acct-lists" class="list-group bg-light">
+        <li class="acct-item d-flex justify-content-start"
+            v-for="list in acctLists.acctData" :key="list.id">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.website }}</span>
-            <span class="text-muted">{{ list.email}}</span>
+            <span class="text-muted">{{ list.username}}</span>
           </div>
         </li>
 
@@ -41,8 +40,9 @@ export default {
   name: "Acctlist",
   data() {
     return {
-      acctLists: store.state.acctData,
-      isDisable: ''
+      acctLists: '',
+      isDisable: '',
+      acctTotal: ''
     };
   },
   mounted() {
@@ -50,6 +50,13 @@ export default {
     if (this.acctLists.length == 0) {
       this.isDisable = true;
     }
+
+    this.acctLists = store.state.acctData
+  },
+  updated() {
+    this.acctLists = store.state
+    this.acctTotal = this.acctLists.acctData.length
+
   },
   methods: {
     getTotalAcct() {
@@ -104,7 +111,7 @@ export default {
   background-color: #fff;
   border-bottom: 1px solid #dee2e6;
 }
-/* BUGS on this button class */
+
 .new-acct {
   position: relative;
   border-top: 1px solid #dee2e6;

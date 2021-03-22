@@ -18,48 +18,68 @@
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" readonly class="form-control-plaintext" id="username" value="ronny.gabi@gmail.com">
+        <input type="text" v-model="inputWebsite" class="form-control-plaintext" id="website">
       </div>
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Username</label>
-        <input type="text" readonly class="form-control-plaintext" id="username" value="ronny.gabi@gmail.com">
+        <input type="text" v-model="inputUsername" class="form-control-plaintext" id="username">
       </div>
       <!-- Password Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="Password" readonly class="border form-control-plaintext" id="password" value="rod">
+          <input type="text" v-model="inputPassword" class="border form-control-plaintext" id="password">
           <input class="form-check-input" type="checkbox">
 
-          <!-- <div class="col-6 col-md-3">
-            
+          <!-- <div class="col-6 col-md-3">            
           </div>
           <div class="col-2">
-            <div class="form-check form-check-inline">
-              
+            <div class="form-check form-check-inline">              
             </div>
           </div> -->
         </div>
       </div>
       <!-- It has to be natural gutter for every div tag -->
       <div class="acct-new__button">
-        <button type="button" class="btn mr-1">
+        <button @click="submitForm()" type="button" class="btn mr-1">
           Save
         </button>
-        <button type="button" class="btn ml-1">
+        <button :disabled="isDisable == true" type="button" class="btn ml-1">
           Cancel
         </button>
-
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import { store } from "../store.js";
+
 export default {
   name: "AccountAdd",
+  props: ['isDisable'],
+  data() {
+    return {
+      acctForm: { website: '', username: '', password: '' },
+      inputWebsite: '',
+      inputUsername: '',
+      inputPassword: ''
+    }
+  },
+  methods: {
+    submitForm() {
+      //instantiate then call store object
+      this.acctForm['website'] = this.inputWebsite
+      this.acctForm['username'] = this.inputUsername
+      this.acctForm['password'] = this.inputPassword
+
+      store.storeAcct(this.acctForm)
+
+    }
+  }
+
 };
 </script>
 
