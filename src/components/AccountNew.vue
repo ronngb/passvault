@@ -13,24 +13,27 @@
     <!-- Header End -->
     <hr class="d-none d-lg-block"><!-- Line Seperator -->
 
-    <form class="acct-new__form">
+    <form class="acct-new__form ">
       <!-- Website address Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" v-model="inputWebsite" class="form-control-plaintext" id="website">
+        <input type="text" v-model="inputForm.website" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
       </div>
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Username</label>
-        <input type="text" v-model="inputUsername" class="form-control-plaintext" id="username">
+        <input type="text" v-model="inputForm.username" :class="{'form-control':true, 'is-invalid': errors[1]}" id="username">
+        <div class="invalid-feedback">
+          Your username is required.
+        </div>
       </div>
       <!-- Password Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="text" v-model="inputPassword" class="border form-control-plaintext" id="password">
+          <input type="text" v-model="inputForm.password" :class="{'form-control':true, 'is-invalid': errors[2]}" id="password">
           <input class="form-check-input" type="checkbox">
 
           <!-- <div class="col-6 col-md-3">            
@@ -53,7 +56,7 @@
     </form>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
 import { store } from "../store.js";
 
@@ -62,20 +65,23 @@ export default {
   props: ['isDisable'],
   data() {
     return {
-      acctForm: { website: '', username: '', password: '' },
-      inputWebsite: '',
-      inputUsername: '',
-      inputPassword: ''
+      inputForm: { website: '', username: '', password: '' },
+      errors: []
     }
   },
   methods: {
     submitForm() {
       //instantiate then call store object
-      this.acctForm['website'] = this.inputWebsite
-      this.acctForm['username'] = this.inputUsername
-      this.acctForm['password'] = this.inputPassword
+      this.errors = []
 
-      store.storeAcct(this.acctForm)
+      Object.values(this.inputForm).forEach(obj => {
+        obj == 0 ? this.errors.push(1) : this.errors.push(0);
+      })
+
+      if (!this.errors.includes(1))
+        store.storeAcct(this.inputForm)
+
+      //clear inputForm after success
 
     }
   }
