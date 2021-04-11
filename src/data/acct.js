@@ -1,17 +1,12 @@
 export const acctData = [
-    // {
-    //     id: 1,
-    //     website: 'lazada.com.ph',
-    //     passCode: 'Monday',
-    //     email: 'ronny.gabi@gmail.com',
-    //     icon: '',
-    //     dates: [{
-    //         created_at: 'Get Groceries',
-    //         updated_at: false,
-    //         lastUsed_at: ''
-    //     }, ],
-
-    // },
+    {
+        website: 'lazada.com.ph',
+        password: 'Monday',
+        username: 'ronny.gabi@gmail.com',
+        created: 'April, 19 2021',
+        last_modified: 'April, 19 2021',
+        last_used: 'April, 19 2021',
+    },
     // {
     //     id: 2,
     //     website: 'lazada.com.ph',

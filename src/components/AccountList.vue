@@ -64,8 +64,7 @@ export default {
     },
     //Create a function that will always be True
     createAcct() {
-      // this.$EventBus.$emit('createAcct', true);
-      console.log('dasd')
+      // this.$EventBus.$emit('createAcct', true);      
     }
   },
 };

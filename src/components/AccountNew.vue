@@ -18,7 +18,7 @@
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" @blur=autoCorrect() v-model="inputForm.website" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
+        <input type="text" @blur="autoCorrect()" v-model="inputForm.website" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
       </div>
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
@@ -69,28 +69,29 @@ export default {
       errors: []
     }
   },
-  computed: {
-    autoCorrect() {
-      const strCont = 'https://'
-
-      if (this.inputForm.website.indexOf(strCont) == -1)
-        this.inputForm.website = strCont.concat(this.inputForm.website)
-    }
-  },
   methods: {
     submitForm() {
       //instantiate then call store object
       this.errors = []
-
       Object.values(this.inputForm).forEach(obj => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       })
       //clear inputForm after success
       if (!this.errors.includes(1))
         store.storeAcct(this.inputForm)
+      //TODO: Error on clear()
+      // this.clear()
     },
-
-  }
+    autoCorrect() {
+      const strCont = 'https://'
+      if (this.inputForm.website.indexOf(strCont) == -1)
+        return this.inputForm.website = strCont.concat(this.inputForm.website)
+    },
+    clear() {
+      for (let input in this.inputForm)
+        this.inputForm[input] = ""
+    }
+  },
 
 };
 </script>
