@@ -18,12 +18,12 @@
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" @blur="autoCorrect()" v-model="inputForm.website" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
+        <input type="text" @blur="autoCorrect()" v-model="inputForm.inputWebsite" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
       </div>
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Username</label>
-        <input type="text" v-model="inputForm.username" :class="{'form-control':true, 'is-invalid': errors[1]}" id="username">
+        <input type="text" v-model="inputForm.inputUsername" :class="{'form-control':true, 'is-invalid': errors[1]}" id="username">
         <div class="invalid-feedback">
           Your username is required.
         </div>
@@ -33,7 +33,7 @@
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="text" v-model="inputForm.password" :class="{'form-control':true, 'is-invalid': errors[2]}" id="password">
+          <input type="text" v-model="inputForm.inputPassword" :class="{'form-control':true, 'is-invalid': errors[2]}" id="password">
           <input class="form-check-input" type="checkbox">
 
           <!-- <div class="col-6 col-md-3">            
@@ -65,7 +65,7 @@ export default {
   props: ['isDisable'],
   data() {
     return {
-      inputForm: { website: '', username: '', password: '' },
+      inputForm: { inputWebsite: '', inputUsername: '', inputPassword: '' },
       errors: []
     }
   },
@@ -77,19 +77,19 @@ export default {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       })
       //clear inputForm after success
-      if (!this.errors.includes(1))
+      if (!this.errors.includes(1)) {
         store.storeAcct(this.inputForm)
-      //TODO: Error on clear()
-      // this.clear()
+        this.clear()
+      }
     },
     autoCorrect() {
       const strCont = 'https://'
-      if (this.inputForm.website.indexOf(strCont) == -1)
-        return this.inputForm.website = strCont.concat(this.inputForm.website)
+      if (this.inputForm.inputWebsite.indexOf(strCont) == -1)
+        return this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite)
     },
     clear() {
       for (let input in this.inputForm)
-        this.inputForm[input] = ""
+        delete this.inputForm[input]
     }
   },
 
