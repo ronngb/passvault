@@ -19,6 +19,9 @@
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
         <input type="text" @blur="autoCorrect()" v-model="inputForm.inputWebsite" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
+        <div class="invalid-feedback">
+          Your website address is required.
+        </div>
       </div>
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
@@ -34,6 +37,9 @@
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
           <input type="text" v-model="inputForm.inputPassword" :class="{'form-control':true, 'is-invalid': errors[2]}" id="password">
+          <div class="invalid-feedback">
+            Your password is required.
+          </div>
           <input class="form-check-input" type="checkbox">
 
           <!-- <div class="col-6 col-md-3">            
@@ -84,12 +90,13 @@ export default {
     },
     autoCorrect() {
       const strCont = 'https://'
-      if (this.inputForm.inputWebsite.indexOf(strCont) == -1)
-        return this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite)
+      //git commit "refactor autoCorrect()"
+      this.inputForm.inputWebsite === "" ? null : this.inputForm.inputWebsite.indexOf(strCont) == -1 ? this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite) : null;
+
     },
     clear() {
       for (let input in this.inputForm)
-        delete this.inputForm[input]
+        this.inputForm[input] = '';
     }
   },
 
