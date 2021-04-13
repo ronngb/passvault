@@ -1,7 +1,8 @@
 <template>
   <main id="acct-main" class="col-md-7 ">
-    <!-- <AccountInfo /> -->
-    <AccountNew v-if="isBool" :isDisable="isBool" />
+    <!-- TODO:Try adding props here -->
+    <AccountInfo v-if="!isBool" />
+    <AccountNew v-if="isBool" />
   </main>
 </template>
 <!-- eslint-disable -->
@@ -23,15 +24,20 @@ export default {
     AccountNew,
   },
   created() {
-    this.$EventBus.$on('createAcct', event => this.addNote(event));
+    //this.$EventBus.$on('createAcct', event => console.log(event));
+    this.$EventBus.$on('shiftView', this.shiftView);
   },
   mounted() {
     if (this.acctLists.length == 0) {
       //make acctnew true
       this.isBool = true;
     }
-
   },
+  methods: {
+    shiftView() {
+      this.isBool = !this.isBool
+    }
+  }
 };
 </script>
 

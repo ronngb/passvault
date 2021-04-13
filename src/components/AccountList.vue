@@ -26,7 +26,7 @@
       </ol>
     </div>
     <div class="new-acct p-3">
-      <button :disabled=" isDisable == true" @click="createAcct()" type="button" class="btn btn-secondary btn-block btn-sm">
+      <button @click="createAcct()" type="button" class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
     </div>
@@ -48,7 +48,7 @@ export default {
   mounted() {
     //no data disable
     if (this.acctLists.length == 0) {
-      this.isDisable = true;
+      //this.isDisable = true;
     }
 
     this.acctLists = store.state.acctData
@@ -64,7 +64,7 @@ export default {
     },
     //Create a function that will always be True
     createAcct() {
-      // this.$EventBus.$emit('createAcct', true);      
+      this.$EventBus.$emit('createAcct', true);
     }
   },
 };

@@ -84,13 +84,14 @@ export default {
       })
       //clear inputForm after success
       if (!this.errors.includes(1)) {
-        store.storeAcct(this.inputForm)
+        //return index pos        
+        this.$EventBus.$emit('getIndex', store.storeAcct(this.inputForm));
         this.clear()
       }
     },
     autoCorrect() {
       const strCont = 'https://'
-      //git commit "refactor autoCorrect()"
+      //git commit "refactor autoCorrect()" 
       this.inputForm.inputWebsite === "" ? null : this.inputForm.inputWebsite.indexOf(strCont) == -1 ? this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite) : null;
 
     },

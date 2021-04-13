@@ -23,6 +23,8 @@ export const store = {
 
         this.state.acctData.push(Object.assign(Object.fromEntries(acctArr), Object.fromEntries(datesArr)));
 
+        return this.state.acctData.length - 1
+
     }
 
 

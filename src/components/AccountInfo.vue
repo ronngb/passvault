@@ -78,8 +78,21 @@
 </template>
 
 <script>
+
+
 export default {
   name: "Acctinfo",
+
+  created() {
+    this.$EventBus.$on('getIndex', index => {
+      //this.getAcctInfo(index)
+      this.$EventBus.$emit('shiftView')
+    });
+  },
+  methods: {
+
+
+  }
 };
 </script>
 
