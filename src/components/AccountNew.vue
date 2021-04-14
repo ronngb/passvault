@@ -85,7 +85,7 @@ export default {
       //clear inputForm after success
       if (!this.errors.includes(1)) {
         //return index pos        
-        this.$EventBus.$emit('getIndex', store.storeAcct(this.inputForm));
+        this.$EventBus.$emit('setIndex', store.storeAcct(this.inputForm));
         this.clear()
       }
     },

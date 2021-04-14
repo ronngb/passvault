@@ -15,7 +15,8 @@ export default {
   name: "AccountMain",
   data() {
     return {
-      acctLists: store.state.acctData,
+      acctList: store.state,
+      acctInfo: '',
       isBool: ''
     }
   },
@@ -25,10 +26,13 @@ export default {
   },
   created() {
     //this.$EventBus.$on('createAcct', event => console.log(event));
-    this.$EventBus.$on('shiftView', this.shiftView);
+    this.$EventBus.$on('setIndex', index => {
+      this.shiftView()
+      this.getAcctInfo(index)
+    });
   },
   mounted() {
-    if (this.acctLists.length == 0) {
+    if (this.acctList.acctData.length == 0) {
       //make acctnew true
       this.isBool = true;
     }
@@ -36,6 +40,9 @@ export default {
   methods: {
     shiftView() {
       this.isBool = !this.isBool
+    },
+    getAcctInfo(index) {
+      this.acctInfo = this.acctList.acctData[index]
     }
   }
 };
