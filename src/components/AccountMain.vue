@@ -32,10 +32,7 @@ export default {
     });
   },
   mounted() {
-    if (this.acctList.acctData.length == 0) {
-      //make acctnew true
-      this.isBool = true;
-    }
+    this.acctList.acctData.length == 0 ? this.isBool = true : null
   },
   methods: {
     shiftView() {
