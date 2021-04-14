@@ -1,7 +1,7 @@
 <template>
   <main id="acct-main" class="col-md-7 ">
     <!-- TODO:Try adding props here -->
-    <AccountInfo v-if="!isBool" />
+    <AccountInfo v-if="!isBool" :info="acctInfo" />
     <AccountNew v-if="isBool" />
   </main>
 </template>

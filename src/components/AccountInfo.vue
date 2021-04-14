@@ -5,7 +5,7 @@
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
         <font-awesome-icon icon="globe" class="mr-2" />
-        lazada.com.ph
+        {{ cleanUrl }}
       </h4>
       <!-- This <hr> will appear in mobile -->
       <hr class="d-block d-lg-none">
@@ -28,7 +28,9 @@
     <div class="mb-3">
       <label class="col-form-label">website address</label>
       <div>
-        <a href="https://www.linkedin.com" style="font-size: 15px">https://www.linkedin.com</a>
+        <a :href="info.website" style="font-size: 15px">
+          {{ info.website }}
+        </a>
       </div>
     </div>
     <!-- TODO: Prob. in column  -->
@@ -39,7 +41,7 @@
         <label class="label">Username</label>
         <div class="form-row">
           <div class="col-8 col-md-5">
-            <input type="text" readonly class="form-control-plaintext" id="username" value="ronny.gabi@gmail.com">
+            <input type="text" readonly class="form-control-plaintext" id="username" :value="info.username">
           </div>
           <div class="col-4 col-md-5 align-self-center">
             <button type="button" class="btn btn-light px-lg-5 ">
@@ -53,7 +55,7 @@
         <label class="label">Password</label>
         <div class="form-row align-items-center">
           <div class="col-6 col-md-3">
-            <input type="Password" readonly class="form-control-plaintext" id="password" value="rod">
+            <input type="Password" readonly class="form-control-plaintext" id="password" :value="info.password">
           </div>
           <div class="col-2">
             <div class="form-check form-check-inline">
@@ -70,18 +72,25 @@
     </form>
     <hr class="mx-0" style="width:40px">
     <div class="acct-info__date">
-      <p>Created: September 3, 2020</p>
-      <p>Last modified: September 22, 2020</p>
-      <p>Last used: September 3, 2020</p>
+      <p>Created: {{ info.created }}</p>
+      <p>Last modified: {{ info.last_modified }}</p>
+      <p>Last used: {{ info.last_used }}</p>
     </div>
   </div>
 </template>
 
 <script>
 
-
 export default {
-  name: "Acctinfo",
+  name: "AcctInfo",
+  props: ['info'],
+  computed: {
+    cleanUrl() {
+      const regex = /(http(s?)):\/\/|ww(w|3)./gi
+      if (this.info.website !== undefined)
+        return this.info.website.replace(regex, '')
+    }
+  },
   methods: {
 
   }
