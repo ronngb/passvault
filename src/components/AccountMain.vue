@@ -28,21 +28,14 @@ export default {
     //THIS PART:ERROR
     this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
-      this.shiftView()
-      this.getAcctInfo(index)
+      this.acctInfo = this.acctList.acctData[index]
+      this.isBool = false
     });
   },
   mounted() {
     this.acctList.acctData.length == 0 ? this.isBool = true : null
   },
   methods: {
-    shiftView() {
-      this.isBool = false
-    },
-    getAcctInfo(index) {
-      //TODO:Refactor
-      this.acctInfo = this.acctList.acctData[index]
-    }
   }
 };
 </script>
