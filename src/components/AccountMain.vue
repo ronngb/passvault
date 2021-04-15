@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     shiftView() {
-      this.isBool = !this.isBool
+      this.isBool = false
     },
     getAcctInfo(index) {
       //TODO:Refactor

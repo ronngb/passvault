@@ -14,12 +14,11 @@
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
-        <li class="acct-item d-flex justify-content-start"
-            v-for="list in acctList.acctData" :key="list.id">
+        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index)" v-for="(list, index) in acctList.acctData" :key="list.website">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ sanitizeUrl(list.website) }}</span>
-            <span class="text-muted">{{ list.username}}</span>
+            <span class="text-muted">{{ list.username }}</span>
           </div>
         </li>
 
