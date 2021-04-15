@@ -25,7 +25,8 @@ export default {
     AccountNew,
   },
   created() {
-    //this.$EventBus.$on('createAcct', event => console.log(event));
+    //THIS PART:ERROR
+    this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
       this.shiftView()
       this.getAcctInfo(index)
@@ -39,6 +40,7 @@ export default {
       this.isBool = !this.isBool
     },
     getAcctInfo(index) {
+      //TODO:Refactor
       this.acctInfo = this.acctList.acctData[index]
     }
   }

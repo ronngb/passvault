@@ -8,14 +8,14 @@
           <option>Name (A-Z)</option>
         </select>
       </span>
-      <span class="ml-auto mr-2">{{ acctTotal }} logins</span>
+      <span class="ml-auto mr-2">{{ acctLenght }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
         <li class="acct-item d-flex justify-content-start"
-            v-for="list in acctLists.acctData" :key="list.id">
+            v-for="list in acctList.acctData" :key="list.id">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.website }}</span>
@@ -26,7 +26,7 @@
       </ol>
     </div>
     <div class="new-acct p-3">
-      <button @click="createAcct()" type="button" class="btn btn-secondary btn-block btn-sm">
+      <button @click="$EventBus.$emit('createAcct')" type="button" class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
     </div>
@@ -40,32 +40,19 @@ export default {
   name: "Acctlist",
   data() {
     return {
-      acctLists: '',
+      acctList: store.state,
       isDisable: '',
-      acctTotal: ''
     };
   },
-  mounted() {
-    //no data disable
-    if (this.acctLists.length == 0) {
-      //this.isDisable = true;
-    }
-
-    this.acctLists = store.state.acctData
-  },
   updated() {
-    this.acctLists = store.state
-    this.acctTotal = this.acctLists.acctData.length
-
+    this.acctList = store.state
+  },
+  computed: {
+    acctLenght() {
+      return this.acctList.acctData.length
+    }
   },
   methods: {
-    getTotalAcct() {
-      return this.acctLists.length;
-    },
-    //Create a function that will always be True
-    createAcct() {
-      this.$EventBus.$emit('createAcct', true);
-    }
   },
 };
 </script>
