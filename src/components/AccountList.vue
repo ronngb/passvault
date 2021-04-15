@@ -18,7 +18,7 @@
             v-for="list in acctList.acctData" :key="list.id">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
-            <span>{{ list.website }}</span>
+            <span>{{ sanitizeUrl(list.website) }}</span>
             <span class="text-muted">{{ list.username}}</span>
           </div>
         </li>
@@ -50,9 +50,13 @@ export default {
   computed: {
     acctLenght() {
       return this.acctList.acctData.length
-    }
+    },
   },
   methods: {
+    sanitizeUrl(web) {
+      const regex = /(http(s?)):\/\/|ww(w|3)./gi
+      return web.replace(regex, '')
+    }
   },
 };
 </script>
