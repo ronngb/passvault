@@ -4,13 +4,6 @@ export const store = {
     state: {
         acctData,
     },
-    getTotalAcct() {
-        return this.state.acctData.length;
-    },
-
-    setIsOpen() {
-        this.state.isOpen = !this.state.isOpen;
-    },
     getDate() {
         const format = { month: 'long', day: '2-digit', year: 'numeric' }
         return new Date().toLocaleString('en-us', format)
