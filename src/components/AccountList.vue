@@ -17,7 +17,7 @@
         <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index), setFocus($event)" v-for="(list, index) in acctList.acctData" :key="list.website">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
-            <span>{{ sanitizeUrl(list.website) }}</span>
+            <span>{{ list.domain }}</span>
             <span class="text-muted">{{ list.username }}</span>
           </div>
         </li>
@@ -52,11 +52,6 @@ export default {
     },
   },
   methods: {
-    //TODO:move this fucntion to store.js
-    sanitizeUrl(web) {
-      const regex = /(http(s?)):\/\/|ww(w|3)./gi
-      return web.replace(regex, '')
-    },
     setFocus(e) {
       let sibling = e.currentTarget.parentNode.firstChild
       e.currentTarget.style.background = "#f8f9fa"

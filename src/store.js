@@ -4,10 +4,13 @@ export const store = {
     state: {
         acctData,
     },
+    sanitizeUrl(url) {
+        const regex = /(http(s?)):\/\/|ww(w|3)./gi
+        return url.replace(regex, '')
+    },
     getDate() {
         const format = { month: 'long', day: '2-digit', year: 'numeric' }
         return new Date().toLocaleString('en-us', format)
-
     },
     storeAcct(newAcct) {
         const acctArr = [['website', newAcct.inputWebsite], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]

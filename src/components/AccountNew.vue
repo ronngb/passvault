@@ -77,21 +77,17 @@ export default {
   },
   methods: {
     submitForm() {
-      //instantiate then call store object
       this.errors = []
       Object.values(this.inputForm).forEach(obj => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       })
-      //clear inputForm after success
       if (!this.errors.includes(1)) {
-        //return index pos        
         this.$EventBus.$emit('setIndex', store.storeAcct(this.inputForm));
         this.clear()
       }
     },
     autoCorrect() {
       const strCont = 'https://'
-      //git commit "refactor autoCorrect()" 
       this.inputForm.inputWebsite === "" ? null : this.inputForm.inputWebsite.indexOf(strCont) == -1 ? this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite) : null;
 
     },
