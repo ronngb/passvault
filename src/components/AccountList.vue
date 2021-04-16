@@ -62,7 +62,7 @@ export default {
       e.currentTarget.style.background = "#f8f9fa"
       while (sibling) {
         if (sibling.nodeType === 1 && sibling !== e.currentTarget) {
-          sibling.style.background = "white"
+          sibling.style.background = ""
         }
         sibling = sibling.nextSibling;
       }
