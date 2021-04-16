@@ -5,7 +5,7 @@
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
         <font-awesome-icon icon="globe" class="mr-2" />
-        {{ cleanUrl }}
+        {{ info.domain }}
       </h4>
       <!-- This <hr> will appear in mobile -->
       <hr class="d-block d-lg-none">
@@ -28,8 +28,8 @@
     <div class="mb-3">
       <label class="col-form-label">website address</label>
       <div>
-        <a :href="info.website" style="font-size: 15px">
-          {{ info.website }}
+        <a :href="info.url" style="font-size: 15px">
+          {{ info.url }}
         </a>
       </div>
     </div>
@@ -84,16 +84,6 @@
 export default {
   name: "AcctInfo",
   props: ['info'],
-  computed: {
-    cleanUrl() {
-      const regex = /(http(s?)):\/\/|ww(w|3)./gi
-      if (this.info.website !== undefined)
-        return this.info.website.replace(regex, '')
-    }
-  },
-  methods: {
-
-  }
 };
 </script>
 
