@@ -13,7 +13,7 @@ export const store = {
         return new Date().toLocaleString('en-us', format)
     },
     storeAcct(newAcct) {
-        const acctArr = [['website', newAcct.inputWebsite], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
+        const acctArr = [['url', newAcct.inputWebsite], ['domain', this.sanitizeUrl(newAcct.inputWebsite)], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
 
         const datesArr = [['created', this.getDate()], ['last_modified', this.getDate()], ['last_used', this.getDate()]]
 
