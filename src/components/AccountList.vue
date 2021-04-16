@@ -14,7 +14,7 @@
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
-        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index)" v-for="(list, index) in acctList.acctData" :key="list.website">
+        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index), setFocus($event)" v-for="(list, index) in acctList.acctData" :key="list.website">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ sanitizeUrl(list.website) }}</span>
@@ -52,9 +52,20 @@ export default {
     },
   },
   methods: {
+    //TODO:move this fucntion to store.js
     sanitizeUrl(web) {
       const regex = /(http(s?)):\/\/|ww(w|3)./gi
       return web.replace(regex, '')
+    },
+    setFocus(e) {
+      let sibling = e.currentTarget.parentNode.firstChild
+      e.currentTarget.style.background = "#f8f9fa"
+      while (sibling) {
+        if (sibling.nodeType === 1 && sibling !== e.currentTarget) {
+          sibling.style.background = "white"
+        }
+        sibling = sibling.nextSibling;
+      }
     }
   },
 };
@@ -99,6 +110,11 @@ export default {
   padding: 0.75rem 1.25rem;
   background-color: #fff;
   border-bottom: 1px solid #dee2e6;
+}
+
+#acct-lists > li:hover,
+#acct-lists > li:focus {
+  background: #f8f9fa;
 }
 
 .new-acct {
