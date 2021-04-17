@@ -21,8 +21,19 @@ export const store = {
 
         return this.state.acctData.length - 1
 
-    }
-
-
-
+    },
+    sortAcct(sort) {
+        //GIT: created sortAcct()        
+        this.state.acctData.sort((a, b) => {
+            switch (sort) {
+                case 'asc':
+                    console.log('asc');
+                    return (a.domain > b.domain) ? 1 : -1;
+                    break;
+                case 'desc':
+                    return (a.domain < b.domain) ? 1 : -1;
+                    break;
+            }
+        })
+    },
 }

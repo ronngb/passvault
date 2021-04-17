@@ -4,8 +4,8 @@
       <span class="pl-2">Sort by:</span>
       <span class="">
         <select class="custom-select custom-select-sm border-0 bg-light">
-          <option>Name (A-Z)</option>
-          <option>Name (A-Z)</option>
+          <option @click="sortAcct('asc')">Name (A-Z)</option>
+          <option @click="sortAcct('desc')">Name (Z-A)</option>
         </select>
       </span>
       <span class="ml-auto mr-2">{{ acctLenght }} logins</span>
@@ -52,6 +52,9 @@ export default {
     },
   },
   methods: {
+    sortAcct(sort) {
+      store.sortAcct(sort)
+    },
     setFocus(e) {
       let sibling = e.currentTarget.parentNode.firstChild
       e.currentTarget.style.background = "#f8f9fa"
