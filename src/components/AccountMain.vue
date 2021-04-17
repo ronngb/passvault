@@ -25,7 +25,8 @@ export default {
     AccountNew,
   },
   created() {
-    //THIS PART:ERROR
+    //TODO: make the 1st on then list acct to be alaways set 
+    //EXAMPLE: accountInfo.acctData[0]
     this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
       this.acctInfo = this.acctList.acctData[index]

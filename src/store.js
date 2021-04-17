@@ -26,11 +26,10 @@ export const store = {
         //GIT: created sortAcct()        
         this.state.acctData.sort((a, b) => {
             switch (sort) {
-                case 'asc':
-                    console.log('asc');
+                case 'Name (A-Z)':
                     return (a.domain > b.domain) ? 1 : -1;
                     break;
-                case 'desc':
+                case 'Name (Z-A)':
                     return (a.domain < b.domain) ? 1 : -1;
                     break;
             }

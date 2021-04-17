@@ -3,9 +3,9 @@
     <div class="acct-list__header d-flex align-items-center">
       <span class="pl-2">Sort by:</span>
       <span class="">
-        <select class="custom-select custom-select-sm border-0 bg-light">
-          <option @click="sortAcct('asc')">Name (A-Z)</option>
-          <option @click="sortAcct('desc')">Name (Z-A)</option>
+        <select v-model="sortBy" class="custom-select custom-select-sm border-0 bg-light">
+          <option @click="sortAcct(sortBy)">Name (A-Z)</option>
+          <option @click="sortAcct(sortBy)">Name (Z-A)</option>
         </select>
       </span>
       <span class="ml-auto mr-2">{{ acctLenght }} logins</span>
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       acctList: store.state,
+      sortBy: 'Name (A-Z)',
       isDisable: '',
     };
   },
@@ -52,6 +53,7 @@ export default {
     },
   },
   methods: {
+    //TODO:call the sortAcct in mounted poperties
     sortAcct(sort) {
       store.sortAcct(sort)
     },
