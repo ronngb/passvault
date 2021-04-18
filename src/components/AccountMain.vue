@@ -25,8 +25,6 @@ export default {
     AccountNew,
   },
   created() {
-    //TODO: make the 1st on then list acct to be alaways set 
-    //EXAMPLE: accountInfo.acctData[0]
     this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
       this.acctInfo = this.acctList.acctData[index]
@@ -34,9 +32,13 @@ export default {
     });
   },
   mounted() {
-    this.acctList.acctData.length == 0 ? this.isBool = true : null
+    this.hasAcct()
   },
   methods: {
+    hasAcct() {
+      this.acctList.acctData.length == 0 ?
+        this.isBool = true : this.acctInfo = this.acctList.acctData[0]
+    }
   }
 };
 </script>
