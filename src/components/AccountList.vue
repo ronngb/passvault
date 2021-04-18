@@ -44,6 +44,9 @@ export default {
       isDisable: '',
     };
   },
+  mounted() {
+    this.sortAcct(this.sortBy)
+  },
   updated() {
     this.acctList = store.state
   },
@@ -53,7 +56,6 @@ export default {
     },
   },
   methods: {
-    //TODO:call the sortAcct in mounted poperties
     sortAcct(sort) {
       store.sortAcct(sort)
     },

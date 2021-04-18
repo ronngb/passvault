@@ -23,15 +23,12 @@ export const store = {
 
     },
     sortAcct(sort) {
-        //GIT: created sortAcct()        
         this.state.acctData.sort((a, b) => {
             switch (sort) {
                 case 'Name (A-Z)':
                     return (a.domain > b.domain) ? 1 : -1;
-                    break;
                 case 'Name (Z-A)':
                     return (a.domain < b.domain) ? 1 : -1;
-                    break;
             }
         })
     },
