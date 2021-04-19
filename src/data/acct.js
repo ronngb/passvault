@@ -1,5 +1,6 @@
 export const acctData = [
     {
+        id: 4,
         url: 'https://www.lazada.com.ph',
         domain: 'lazada.com.ph',
         password: 'Monday',
@@ -9,6 +10,7 @@ export const acctData = [
         last_used: 'April, 19 2021',
     },
     {
+        id: 1,
         url: 'https://www.facebook.com.ph',
         domain: 'facebook.com.ph',
         password: 'Monday',
@@ -18,6 +20,7 @@ export const acctData = [
         last_used: 'April, 19 2021',
     },
     {
+        id: 2,
         url: 'https://www.google.com.ph',
         domain: 'google.com.ph',
         password: 'Monday',
@@ -27,6 +30,7 @@ export const acctData = [
         last_used: 'April, 19 2021',
     },
     {
+        id: 3,
         url: 'https://helo.com.ph',
         domain: 'helo.com.ph',
         password: 'Monday',

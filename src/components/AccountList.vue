@@ -14,7 +14,7 @@
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
-        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index), setFocus($event)" v-for="(list, index) in acctList.acctData" :key="list.website">
+        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index), setFocus(list.id)" v-for="(list, index) in acctList.acctData" :key="list.id" :class="{'active': (list.id === focusId)}">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.domain }}</span>
@@ -41,6 +41,7 @@ export default {
     return {
       acctList: store.state,
       sortBy: 'Name (A-Z)',
+      focusId: 1,
       isDisable: '',
     };
   },
@@ -59,15 +60,8 @@ export default {
     sortAcct(sort) {
       store.sortAcct(sort)
     },
-    setFocus(e) {
-      let sibling = e.currentTarget.parentNode.firstChild
-      e.currentTarget.style.background = "#f8f9fa"
-      while (sibling) {
-        if (sibling.nodeType === 1 && sibling !== e.currentTarget) {
-          sibling.style.background = ""
-        }
-        sibling = sibling.nextSibling;
-      }
+    setFocus(id) {
+      this.focusId = id
     }
   },
 };
@@ -114,9 +108,9 @@ export default {
   border-bottom: 1px solid #dee2e6;
 }
 
-#acct-lists > li:hover,
-#acct-lists > li:focus {
-  background: #f8f9fa;
+#acct-lists .active,
+#acct-lists > li:hover {
+  background-color: #f8f9fa;
 }
 
 .new-acct {
