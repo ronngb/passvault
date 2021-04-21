@@ -44,8 +44,9 @@
             <input type="text" readonly class="form-control-plaintext" id="username" :value="info.username">
           </div>
           <div class="col-4 col-md-5 align-self-center">
-            <button type="button" class="btn btn-light px-lg-5 ">
-              <span class="text-muted ">Copy</span>
+            <button :disabled="isUser" @click="toClipboard(info.username, 'isUser')" type="button" class="btn btn-light px-lg-5">
+              <span v-if="isUser" class="text-muted">Copied!</span>
+              <span v-if="!isUser" class="text-muted">Copy</span>
             </button>
           </div>
         </div>
@@ -63,8 +64,9 @@
             </div>
           </div>
           <div class="col-4">
-            <button type="button" class="btn btn-light px-lg-5">
-              <span class="text-muted ">Copy</span>
+            <button :disabled="isPass" @click="toClipboard(info.password, 'isPass')" type="button" class="btn btn-light px-lg-5">
+              <span v-if="isPass" class="text-muted">Copied!</span>
+              <span v-if="!isPass" class="text-muted">Copy</span>
             </button>
           </div>
         </div>
@@ -84,6 +86,19 @@
 export default {
   name: "AcctInfo",
   props: ['info'],
+  data() {
+    return {
+      isPass: false,
+      isUser: false,
+    }
+  },
+  methods: {
+    toClipboard(info, bool) {
+      this[bool] = true
+      navigator.clipboard.writeText(info)
+        .then(setTimeout(() => { this[bool] = false }, 4000))
+    }
+  }
 };
 </script>
 
