@@ -10,7 +10,7 @@
       <!-- This <hr> will appear in mobile -->
       <hr class="d-block d-lg-none">
 
-      <button type="button" class="btn  mx-1">
+      <button v-if="!isEdit" @click="editAcct" type="button" class="btn mx-1">
         <span class="text-muted">
           <font-awesome-icon icon="pencil-alt" class="mr-1" /> Edit
         </span>
@@ -41,9 +41,9 @@
         <label class="label">Username</label>
         <div class="form-row">
           <div class="col-8 col-md-5">
-            <input type="text" readonly class="form-control-plaintext" id="username" :value="info.username">
+            <input type="text" :readonly="!isEdit" class="form-control-plaintext" id="username" :value="info.username">
           </div>
-          <div class="col-4 col-md-5 align-self-center">
+          <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
             <button :disabled="isUser" @click="toClipboard(info.username, 'isUser')" type="button" class="btn btn-light px-lg-5">
               <span v-if="isUser" class="text-muted">Copied!</span>
               <span v-if="!isUser" class="text-muted">Copy</span>
@@ -56,20 +56,29 @@
         <label class="label">Password</label>
         <div class="form-row align-items-center">
           <div class="col-6 col-md-3">
-            <input type="Password" readonly class="form-control-plaintext" id="password" :value="info.password">
+            <input type="Password" :readonly="!isEdit" class="form-control-plaintext" id="password" :value="info.password">
           </div>
           <div class="col-2">
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox">
             </div>
           </div>
-          <div class="col-4">
+          <div v-if="!isEdit" class="col-4">
             <button :disabled="isPass" @click="toClipboard(info.password, 'isPass')" type="button" class="btn btn-light px-lg-5">
               <span v-if="isPass" class="text-muted">Copied!</span>
               <span v-if="!isPass" class="text-muted">Copy</span>
             </button>
           </div>
         </div>
+      </div>
+      <!--  -->
+      <div v-if="isEdit" class="acct-new__button">
+        <button type="button" class="btn mr-1">
+          Save
+        </button>
+        <button @click="editAcct" type="button" class="btn ml-1">
+          Cancel
+        </button>
       </div>
     </form>
     <hr class="mx-0" style="width:40px">
@@ -90,6 +99,7 @@ export default {
     return {
       isPass: false,
       isUser: false,
+      isEdit: false
     }
   },
   methods: {
@@ -97,6 +107,9 @@ export default {
       this[bool] = true
       navigator.clipboard.writeText(info)
         .then(setTimeout(() => { this[bool] = false }, 4000))
+    },
+    editAcct() {
+      this.isEdit = !this.isEdit
     }
   }
 };
