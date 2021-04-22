@@ -56,11 +56,12 @@
         <label class="label">Password</label>
         <div class="form-row align-items-center">
           <div class="col-6 col-md-3">
-            <input type="Password" :readonly="!isEdit" class="form-control-plaintext" id="password" :value="info.password">
+            <input :type="inputType" :readonly="!isEdit" class="form-control-plaintext" id="password" :value="info.password">
           </div>
           <div class="col-2">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox">
+            <div @click="showPassword" class="form-check form-check-inline">
+              <font-awesome-icon v-if="!isShow" icon="eye" class="" />
+              <font-awesome-icon v-if="isShow" icon="eye-slash" class="" />
             </div>
           </div>
           <div v-if="!isEdit" class="col-4">
@@ -99,7 +100,9 @@ export default {
     return {
       isPass: false,
       isUser: false,
-      isEdit: false
+      isEdit: false,
+      isShow: false,
+      inputType: 'password'
     }
   },
   methods: {
@@ -110,6 +113,10 @@ export default {
     },
     editAcct() {
       this.isEdit = !this.isEdit
+    },
+    showPassword() {
+      this.isShow = !this.isShow
+      this.inputType = this.inputType === 'password' ? 'text' : 'password'
     }
   }
 };
