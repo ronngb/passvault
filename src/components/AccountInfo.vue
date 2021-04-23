@@ -8,29 +8,28 @@
         {{ info.domain }}
       </h4>
       <!-- This <hr> will appear in mobile -->
-      <hr class="d-block d-lg-none">
+      <hr class="d-block d-lg-none" />
 
-      <button v-if="!isEdit" @click="editAcct" type="button" class="btn mx-1">
+      <button v-if="!isEdit" @click="onEdit" type="button" class="btn mx-1">
         <span class="text-muted">
-          <font-awesome-icon icon="pencil-alt" class="mr-1" /> Edit
+          <font-awesome-icon icon="pencil-alt" class="mr-1" />Edit
         </span>
       </button>
       <button type="button" class="btn mx-1">
-        <span class="text-muted ">
+        <span class="text-muted">
           <font-awesome-icon icon="trash" class="mr-1" />Remove
         </span>
       </button>
-
     </div>
     <!-- Header End -->
-    <hr class="d-none d-lg-block"><!-- Line Seperator -->
+    <hr class="d-none d-lg-block" />
+    <!-- Line Seperator -->
     <!-- Website address Start -->
     <div class="mb-3">
-      <label class="col-form-label">website address</label>
+      <label class="col-form-label">website
+        address</label>
       <div>
-        <a :href="info.url" style="font-size: 15px">
-          {{ info.url }}
-        </a>
+        <a :href="info.url" style="font-size: 15px">{{ info.url }}</a>
       </div>
     </div>
     <!-- TODO: Prob. in column  -->
@@ -41,10 +40,14 @@
         <label class="label">Username</label>
         <div class="form-row">
           <div class="col-8 col-md-5">
-            <input type="text" :readonly="!isEdit" class="form-control-plaintext" id="username" :value="info.username">
+            <input type="text" :readonly="!isEdit"
+                   :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
+                   id="username" :value="info.username" />
           </div>
           <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
-            <button :disabled="isUser" @click="toClipboard(info.username, 'isUser')" type="button" class="btn btn-light px-lg-5">
+            <button :disabled="isUser"
+                    @click="toClipboard(info.username, 'isUser')" type="button"
+                    class="btn btn-light px-lg-5">
               <span v-if="isUser" class="text-muted">Copied!</span>
               <span v-if="!isUser" class="text-muted">Copy</span>
             </button>
@@ -56,16 +59,25 @@
         <label class="label">Password</label>
         <div class="form-row align-items-center">
           <div class="col-6 col-md-3">
-            <input :type="inputType" :readonly="!isEdit" class="form-control-plaintext" id="password" :value="info.password">
+            <input :type="inputType" :readonly="!isEdit"
+                   :class="{'is-invalid': true,'form-control-plaintext': !isEdit, 'form-control': isError}"
+                   @input="inputPassword = $event.target.value"
+                   :value="info.password" id="password" />
+            <div v-if="isEdit && isError" class="invalid-feedback">
+              Your password is required.
+            </div>
           </div>
           <div class="col-2">
-            <div @click="showPassword" class="form-check form-check-inline">
-              <font-awesome-icon v-if="!isShow" icon="eye" class="" />
-              <font-awesome-icon v-if="isShow" icon="eye-slash" class="" />
+            <div @click="showPassword" class="form-check">
+              <!-- BUGS -->
+              <font-awesome-icon v-if="!isShow" icon="eye" />
+              <font-awesome-icon v-if="isShow" icon="eye-slash" class />
             </div>
           </div>
           <div v-if="!isEdit" class="col-4">
-            <button :disabled="isPass" @click="toClipboard(info.password, 'isPass')" type="button" class="btn btn-light px-lg-5">
+            <button :disabled="isPass"
+                    @click="toClipboard(info.password, 'isPass')" type="button"
+                    class="btn btn-light px-lg-5">
               <span v-if="isPass" class="text-muted">Copied!</span>
               <span v-if="!isPass" class="text-muted">Copy</span>
             </button>
@@ -74,15 +86,12 @@
       </div>
       <!--  -->
       <div v-if="isEdit" class="acct-new__button">
-        <button type="button" class="btn mr-1">
-          Save
-        </button>
-        <button @click="editAcct" type="button" class="btn ml-1">
-          Cancel
-        </button>
+        <button @click="editAcct(info.id)" type="button"
+                class="btn mr-1">Save</button>
+        <button @click="onEdit" type="button" class="btn ml-1">Cancel</button>
       </div>
     </form>
-    <hr class="mx-0" style="width:40px">
+    <hr class="mx-0" style="width:40px" />
     <div class="acct-info__date">
       <p>Created: {{ info.created }}</p>
       <p>Last modified: {{ info.last_modified }}</p>
@@ -95,15 +104,20 @@
 
 export default {
   name: "AcctInfo",
-  props: ['info'],
+  props: ['info', 'infoPass'],
   data() {
     return {
       isPass: false,
       isUser: false,
       isEdit: false,
       isShow: false,
-      inputType: 'password'
+      isError: false,
+      inputPassword: '',
+      inputType: 'password',
     }
+  },
+  beforeUpdate() {
+    this.inputPassword = this.infoPass
   },
   methods: {
     toClipboard(info, bool) {
@@ -112,6 +126,10 @@ export default {
         .then(setTimeout(() => { this[bool] = false }, 4000))
     },
     editAcct() {
+      console.log(this.inputPassword)
+      this.isError = this.inputPassword == '' ? true : false
+    },
+    onEdit() {
       this.isEdit = !this.isEdit
     },
     showPassword() {

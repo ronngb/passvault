@@ -1,7 +1,8 @@
 <template>
   <main id="acct-main" class="col-md-7 ">
     <!-- TODO:Try adding props here -->
-    <AccountInfo v-if="!isBool" :info="acctInfo" />
+    <AccountInfo v-if="!isBool" :info="acctInfo"
+                 :info-pass="acctInfo.password" />
     <AccountNew v-if="isBool" />
   </main>
 </template>
@@ -38,6 +39,7 @@ export default {
     hasAcct() {
       this.acctList.acctData.length == 0 ?
         this.isBool = true : this.acctInfo = this.acctList.acctData[0]
+
     }
   }
 };
