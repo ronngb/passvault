@@ -12,6 +12,12 @@ export const store = {
         const format = { month: 'long', day: '2-digit', year: 'numeric' }
         return new Date().toLocaleString('en-us', format)
     },
+    editAcct(id, newAcctInfo) {
+        const acctObj = this.state.acctData.find((acct) => acct.id === id)
+        acctObj.password = newAcctInfo.password
+        acctObj.username = newAcctInfo.username
+        acctObj.last_modified = this.getDate()
+    },
     storeAcct(newAcct) {
         const acctArr = [['url', newAcct.inputWebsite], ['domain', this.sanitizeUrl(newAcct.inputWebsite)], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
 

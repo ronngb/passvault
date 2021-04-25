@@ -42,7 +42,8 @@
           <div class="col-8 col-md-5">
             <input type="text" :readonly="!isEdit"
                    :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
-                   id="username" :value="info.username" />
+                   @input="inputForm.username = $event.target.value"
+                   :value="info.username" id="username" />
           </div>
           <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
             <button :disabled="isUser"
@@ -61,7 +62,7 @@
           <div class="col-6 col-md-3">
             <input :type="inputType" :readonly="!isEdit"
                    :class="{'is-invalid': true,'form-control-plaintext': !isEdit, 'form-control': isError}"
-                   @input="inputPassword = $event.target.value"
+                   @input="inputForm.password = $event.target.value"
                    :value="info.password" id="password" />
             <div v-if="isEdit && isError" class="invalid-feedback">
               Your password is required.
@@ -86,7 +87,7 @@
       </div>
       <!--  -->
       <div v-if="isEdit" class="acct-new__button">
-        <button @click="editAcct(info.id)" type="button"
+        <button @click.stop="editAcct($event,info.id)" type="button"
                 class="btn mr-1">Save</button>
         <button @click="onEdit" type="button" class="btn ml-1">Cancel</button>
       </div>
@@ -101,6 +102,7 @@
 </template>
 
 <script>
+import { store } from "../store.js";
 
 export default {
   name: "AcctInfo",
@@ -112,12 +114,14 @@ export default {
       isEdit: false,
       isShow: false,
       isError: false,
+      inputForm: { username: '', password: '' },
       inputPassword: '',
       inputType: 'password',
     }
   },
   beforeUpdate() {
-    this.inputPassword = this.infoPass
+    for (let input in this.inputForm)
+      this.inputForm[input] = this.info[input]
   },
   methods: {
     toClipboard(info, bool) {
@@ -125,12 +129,21 @@ export default {
       navigator.clipboard.writeText(info)
         .then(setTimeout(() => { this[bool] = false }, 4000))
     },
-    editAcct() {
-      console.log(this.inputPassword)
-      this.isError = this.inputPassword == '' ? true : false
+    editAcct(e, id) {
+      // this.isError = this.inputForm.password == '' ? true
+      //   : store.editAcct(id, this.inputForm)
+      if (this.inputForm.password == '') {
+        this.isError = true
+        // e.preventDefault()
+      } else {
+        store.editAcct(id, this.inputForm)
+        this.onEdit()
+      }
+
     },
     onEdit() {
       this.isEdit = !this.isEdit
+      this.isError = false
     },
     showPassword() {
       this.isShow = !this.isShow
