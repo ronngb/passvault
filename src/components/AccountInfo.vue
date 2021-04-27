@@ -42,7 +42,8 @@
           <div class="col-8 col-md-5">
             <input type="text" :readonly="!isEdit"
                    :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
-                   @input="inputForm.username = $event.target.value"
+                   @input="$emit('update',[$event.target]),
+                   (inputForm.username = $event.target.value)"
                    :value="info.username" id="username" />
           </div>
           <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
@@ -62,7 +63,8 @@
           <div class="col-6 col-md-3">
             <input :type="inputType" :readonly="!isEdit"
                    :class="{'is-invalid': true,'form-control-plaintext': !isEdit, 'form-control': isError}"
-                   @input="inputForm.password = $event.target.value"
+                   @input="$emit('update',[$event.target]),
+                   (inputForm.password = $event.target.value)"
                    :value="info.password" id="password" />
             <div v-if="isEdit && isError" class="invalid-feedback">
               Your password is required.
@@ -106,7 +108,7 @@ import { store } from "../store.js";
 
 export default {
   name: "AcctInfo",
-  props: ['info', 'infoPass'],
+  props: ['info'],
   data() {
     return {
       isPass: false,
@@ -115,7 +117,6 @@ export default {
       isShow: false,
       isError: false,
       inputForm: { username: '', password: '' },
-      inputPassword: '',
       inputType: 'password',
     }
   },
@@ -131,19 +132,19 @@ export default {
     },
     editAcct(e, id) {
       // this.isError = this.inputForm.password == '' ? true
-      //   : store.editAcct(id, this.inputForm)
+      //   : store.editAcct(id, this.inputForm)      
       if (this.inputForm.password == '') {
         this.isError = true
-        // e.preventDefault()
       } else {
         store.editAcct(id, this.inputForm)
-        this.onEdit()
+        this.$emit('fetch', 1)
       }
-
     },
     onEdit() {
       this.isEdit = !this.isEdit
       this.isError = false
+      this.$emit('fetch')
+      // Modal discard changes    
     },
     showPassword() {
       this.isShow = !this.isShow

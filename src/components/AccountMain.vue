@@ -1,8 +1,8 @@
 <template>
   <main id="acct-main" class="col-md-7 ">
     <!-- TODO:Try adding props here -->
-    <AccountInfo v-if="!isBool" :info="acctInfo"
-                 :info-pass="acctInfo.password" />
+    <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
+                 @fetch="hasAcct" />
     <AccountNew v-if="isBool" />
   </main>
 </template>
@@ -16,9 +16,10 @@ export default {
   name: "AccountMain",
   data() {
     return {
+      //TRY: make the acctInfo Object
       acctList: store.state,
-      acctInfo: '',
-      isBool: ''
+      acctInfo: {},
+      isBool: '',
     }
   },
   components: {
@@ -28,7 +29,7 @@ export default {
   created() {
     this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
-      this.acctInfo = this.acctList.acctData[index]
+      this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[index]))
       this.isBool = false
     });
   },
@@ -37,10 +38,13 @@ export default {
   },
   methods: {
     hasAcct() {
-      this.acctList.acctData.length == 0 ?
-        this.isBool = true : this.acctInfo = this.acctList.acctData[0]
-
-    }
+      this.acctList.acctData.length == 0
+        ? this.isBool = true
+        : this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[0]))
+    },
+    updateInfo(info) {
+      this.acctInfo[info[0].id] = info[0].value
+    },
   }
 };
 </script>
