@@ -10,7 +10,8 @@
       <!-- This <hr> will appear in mobile -->
       <hr class="d-block d-lg-none" />
 
-      <button v-if="!isEdit" @click="onEdit" type="button" class="btn mx-1">
+      <button v-if="!isEdit" @click="onEdit(info.id)" type="button"
+              class="btn mx-1">
         <span class="text-muted">
           <font-awesome-icon icon="pencil-alt" class="mr-1" />Edit
         </span>
@@ -89,9 +90,10 @@
       </div>
       <!--  -->
       <div v-if="isEdit" class="acct-new__button">
-        <button @click.stop="editAcct($event,info.id)" type="button"
+        <button @click.stop="editAcct(info.id)" type="button"
                 class="btn mr-1">Save</button>
-        <button @click="onEdit" type="button" class="btn ml-1">Cancel</button>
+        <button @click="onEdit(info.id)" type="button"
+                class="btn ml-1">Cancel</button>
       </div>
     </form>
     <hr class="mx-0" style="width:40px" />
@@ -130,21 +132,19 @@ export default {
       navigator.clipboard.writeText(info)
         .then(setTimeout(() => { this[bool] = false }, 4000))
     },
-    editAcct(e, id) {
+    editAcct(acctId) {
       // this.isError = this.inputForm.password == '' ? true
       //   : store.editAcct(id, this.inputForm)      
       if (this.inputForm.password == '') {
         this.isError = true
       } else {
-        store.editAcct(id, this.inputForm)
-        this.$emit('fetch', 1)
+        this.$emit('fetch', store.editAcct(acctId, this.inputForm))
       }
     },
-    onEdit() {
+    onEdit(acctId) {
       this.isEdit = !this.isEdit
       this.isError = false
-      this.$emit('fetch')
-      // Modal discard changes    
+      this.$emit('fetch', store.getIndexOfAcct(acctId))
     },
     showPassword() {
       this.isShow = !this.isShow

@@ -37,10 +37,10 @@ export default {
     this.hasAcct()
   },
   methods: {
-    hasAcct() {
+    hasAcct(acctIndex = 0) {
       this.acctList.acctData.length == 0
         ? this.isBool = true
-        : this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[0]))
+        : this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[acctIndex]))
     },
     updateInfo(info) {
       this.acctInfo[info[0].id] = info[0].value

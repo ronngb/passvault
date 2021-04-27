@@ -4,6 +4,9 @@ export const store = {
     state: {
         acctData,
     },
+    getIndexOfAcct(acctId) {
+        return this.state.acctData.findIndex((acct) => acct.id === acctId)
+    },
     sanitizeUrl(url) {
         const regex = /(http(s?)):\/\/|ww(w|3)./gi
         return url.replace(regex, '')
@@ -12,11 +15,12 @@ export const store = {
         const format = { month: 'long', day: '2-digit', year: 'numeric' }
         return new Date().toLocaleString('en-us', format)
     },
-    editAcct(id, newAcctInfo) {
-        const acctObj = this.state.acctData.find((acct) => acct.id === id)
+    editAcct(acctId, newAcctInfo) {
+        const acctObj = this.state.acctData.find((acct) => acct.id === acctId)
         acctObj.password = newAcctInfo.password
         acctObj.username = newAcctInfo.username
         acctObj.last_modified = this.getDate()
+        return this.getIndexOfAcct(acctId)
     },
     storeAcct(newAcct) {
         const acctArr = [['url', newAcct.inputWebsite], ['domain', this.sanitizeUrl(newAcct.inputWebsite)], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
