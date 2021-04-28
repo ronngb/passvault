@@ -3,7 +3,8 @@
     <div class="acct-list__header d-flex align-items-center">
       <span class="pl-2">Sort by:</span>
       <span class="">
-        <select v-model="sortBy" class="custom-select custom-select-sm border-0 bg-light">
+        <select v-model="sortBy"
+                class="custom-select custom-select-sm border-0 bg-light">
           <option @click="sortAcct(sortBy)">Name (A-Z)</option>
           <option @click="sortAcct(sortBy)">Name (Z-A)</option>
         </select>
@@ -14,7 +15,10 @@
     <div id="acct__list-item" class="d-flex flex-column ">
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
-        <li class="acct-item d-flex justify-content-start" @click="$EventBus.$emit('setIndex', index), setFocus(list.id)" v-for="(list, index) in acctList.acctData" :key="list.id" :class="{'active': (list.id === focusId)}">
+        <li class="acct-item d-flex justify-content-start"
+            @click="$EventBus.$emit('setIndex', index), setFocus(list.id)"
+            v-for="(list, index) in acctList.acctData" :key="list.id"
+            :class="{'active': (list.id === focusId)}">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.domain }}</span>
@@ -25,7 +29,8 @@
       </ol>
     </div>
     <div class="new-acct p-3">
-      <button @click="$EventBus.$emit('createAcct')" type="button" class="btn btn-secondary btn-block btn-sm">
+      <button @click="$EventBus.$emit('createAcct')" type="button"
+              class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
     </div>

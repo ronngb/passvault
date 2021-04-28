@@ -122,9 +122,15 @@ export default {
       inputType: 'password',
     }
   },
+
   beforeUpdate() {
     for (let input in this.inputForm)
       this.inputForm[input] = this.info[input]
+  },
+  watch: {
+    info(newData, oldData) {
+      if (newData.id != oldData.id) this.resetData()
+    }
   },
   methods: {
     toClipboard(info, bool) {
