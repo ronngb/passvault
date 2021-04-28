@@ -18,7 +18,10 @@
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" @blur="autoCorrect()" v-model="inputForm.inputWebsite" :class="{'form-control':true, 'is-invalid': errors[0]}" id="website">
+        <input type="text" @blur="autoCorrect()"
+               v-model="inputForm.inputWebsite"
+               :class="{'form-control':true, 'is-invalid': errors[0]}"
+               id="website">
         <div class="invalid-feedback">
           Your website address is required.
         </div>
@@ -26,7 +29,9 @@
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Username</label>
-        <input type="text" v-model="inputForm.inputUsername" :class="{'form-control':true, 'is-invalid': errors[1]}" id="username">
+        <input type="text" v-model="inputForm.inputUsername"
+               :class="{'form-control':true, 'is-invalid': errors[1]}"
+               id="username">
         <div class="invalid-feedback">
           Your username is required.
         </div>
@@ -36,7 +41,9 @@
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="text" v-model="inputForm.inputPassword" :class="{'form-control':true, 'is-invalid': errors[2]}" id="password">
+          <input type="text" v-model="inputForm.inputPassword"
+                 :class="{'form-control':true, 'is-invalid': errors[2]}"
+                 id="password">
           <div class="invalid-feedback">
             Your password is required.
           </div>
@@ -82,7 +89,7 @@ export default {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       })
       if (!this.errors.includes(1)) {
-        this.$EventBus.$emit('setIndex', store.storeAcct(this.inputForm));
+        this.$emit('update', store.storeAcct(this.inputForm));
         this.clear()
       }
     },

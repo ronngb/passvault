@@ -3,7 +3,7 @@
     <!-- TODO:Try adding props here -->
     <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
                  @fetch="hasAcct" />
-    <AccountNew v-if="isBool" />
+    <AccountNew v-if="isBool" @update="hasAcct" />
   </main>
 </template>
 <!-- eslint-disable -->
@@ -38,9 +38,12 @@ export default {
   },
   methods: {
     hasAcct(acctIndex = 0) {
-      this.acctList.acctData.length == 0
-        ? this.isBool = true
-        : this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[acctIndex]))
+      if (this.acctList.acctData.length == 0) {
+        this.isBool = true
+      } else {
+        this.isBool = false
+        this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[acctIndex]))
+      }
     },
     updateInfo(info) {
       this.acctInfo[info[0].id] = info[0].value
