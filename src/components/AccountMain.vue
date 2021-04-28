@@ -2,7 +2,7 @@
   <main id="acct-main" class="col-md-7 ">
     <!-- TODO:Try adding props here -->
     <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
-                 @fetch="hasAcct" />
+                 @fetch="hasAcct" ref="reset" />
     <AccountNew v-if="isBool" @update="hasAcct" />
   </main>
 </template>
@@ -16,7 +16,6 @@ export default {
   name: "AccountMain",
   data() {
     return {
-      //TRY: make the acctInfo Object
       acctList: store.state,
       acctInfo: {},
       isBool: '',
@@ -29,7 +28,8 @@ export default {
   created() {
     this.$EventBus.$on('createAcct', () => this.isBool = true);
     this.$EventBus.$on('setIndex', index => {
-      this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[index]))
+      this.$refs.reset.resetData()
+      this.hasAcct(index)
       this.isBool = false
     });
   },

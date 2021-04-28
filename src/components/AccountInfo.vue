@@ -149,6 +149,9 @@ export default {
     showPassword() {
       this.isShow = !this.isShow
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
+    },
+    resetData() {
+      Object.assign(this.$data, this.$options.data())
     }
   }
 };
