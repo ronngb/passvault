@@ -9,7 +9,7 @@
           <option @click="sortAcct(sortBy)">Name (Z-A)</option>
         </select>
       </span>
-      <span class="ml-auto mr-2">{{ acctLenght }} logins</span>
+      <span class="ml-auto mr-2">{{ totalAcct }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct__list-item" class="d-flex flex-column ">
@@ -57,7 +57,7 @@ export default {
     this.acctList = store.state
   },
   computed: {
-    acctLenght() {
+    totalAcct() {
       return this.acctList.acctData.length
     },
   },
