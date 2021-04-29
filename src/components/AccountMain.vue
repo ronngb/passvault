@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <AccountList />
+    <AccountList :acct-list=acctList />
     <main id="acct-main" class="col-md-7 ">
       <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
                    @fetch="hasAcct" />

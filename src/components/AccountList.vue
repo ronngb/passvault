@@ -16,8 +16,8 @@
       <!-- TODO: only border bottom is present -->
       <ol id="acct-lists" class="list-group bg-light">
         <li class="acct-item d-flex justify-content-start"
-            @click="$EventBus.$emit('setIndex', index), setFocus(list.id)"
             v-for="(list, index) in acctList.acctData" :key="list.id"
+            @click="$EventBus.$emit('setIndex', index), setFocus(list.id)"
             :class="{'active': (list.id === focusId)}">
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
@@ -42,9 +42,10 @@ import { store } from "../store.js";
 
 export default {
   name: "Acctlist",
+  props: ['acctList'],
   data() {
     return {
-      acctList: store.state,
+      // acctList: store.state,
       sortBy: 'Name (A-Z)',
       focusId: 1,
       isDisable: '',
