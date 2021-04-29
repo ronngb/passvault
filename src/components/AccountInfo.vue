@@ -45,7 +45,8 @@
                    :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
                    @input="$emit('update',[$event.target]),
                    (inputForm.username = $event.target.value)"
-                   :value="info.username" id="username" />
+                   :value="info.username" :placeholder="hasUsername"
+                   id="username" />
           </div>
           <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
             <button :disabled="isUser"
@@ -90,7 +91,7 @@
       </div>
       <!--  -->
       <div v-if="isEdit" class="acct-new__button">
-        <button @click.stop="editAcct(info.id)" type="button"
+        <button @click="editAcct(info.id)" type="button"
                 class="btn mr-1">Save</button>
         <button @click="onEdit(info.id)" type="button"
                 class="btn ml-1">Cancel</button>
@@ -120,6 +121,7 @@ export default {
       isError: false,
       inputForm: { username: '', password: '' },
       inputType: 'password',
+      hasUsername: ''
     }
   },
 
@@ -130,6 +132,7 @@ export default {
   watch: {
     info(newData, oldData) {
       if (newData.id != oldData.id) this.resetData()
+      this.hasUsername = newData.username == '' ? '(no username)' : ''
     }
   },
   methods: {
@@ -139,12 +142,11 @@ export default {
         .then(setTimeout(() => { this[bool] = false }, 4000))
     },
     editAcct(acctId) {
-      // this.isError = this.inputForm.password == '' ? true
-      //   : store.editAcct(id, this.inputForm)      
       if (this.inputForm.password == '') {
         this.isError = true
       } else {
-        this.$emit('fetch', store.editAcct(acctId, this.inputForm))
+        store.editAcct(acctId, this.inputForm)
+        this.onEdit(acctId)
       }
     },
     onEdit(acctId) {
