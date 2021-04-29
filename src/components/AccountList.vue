@@ -29,7 +29,7 @@
       </ol>
     </div>
     <div class="new-acct p-3">
-      <button @click="$EventBus.$emit('createAcct')" type="button"
+      <button @click="$emit('createAcct')" type="button"
               class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>

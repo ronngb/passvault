@@ -1,6 +1,7 @@
 <template>
   <div class="row">
-    <AccountList :acct-list=acctList @changeFocus="hasAcct" />
+    <AccountList :acct-list=acctList @changeFocus="hasAcct"
+                 @createAcct="isBool = true" />
     <main id="acct-main" class="col-md-7 ">
       <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
                    @fetch="hasAcct" />
@@ -28,13 +29,6 @@ export default {
     AccountInfo,
     AccountNew,
     AccountList
-  },
-  created() {
-    this.$EventBus.$on('createAcct', () => this.isBool = true);
-    this.$EventBus.$on('setIndex', index => {
-      this.hasAcct(index)
-      this.isBool = false
-    });
   },
   mounted() {
     this.hasAcct()
