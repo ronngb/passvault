@@ -2,24 +2,19 @@
   <div id="app">
     <SearchBar />
     <div class="container-fluid">
-      <div class="row">
-        <AccountList />
-        <AccountMain />
-      </div>
+      <AccountMain />
     </div>
   </div>
 </template>
 <!-- eslint-disable -->
 <script>
 import SearchBar from "./components/SearchBar.vue";
-import AccountList from "./components/AccountList.vue";
 import AccountMain from "./components/AccountMain.vue";
 
 export default {
   name: "App",
   components: {
     SearchBar,
-    AccountList,
     AccountMain,
   },
 };

@@ -1,15 +1,18 @@
 <template>
-  <main id="acct-main" class="col-md-7 ">
-    <!-- TODO:Try adding props here -->
-    <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
-                 @fetch="hasAcct" />
-    <AccountNew v-if="isBool" @update="hasAcct" />
-  </main>
+  <div class="row">
+    <AccountList />
+    <main id="acct-main" class="col-md-7 ">
+      <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
+                   @fetch="hasAcct" />
+      <AccountNew v-if="isBool" @update="hasAcct" />
+    </main>
+  </div>
 </template>
 <!-- eslint-disable -->
 <script>
 import AccountInfo from "./AccountInfo.vue";
 import AccountNew from "./AccountNew.vue";
+import AccountList from "./AccountList.vue";
 import { store } from "../store.js";
 
 export default {
@@ -24,6 +27,7 @@ export default {
   components: {
     AccountInfo,
     AccountNew,
+    AccountList
   },
   created() {
     this.$EventBus.$on('createAcct', () => this.isBool = true);
