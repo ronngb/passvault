@@ -22,7 +22,7 @@
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.domain }}</span>
-            <span class="text-muted">{{ list.username }}</span>
+            <span class="text-muted">{{ hasUsername(list.username) }}</span>
           </div>
         </li>
 
@@ -53,9 +53,6 @@ export default {
   mounted() {
     this.sortAcct(this.sortBy)
   },
-  updated() {
-    this.acctList = store.state
-  },
   computed: {
     totalAcct() {
       return this.acctList.acctData.length
@@ -67,6 +64,9 @@ export default {
     },
     setFocus(id) {
       this.focusId = id
+    },
+    hasUsername(username) {
+      return username == '' ? '(no username)' : username
     }
   },
 };
