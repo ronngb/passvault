@@ -22,6 +22,10 @@ export const store = {
         acctObj.last_modified = this.getDate()
         return this.getIndexOfAcct(acctId)
     },
+    removeAcct(acctId) {
+        this.state.acctData.splice(this.getIndexOfAcct(acctId), 1)
+
+    },
     storeAcct(newAcct) {
         const acctArr = [['url', newAcct.inputWebsite], ['domain', this.sanitizeUrl(newAcct.inputWebsite)], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
 

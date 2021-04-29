@@ -16,7 +16,7 @@
           <font-awesome-icon icon="pencil-alt" class="mr-1" />Edit
         </span>
       </button>
-      <button type="button" class="btn mx-1">
+      <button @click="removeAcct(info.id)" type="button" class="btn mx-1">
         <span class="text-muted">
           <font-awesome-icon icon="trash" class="mr-1" />Remove
         </span>
@@ -151,6 +151,10 @@ export default {
       this.isEdit = !this.isEdit
       this.isError = false
       this.$emit('fetch', store.getIndexOfAcct(acctId))
+    },
+    removeAcct(acctId) {
+      store.removeAcct(acctId)
+      this.$emit('fetch')
     },
     showPassword() {
       this.isShow = !this.isShow
