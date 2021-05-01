@@ -11,7 +11,7 @@ export const store = {
         const regex = /(http(s?)):\/\/|ww(w|3)./gi
         return url.replace(regex, '')
     },
-    getDate() {
+    getDateNow() {
         const format = { month: 'long', day: '2-digit', year: 'numeric' }
         return new Date().toLocaleString('en-us', format)
     },
@@ -26,15 +26,23 @@ export const store = {
         this.state.acctData.splice(this.getIndexOfAcct(acctId), 1)
 
     },
-    storeAcct(newAcct) {
-        const acctArr = [['url', newAcct.inputWebsite], ['domain', this.sanitizeUrl(newAcct.inputWebsite)], ['username', newAcct.inputUsername], ['password', newAcct.inputPassword]]
+    storeAcct(infoAcctObj) {
+        let newAcctObj = {
+            'domain': this.sanitizeUrl(infoAcctObj.inputWebsite)
+        }
 
-        const datesArr = [['created', this.getDate()], ['last_modified', this.getDate()], ['last_used', this.getDate()]]
+        for (let info in infoAcctObj) {
+            newAcctObj[info] = infoAcctObj[info]
+        }
 
-        this.state.acctData.push(Object.assign(Object.fromEntries(acctArr), Object.fromEntries(datesArr)));
+        const datesObj = {
+            'created': this.getDateNow(),
+            'last_modified': this.getDateNow(),
+            'last_used': this.getDateNow()
+        }
+        newAcctObj = Object.assign(newAcctObj, datesObj)
 
-        return this.state.acctData.length - 1
-
+        return this.state.acctData.push(newAcctObj) - 1
     },
     sortAcct(sort) {
         this.state.acctData.sort((a, b) => {
