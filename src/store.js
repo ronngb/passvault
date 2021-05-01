@@ -28,7 +28,7 @@ export const store = {
     },
     storeAcct(infoAcctObj) {
         let newAcctObj = {
-            'domain': this.sanitizeUrl(infoAcctObj.inputWebsite)
+            'domain': this.sanitizeUrl(infoAcctObj.url)
         }
 
         for (let info in infoAcctObj) {

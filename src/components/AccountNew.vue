@@ -18,8 +18,7 @@
       <div class="acct-new__input col-8 col-md-5">
         <label>Website address</label>
         <!-- TODO:Make it longer with border with rounded corner -->
-        <input type="text" @blur="autoCorrect()"
-               v-model="inputForm.inputWebsite"
+        <input type="text" @blur="autoCorrect()" v-model="inputForm.url"
                :class="{'form-control':true, 'is-invalid': errors[0]}"
                id="website">
         <div class="invalid-feedback">
@@ -29,7 +28,7 @@
       <!-- Username Start -->
       <div class="acct-new__input col-8 col-md-5">
         <label>Username</label>
-        <input type="text" v-model="inputForm.inputUsername"
+        <input type="text" v-model="inputForm.username"
                :class="{'form-control':true, 'is-invalid': errors[1]}"
                id="username">
         <div class="invalid-feedback">
@@ -41,7 +40,7 @@
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="text" v-model="inputForm.inputPassword"
+          <input type="text" v-model="inputForm.password"
                  :class="{'form-control':true, 'is-invalid': errors[2]}"
                  id="password">
           <div class="invalid-feedback">
@@ -78,7 +77,7 @@ export default {
   props: ['isDisable'],
   data() {
     return {
-      inputForm: { inputWebsite: '', inputUsername: '', inputPassword: '' },
+      inputForm: { url: '', username: '', password: '' },
       errors: []
     }
   },
@@ -94,8 +93,9 @@ export default {
       }
     },
     autoCorrect() {
+      //Refactor
       const strCont = 'https://'
-      this.inputForm.inputWebsite === "" ? null : this.inputForm.inputWebsite.indexOf(strCont) == -1 ? this.inputForm.inputWebsite = strCont.concat(this.inputForm.inputWebsite) : null;
+      this.inputForm.url === "" ? null : this.inputForm.url.indexOf(strCont) == -1 ? this.inputForm.url = strCont.concat(this.inputForm.url) : null;
 
     },
     clear() {
