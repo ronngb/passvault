@@ -40,14 +40,17 @@
         <label>Password</label>
         <div class="form-row mx-0 align-items-center flex-row-reverse">
           <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input type="text" v-model="inputForm.password"
+          <input :type="inputType" v-model="inputForm.password"
                  :class="{'form-control':true, 'is-invalid': errors[2]}"
                  id="password">
           <div class="invalid-feedback">
             Your password is required.
           </div>
-          <input class="form-check-input" type="checkbox">
-
+          <!-- <input class="form-check-input" type="checkbox"> -->
+          <div @click="showPassword">
+            <font-awesome-icon v-if="!isShow" icon="eye" />
+            <font-awesome-icon v-if="isShow" icon="eye-slash" class />
+          </div>
           <!-- <div class="col-6 col-md-3">            
           </div>
           <div class="col-2">
@@ -73,12 +76,14 @@
 import { store } from "../store.js";
 
 export default {
-  name: "AccountAdd",
+  name: "AccountNew",
   props: ['isDisable'],
   data() {
     return {
       inputForm: { url: '', username: '', password: '' },
-      errors: []
+      errors: [],
+      isShow: '',
+      inputType: 'password'
     }
   },
   methods: {
@@ -97,6 +102,10 @@ export default {
       if (this.inputForm.url === "") return
       if (this.inputForm.url.indexOf(strCont) == -1)
         this.inputForm.url = strCont.concat(this.inputForm.url)
+    },
+    showPassword() {
+      this.isShow = !this.isShow
+      this.inputType = this.inputType === 'password' ? 'text' : 'password'
     },
     clear() {
       for (let input in this.inputForm)
