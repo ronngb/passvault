@@ -93,10 +93,10 @@ export default {
       }
     },
     autoCorrect() {
-      //Refactor
       const strCont = 'https://'
-      this.inputForm.url === "" ? null : this.inputForm.url.indexOf(strCont) == -1 ? this.inputForm.url = strCont.concat(this.inputForm.url) : null;
-
+      if (this.inputForm.url === "") return
+      if (this.inputForm.url.indexOf(strCont) == -1)
+        this.inputForm.url = strCont.concat(this.inputForm.url)
     },
     clear() {
       for (let input in this.inputForm)
