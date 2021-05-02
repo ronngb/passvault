@@ -4,6 +4,7 @@ export const store = {
     state: {
         acctData,
     },
+    currentAcctId: 5,
     getIndexOfAcct(acctId) {
         return this.state.acctData.findIndex((acct) => acct.id === acctId)
     },
@@ -24,10 +25,14 @@ export const store = {
     },
     removeAcct(acctId) {
         this.state.acctData.splice(this.getIndexOfAcct(acctId), 1)
-
+    },
+    generateAcctId(currentId) {
+        this.currentAcctId += 1
+        return currentId
     },
     storeAcct(infoAcctObj) {
         let newAcctObj = {
+            'id': this.generateAcctId(this.currentAcctId),
             'domain': this.sanitizeUrl(infoAcctObj.url)
         }
 
