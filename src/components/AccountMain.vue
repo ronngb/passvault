@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <AccountList :acct-list=acctList @changeFocus="hasAcct"
+    <AccountList :acct-list=acctList :set-id=focusId @changeFocus="hasAcct"
                  @createAcct="isBool = true" />
     <main id="acct-main" class="col-md-7 ">
       <AccountInfo v-if="!isBool" :info="acctInfo" @update="updateInfo"
@@ -23,6 +23,7 @@ export default {
       acctList: store.state,
       acctInfo: {},
       isBool: '',
+      focusId: 1
     }
   },
   components: {
@@ -39,7 +40,9 @@ export default {
         this.isBool = true
       } else {
         this.isBool = false
-        this.acctInfo = JSON.parse(JSON.stringify(this.acctList.acctData[acctIndex]))
+        this.acctInfo = JSON.parse(
+          JSON.stringify(this.acctList.acctData[acctIndex]))
+        this.focusId = this.acctList.acctData[acctIndex].id
       }
     },
     updateInfo(info) {

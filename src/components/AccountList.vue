@@ -42,16 +42,21 @@ import { store } from "../store.js";
 
 export default {
   name: "Acctlist",
-  props: ['acctList'],
+  props: ['acctList', 'setId'],
   data() {
     return {
       sortBy: 'Name (A-Z)',
-      focusId: 1,
+      focusId: this.setId,
       isDisable: '',
     };
   },
   mounted() {
     this.sortAcct(this.sortBy)
+  },
+  watch: {
+    setId(acctId) {
+      this.focusId = acctId
+    }
   },
   computed: {
     totalAcct() {
