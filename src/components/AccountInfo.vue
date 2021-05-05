@@ -155,8 +155,10 @@ export default {
       this.$emit('fetch', store.getIndexOfAcct(acctId))
     },
     removeAcct(acctId) {
-      store.removeAcct(acctId)
-      this.$emit('fetch')
+      // place a condition that will return T or F base on the chosen event
+      this.$EventBus.$emit('removeAcct', acctId)
+      // store.removeAcct(acctId)
+      // this.$emit('fetch')
     },
     showPassword() {
       this.isShow = !this.isShow

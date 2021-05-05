@@ -7,6 +7,7 @@
                    @fetch="hasAcct" />
       <AccountNew v-if="isBool" @update="hasAcct" />
     </main>
+    <ConfirmDialog @fetch="hasAcct" />
   </div>
 </template>
 <!-- eslint-disable -->
@@ -14,6 +15,7 @@
 import AccountInfo from "./AccountInfo.vue";
 import AccountNew from "./AccountNew.vue";
 import AccountList from "./AccountList.vue";
+import ConfirmDialog from "./ConfirmDialog.vue";
 import { store } from "../store.js";
 
 export default {
@@ -29,7 +31,8 @@ export default {
   components: {
     AccountInfo,
     AccountNew,
-    AccountList
+    AccountList,
+    ConfirmDialog
   },
   mounted() {
     this.hasAcct()
