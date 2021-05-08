@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-confirm center active" v-if="isShow">
+  <div class="dialog-confirm center" :class="{'active': isShow}">
     <div class="">
       <font-awesome-icon icon="exclamation-circle" style="font-size:3.2em;" />
     </div>
@@ -26,7 +26,7 @@ export default {
   name: "ConfirmDialog",
   data() {
     return {
-      isShow: true,
+      isShow: false,
       isConfirm: '',
       acctId: ''
     }
