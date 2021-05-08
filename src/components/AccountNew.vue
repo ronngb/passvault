@@ -15,9 +15,8 @@
 
     <form class="acct-new__form ">
       <!-- Website address Start -->
-      <div class="acct-new__input col-8 col-md-5">
+      <div class="form-group acct-new_input col-11 col-md-5">
         <label>Website address</label>
-        <!-- TODO:Make it longer with border with rounded corner -->
         <input type="text" @blur="autoCorrect()" v-model="inputForm.url"
                :class="{'form-control':true, 'is-invalid': errors[0]}"
                id="website">
@@ -25,8 +24,8 @@
           Your website address is required.
         </div>
       </div>
-      <!-- Username Start -->
-      <div class="acct-new__input col-8 col-md-5">
+
+      <div class="form-group acct-new_input col-11 col-md-5">
         <label>Username</label>
         <input type="text" v-model="inputForm.username"
                :class="{'form-control':true, 'is-invalid': errors[1]}"
@@ -35,32 +34,26 @@
           Your username is required.
         </div>
       </div>
-      <!-- Password Start -->
-      <div class="acct-new__input col-8 col-md-5">
+
+      <div class="form-group acct-new_input">
         <label>Password</label>
-        <div class="form-row mx-0 align-items-center flex-row-reverse">
-          <!-- ERROR: Still has a problem regarding on checkbox position -->
-          <input :type="inputType" v-model="inputForm.password"
-                 :class="{'form-control':true, 'is-invalid': errors[2]}"
-                 id="password">
-          <div class="invalid-feedback">
-            Your password is required.
-          </div>
-          <!-- <input class="form-check-input" type="checkbox"> -->
-          <div @click="showPassword">
-            <font-awesome-icon v-if="!isShow" icon="eye" />
-            <font-awesome-icon v-if="isShow" icon="eye-slash" class />
-          </div>
-          <!-- <div class="col-6 col-md-3">            
-          </div>
-          <div class="col-2">
-            <div class="form-check form-check-inline">              
+        <div class="form-row align-items-center">
+          <div class="form-group pr-1 col-11 col-md-5 ">
+            <input :type="inputType" v-model="inputForm.password"
+                   :class="{'form-control':true, 'is-invalid': errors[2]}"
+                   id="password">
+            <div class="invalid-feedback">
+              Your password is required.
             </div>
-          </div> -->
+          </div>
+          <div class="form-group col-1 col-md-1" :class="{'mb-5': errors[2]}">
+            <font-awesome-icon @click="showPassword" :icon="isShow" />
+          </div>
         </div>
       </div>
+
       <!-- It has to be natural gutter for every div tag -->
-      <div class="acct-new__button">
+      <div class="acct-new_button">
         <button @click="submitForm()" type="button" class="btn mr-1">
           Save
         </button>
@@ -82,7 +75,7 @@ export default {
     return {
       inputForm: { url: '', username: '', password: '' },
       errors: [],
-      isShow: '',
+      isShow: 'eye',
       inputType: 'password'
     }
   },
@@ -104,7 +97,7 @@ export default {
         this.inputForm.url = strCont.concat(this.inputForm.url)
     },
     showPassword() {
-      this.isShow = !this.isShow
+      this.isShow = this.isShow === 'eye' ? 'eye-slash' : 'eye'
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
     },
     clear() {
@@ -120,8 +113,9 @@ export default {
 /* #acct-new {
   padding: 3rem 3rem;
 } */
-.acct-new__input {
-  padding: 0rem !important;
+.acct-new_input {
+  padding-left: 0px !important;
+  padding-right: 5px !important;
   margin: 2.375rem 0rem;
 }
 
@@ -135,7 +129,7 @@ export default {
   border-radius: 5px;
 }
 
-.acct-new__button button {
+.acct-new_button button {
   border: 1px solid #dee2e6;
   border-radius: 5px;
   margin-top: 2rem;
