@@ -73,11 +73,7 @@
             </div>
           </div>
           <div class="col-2">
-            <div @click="showPassword" class="form-check">
-              <!-- BUGS -->
-              <font-awesome-icon v-if="!isShow" icon="eye" />
-              <font-awesome-icon v-if="isShow" icon="eye-slash" class />
-            </div>
+            <font-awesome-icon @click="showPassword" :icon="isIcon" />
           </div>
           <div v-if="!isEdit" class="col-4">
             <button :disabled="isPass"
@@ -117,8 +113,8 @@ export default {
       isPass: false,
       isUser: false,
       isEdit: false,
-      isShow: false,
       isError: false,
+      isIcon: 'eye',
       inputForm: { username: '', password: '' },
       inputType: 'password',
       hasUsername: ''
@@ -161,7 +157,7 @@ export default {
       // this.$emit('fetch')
     },
     showPassword() {
-      this.isShow = !this.isShow
+      this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye'
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
     },
     resetData() {

@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="form-group col-1 col-md-1" :class="{'mb-5': errors[2]}">
-            <font-awesome-icon @click="showPassword" :icon="isShow" />
+            <font-awesome-icon @click="showPassword" :icon="isIcon" />
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default {
     return {
       inputForm: { url: '', username: '', password: '' },
       errors: [],
-      isShow: 'eye',
+      isIcon: 'eye',
       isDisable: '',
       inputType: 'password'
     }
@@ -99,7 +99,7 @@ export default {
         this.inputForm.url = strCont.concat(this.inputForm.url)
     },
     showPassword() {
-      this.isShow = this.isShow === 'eye' ? 'eye-slash' : 'eye'
+      this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye'
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
     },
     cancelForm() {
