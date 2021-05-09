@@ -142,11 +142,12 @@ export default {
 
 @media (max-width: 768px) {
   #acct-new {
-    padding: 1.5rem 1.5rem;
+    padding: 1.5rem 0.5rem;
   }
 
-  .form-check-input {
-    left: 17rem;
+  .acct-new_button {
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

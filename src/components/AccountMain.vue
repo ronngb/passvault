@@ -59,4 +59,10 @@ export default {
 #acct-main {
   padding: 3rem 3rem;
 }
+
+@media (max-width: 768px) {
+  #acct-main {
+    padding: 1.5rem 1.5rem;
+  }
+}
 </style>
