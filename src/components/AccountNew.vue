@@ -24,7 +24,6 @@
           Your website address is required.
         </div>
       </div>
-
       <div class="form-group acct-new_input col-11 col-md-5">
         <label>Username</label>
         <input type="text" v-model="inputForm.username"
@@ -34,7 +33,6 @@
           Your username is required.
         </div>
       </div>
-
       <div class="form-group acct-new_input">
         <label>Password</label>
         <div class="form-row align-items-center">
@@ -51,13 +49,13 @@
           </div>
         </div>
       </div>
-
       <!-- It has to be natural gutter for every div tag -->
       <div class="acct-new_button">
         <button @click="submitForm()" type="button" class="btn mr-1">
           Save
         </button>
-        <button :disabled="isDisable == true" type="button" class="btn ml-1">
+        <button @click="cancelForm()" :disabled="isDisable" type="button"
+                class="btn ml-1">
           Cancel
         </button>
       </div>
@@ -76,8 +74,12 @@ export default {
       inputForm: { url: '', username: '', password: '' },
       errors: [],
       isShow: 'eye',
+      isDisable: '',
       inputType: 'password'
     }
+  },
+  mounted() {
+    this.isDisable = store.state.acctData.length == 0 ? true : false
   },
   methods: {
     submitForm() {
@@ -99,6 +101,10 @@ export default {
     showPassword() {
       this.isShow = this.isShow === 'eye' ? 'eye-slash' : 'eye'
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
+    },
+    cancelForm() {
+      this.$emit('update');
+      this.clear()
     },
     clear() {
       for (let input in this.inputForm)
