@@ -78,7 +78,7 @@
         </div>
       </div>
       <!--  -->
-      <div v-if="isEdit" class="acct-new__button">
+      <div v-if="isEdit" class="acct-edit_buttons">
         <button @click="editAcct(info.id)" type="button"
                 class="btn mr-1">Save</button>
         <button @click="onEdit(info.id)" type="button"
@@ -170,6 +170,13 @@ export default {
 .acct-info_date > p {
   font-size: 0.8rem;
   margin-bottom: 0.25rem;
+}
+
+.acct-edit_buttons > button {
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  margin-top: 2rem;
+  min-width: 100px;
 }
 
 @media (max-width: 768px) {
