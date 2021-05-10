@@ -1,7 +1,7 @@
 <template>
   <!-- Need to change the attr. ID, Class, name conflict(acct-info) -->
   <div id="acct-info">
-    <div class="acct-info__header d-lg-flex align-items-center">
+    <div class="acct-info_header d-lg-flex align-items-center">
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
         <font-awesome-icon icon="globe" class="mr-2" />
@@ -27,8 +27,7 @@
     <!-- Line Seperator -->
     <!-- Website address Start -->
     <div class="mb-3">
-      <label class="col-form-label">website
-        address</label>
+      <label class="col-form-label">website address</label>
       <div>
         <a :href="info.url" style="font-size: 15px">{{ info.url }}</a>
       </div>
@@ -37,52 +36,45 @@
     <!-- Website address End -->
     <form class="acct-info__form">
       <!-- Username Start -->
-      <div class="mb-3">
-        <label class="label">Username</label>
-        <div class="form-row">
-          <div class="col-8 col-md-5">
-            <input type="text" :readonly="!isEdit"
-                   :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
-                   @input="$emit('update',[$event.target]),
+      <div class="form-row">
+        <div class="form-group col-8 col-md-5">
+          <label>Username</label>
+          <input type="text" :readonly="!isEdit"
+                 :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
+                 @input="$emit('update',[$event.target]),
                    (inputForm.username = $event.target.value)"
-                   :value="info.username" :placeholder="hasUsername"
-                   id="username" />
-          </div>
-          <div v-if="!isEdit" class="col-4 col-md-5 align-self-center">
-            <button :disabled="isUser"
-                    @click="toClipboard(info.username, 'isUser')" type="button"
-                    class="btn btn-light px-lg-5">
-              <span v-if="isUser" class="text-muted">Copied!</span>
-              <span v-if="!isUser" class="text-muted">Copy</span>
-            </button>
-          </div>
+                 :value="info.username" :placeholder="hasUsername"
+                 id="username" />
+        </div>
+        <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
+          <button :disabled="isUser"
+                  @click="toClipboard(info.username, 'isUser')" type="button"
+                  class="btn btn-light px-lg-5">
+            <span v-if="isUser" class="text-muted">Copied!</span>
+            <span v-if="!isUser" class="text-muted">Copy</span>
+          </button>
         </div>
       </div>
       <!-- Password Start -->
-      <div class="mb-3">
-        <label class="label">Password</label>
-        <div class="form-row align-items-center">
-          <div class="col-6 col-md-3">
-            <input :type="inputType" :readonly="!isEdit"
-                   :class="{'is-invalid': true,'form-control-plaintext': !isEdit, 'form-control': isError}"
-                   @input="$emit('update',[$event.target]),
+      <div class="form-row">
+        <div class="form-group col-8 col-md-5">
+          <label>Password</label>
+          <input :type="inputType" :readonly="!isEdit"
+                 :class="{'is-invalid': isError,'form-control-plaintext': !isEdit, 'form-control': isEdit}"
+                 @input="$emit('update',[$event.target]),
                    (inputForm.password = $event.target.value)"
-                   :value="info.password" id="password" />
-            <div v-if="isEdit && isError" class="invalid-feedback">
-              Your password is required.
-            </div>
+                 :value="info.password" id="password" />
+          <div v-if="isEdit && isError" class="invalid-feedback">
+            Your password is required.
           </div>
-          <div class="col-2">
-            <font-awesome-icon @click="showPassword" :icon="isIcon" />
-          </div>
-          <div v-if="!isEdit" class="col-4">
-            <button :disabled="isPass"
-                    @click="toClipboard(info.password, 'isPass')" type="button"
-                    class="btn btn-light px-lg-5">
-              <span v-if="isPass" class="text-muted">Copied!</span>
-              <span v-if="!isPass" class="text-muted">Copy</span>
-            </button>
-          </div>
+        </div>
+        <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
+          <button :disabled="isPass"
+                  @click="toClipboard(info.password, 'isPass')" type="button"
+                  class="btn btn-light px-lg-5">
+            <span v-if="isPass" class="text-muted">Copied!</span>
+            <span v-if="!isPass" class="text-muted">Copy</span>
+          </button>
         </div>
       </div>
       <!--  -->
@@ -94,7 +86,7 @@
       </div>
     </form>
     <hr class="mx-0" style="width:40px" />
-    <div class="acct-info__date">
+    <div class="acct-info_date">
       <p>Created: {{ info.created }}</p>
       <p>Last modified: {{ info.last_modified }}</p>
       <p>Last used: {{ info.last_used }}</p>
@@ -168,25 +160,21 @@ export default {
 </script>
 
 <style>
-/* #acct-info {
-  padding: 3rem 3rem;
-} */
-
-@media (max-width: 768px) {
-  #acct-info {
-    padding: 1.5rem 1.5rem;
-  }
-}
-
-.acct-info__header > button {
+.acct-info_header > button {
   border: none;
   border-radius: 2px;
   color: #343a40;
   background-color: #f8f9fa;
 }
 
-.acct-info__date > p {
+.acct-info_date > p {
   font-size: 0.8rem;
   margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  #acct-info {
+    padding: 1.5rem 0.5rem;
+  }
 }
 </style>
