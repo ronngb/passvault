@@ -14,7 +14,7 @@
         <span class="text-muted">Edit</span>
       </button>
       <button @click="removeAcct(info.id)" type="button"
-              class="btn btn-default mx-1">
+              class="btn btn-default btn-light mx-1">
         <font-awesome-icon icon="trash" class="mr-md-1" />
         <span class="text-muted">Remove</span>
       </button>
@@ -44,6 +44,7 @@
           <button :disabled="isUser"
                   @click="toClipboard(info.username, 'isUser')" type="button"
                   class="btn btn-default btn-light px-lg-4">
+            <font-awesome-icon icon="copy" class="mr-1" />
             <span v-if="isUser" class="text-muted">Copied!</span>
             <span v-if="!isUser" class="text-muted">Copy</span>
           </button>
@@ -66,6 +67,7 @@
           <button :disabled="isPass"
                   @click="toClipboard(info.password, 'isPass')" type="button"
                   class="btn btn-default btn-light px-lg-4">
+            <font-awesome-icon icon="copy" class="mr-1" />
             <span v-if="isPass" class="text-muted">Copied!</span>
             <span v-if="!isPass" class="text-muted">Copy</span>
           </button>
@@ -73,9 +75,9 @@
       </div>
       <div v-if="isEdit" class="acct-edit_buttons">
         <button @click="editAcct(info.id)" type="button"
-                class="btn btn-default mr-1">Save</button>
+                class="btn btn-default btn-light mr-1">Save</button>
         <button @click="onEdit(info.id)" type="button"
-                class="btn btn-default ml-1">Cancel</button>
+                class="btn btn-default btn-light ml-1">Cancel</button>
       </div>
     </form>
     <hr class="mx-0" style="width:40px" />
@@ -166,8 +168,6 @@ export default {
 }
 
 .acct-edit_buttons > button {
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
   margin-top: 2rem;
   min-width: 100px;
 }
