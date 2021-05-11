@@ -9,18 +9,17 @@
       </h4>
 
       <button v-if="!isEdit" @click="onEdit(info.id)" type="button"
-              class="btn mx-1">
+              class="btn btn-default btn-light mx-1">
         <font-awesome-icon icon="pencil-alt" class="mr-md-1" />
         <span class="text-muted">Edit</span>
       </button>
-      <button @click="removeAcct(info.id)" type="button" class="btn mx-1">
+      <button @click="removeAcct(info.id)" type="button"
+              class="btn btn-default mx-1">
         <font-awesome-icon icon="trash" class="mr-md-1" />
         <span class="text-muted">Remove</span>
       </button>
     </div>
-    <!-- Header End -->
     <hr />
-    <!-- Line Seperator -->
     <!-- Website address Start -->
     <div class="mb-3">
       <label class="col-form-label">website address</label>
@@ -29,7 +28,6 @@
       </div>
     </div>
     <!-- TODO: Prob. in column  -->
-    <!-- Website address End -->
     <form class="acct-info__form">
       <!-- Username Start -->
       <div class="form-row">
@@ -45,7 +43,7 @@
         <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
           <button :disabled="isUser"
                   @click="toClipboard(info.username, 'isUser')" type="button"
-                  class="btn btn-light px-lg-5">
+                  class="btn btn-default btn-light px-lg-4">
             <span v-if="isUser" class="text-muted">Copied!</span>
             <span v-if="!isUser" class="text-muted">Copy</span>
           </button>
@@ -67,18 +65,17 @@
         <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
           <button :disabled="isPass"
                   @click="toClipboard(info.password, 'isPass')" type="button"
-                  class="btn btn-light px-lg-5">
+                  class="btn btn-default btn-light px-lg-4">
             <span v-if="isPass" class="text-muted">Copied!</span>
             <span v-if="!isPass" class="text-muted">Copy</span>
           </button>
         </div>
       </div>
-      <!--  -->
       <div v-if="isEdit" class="acct-edit_buttons">
         <button @click="editAcct(info.id)" type="button"
-                class="btn mr-1">Save</button>
+                class="btn btn-default mr-1">Save</button>
         <button @click="onEdit(info.id)" type="button"
-                class="btn ml-1">Cancel</button>
+                class="btn btn-default ml-1">Cancel</button>
       </div>
     </form>
     <hr class="mx-0" style="width:40px" />
@@ -156,15 +153,12 @@ export default {
 </script>
 
 <style>
-.acct-info_header button {
+/* .acct-info_header button {
   border: 1px solid #dee2e6;
   border-radius: 10px;
   color: #343a40;
   background-color: #f8f9fa;
-  /* background: #111;
-  color: #f5f5f5;
-  border: 2px solid #111;*/
-}
+} */
 
 .acct-info_date > p {
   font-size: 0.8rem;
@@ -176,6 +170,13 @@ export default {
   border-radius: 5px;
   margin-top: 2rem;
   min-width: 100px;
+}
+
+.btn.btn-default {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  color: #343a40;
+  background-color: #f8f9fa;
 }
 
 @media (max-width: 768px) {
