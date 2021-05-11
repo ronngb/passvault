@@ -1,29 +1,25 @@
 <template>
   <!-- Need to change the attr. ID, Class, name conflict(acct-info) -->
   <div id="acct-info">
-    <div class="acct-info_header d-lg-flex align-items-center">
+    <div class="acct-info_header d-flex align-items-center">
       <!-- this line will new component will be place -->
       <h4 class="mr-auto mb-0">
         <font-awesome-icon icon="globe" class="mr-2" />
         {{ info.domain }}
       </h4>
-      <!-- This <hr> will appear in mobile -->
-      <hr class="d-block d-lg-none" />
 
       <button v-if="!isEdit" @click="onEdit(info.id)" type="button"
               class="btn mx-1">
-        <span class="text-muted">
-          <font-awesome-icon icon="pencil-alt" class="mr-1" />Edit
-        </span>
+        <font-awesome-icon icon="pencil-alt" class="mr-md-1" />
+        <span class="text-muted">Edit</span>
       </button>
       <button @click="removeAcct(info.id)" type="button" class="btn mx-1">
-        <span class="text-muted">
-          <font-awesome-icon icon="trash" class="mr-1" />Remove
-        </span>
+        <font-awesome-icon icon="trash" class="mr-md-1" />
+        <span class="text-muted">Remove</span>
       </button>
     </div>
     <!-- Header End -->
-    <hr class="d-none d-lg-block" />
+    <hr />
     <!-- Line Seperator -->
     <!-- Website address Start -->
     <div class="mb-3">
@@ -160,11 +156,14 @@ export default {
 </script>
 
 <style>
-.acct-info_header > button {
-  border: none;
-  border-radius: 2px;
+.acct-info_header button {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
   color: #343a40;
   background-color: #f8f9fa;
+  /* background: #111;
+  color: #f5f5f5;
+  border: 2px solid #111;*/
 }
 
 .acct-info_date > p {
@@ -182,6 +181,9 @@ export default {
 @media (max-width: 768px) {
   #acct-info {
     padding: 1.5rem 0.5rem;
+  }
+  .acct-info_header button > span {
+    display: none;
   }
 }
 </style>
