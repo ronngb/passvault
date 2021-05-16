@@ -1,19 +1,19 @@
 <template>
-  <nav id="acct-list" class="col-lg-3 col-sm-4">
-    <div class="acct-list__header d-flex align-items-center">
-      <span class="pl-2">Sort by:</span>
-      <span class="">
+  <nav id="acct-list" class="d-flex flex-column col-lg-3 col-sm-4">
+    <!-- header -->
+    <div class="acct-list_header d-flex align-items-center px-2">
+      <span>Sort by:</span>
+      <span>
         <select v-model="sortBy"
-                class="custom-select custom-select-sm border-0 bg-light">
+                class="custom-select custom-select-sm border-0">
           <option @click="sortAcct(sortBy)">Name (A-Z)</option>
           <option @click="sortAcct(sortBy)">Name (Z-A)</option>
         </select>
       </span>
-      <span class="ml-auto mr-2">{{ totalAcct }} logins</span>
+      <span class="ml-auto">{{ totalAcct }} logins</span>
     </div>
     <!-- List acct. -->
-    <div id="acct__list-item" class="d-flex flex-column ">
-      <!-- TODO: only border bottom is present -->
+    <div id="acct_list-item" class="d-flex flex-column ">
       <ol id="acct-lists" class="list-group bg-light">
         <li class="acct-item d-flex justify-content-start"
             v-for="(list, index) in acctList.acctData" :key="list.id"
@@ -25,9 +25,9 @@
             <span class="text-muted">{{ hasUsername(list.username) }}</span>
           </div>
         </li>
-
       </ol>
     </div>
+    <!-- button -->
     <div class="new-acct p-3">
       <button @click="$emit('createAcct')" type="button"
               class="btn btn-secondary btn-block btn-sm">
@@ -77,38 +77,24 @@ export default {
 };
 </script>
 
-
 <style scoped>
-@media (max-width: 768px) {
-  #acct-list {
-    height: 100vh;
-    position: absolute;
-    background-color: #fff;
-    z-index: 100;
-  }
-}
-
 #acct-list {
   height: calc(100vh - 60px);
-  padding: 0;
-  border-left: 1px solid #dee2e6;
+  padding: 0px;
   border-right: 1px solid #dee2e6;
 }
 
-.acct-list__header {
+.acct-list_header {
   border-bottom: 1px solid #dee2e6;
 }
 
-.acct-list__header > span {
+.acct-list_header > span {
   font-size: 0.8rem;
   color: #6c757d;
 }
-#acct__list-item {
-  height: 484px;
-}
 
-#acct__list-item ol {
-  max-height: 484px;
+#acct_list-item {
+  flex: 1;
   overflow: auto;
 }
 
@@ -124,15 +110,16 @@ export default {
 }
 
 .new-acct {
-  position: relative;
-  border-top: 1px solid #dee2e6;
-  border-right: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
-  border-right: 0px;
+  border: 1px #dee2e6;
+  border-style: solid none;
 }
 
-.list-group-item {
-  border: 0px;
-  border-bottom: 1px solid #dee2e6;
+@media (max-width: 768px) {
+  #acct-list {
+    height: 100vh;
+    position: absolute;
+    background-color: #fff;
+    z-index: 100;
+  }
 }
 </style>
