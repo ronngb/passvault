@@ -1,61 +1,53 @@
 <template>
-  <div class="dialog-confirm center" :class="{'active': isShow}">
+  <div class="dialog-confirm center" :class="{ active: isShow }">
     <div class="">
-      <font-awesome-icon icon="exclamation-circle" style="font-size:3.2em;" />
+      <font-awesome-icon icon="exclamation-circle" style="font-size: 3.2em" />
     </div>
-    <div class="dialog-title">
-      Remove this Account?
-    </div>
-    <div class="dialog-description">
-      This action cannot be undone.
-    </div>
+    <div class="dialog-title">Remove this Account?</div>
+    <div class="dialog-description">This action cannot be undone.</div>
     <div class="confirm-btn">
-      <button type="button" @click="isConfirm = true">
-        Save
-      </button>
-      <button type="button" @click="isConfirm = false">
-        Cancel
-      </button>
+      <button type="button" @click="isConfirm = true">Save</button>
+      <button type="button" @click="isConfirm = false">Cancel</button>
     </div>
   </div>
 </template>
 <script>
-import { store } from "../store.js";
+import { store } from '../../store.js';
 
 export default {
-  name: "ConfirmDialog",
+  name: 'ConfirmDialog',
   data() {
     return {
       isShow: false,
       isConfirm: '',
-      acctId: ''
-    }
+      acctId: '',
+    };
   },
   watch: {
     isConfirm(confirm) {
       if (confirm) {
-        store.removeAcct(this.acctId)
-        this.isShow = false
-        this.$emit('fetch')
-        this.isConfirm = ''
+        store.removeAcct(this.acctId);
+        this.isShow = false;
+        this.$emit('fetch');
+        this.isConfirm = '';
       } else {
-        this.isShow = false
-        this.isConfirm = ''
+        this.isShow = false;
+        this.isConfirm = '';
       }
-    }
+    },
   },
   created() {
     this.$EventBus.$on('removeAcct', (acctId) => {
-      this.removeAcct(acctId)
-    })
+      this.removeAcct(acctId);
+    });
   },
   methods: {
     removeAcct(acctId) {
-      this.isShow = true
-      this.acctId = acctId
-    }
-  }
-}
+      this.isShow = true;
+      this.acctId = acctId;
+    },
+  },
+};
 </script>
 
 <style>

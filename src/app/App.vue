@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <SearchBar />
+    <SearchItem />
     <div class="container-fluid">
       <AccountMain />
     </div>
@@ -8,13 +8,13 @@
 </template>
 <!-- eslint-disable -->
 <script>
-import SearchBar from "./components/SearchBar.vue";
-import AccountMain from "./components/AccountMain.vue";
+import SearchItem from './components/search/SearchItem.vue';
+import AccountMain from './components/AccountMain.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    SearchBar,
+    SearchItem,
     AccountMain,
   },
 };

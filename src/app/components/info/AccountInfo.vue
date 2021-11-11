@@ -8,13 +8,20 @@
         {{ info.domain }}
       </h4>
 
-      <button v-if="!isEdit" @click="onEdit(info.id)" type="button"
-              class="btn btn-default btn-light mx-1">
+      <button
+        v-if="!isEdit"
+        @click="onEdit(info.id)"
+        type="button"
+        class="btn btn-default btn-light mx-1"
+      >
         <font-awesome-icon icon="pencil-alt" class="mr-md-1" />
         <span class="text-muted">Edit</span>
       </button>
-      <button @click="removeAcct(info.id)" type="button"
-              class="btn btn-default btn-light mx-1">
+      <button
+        @click="removeAcct(info.id)"
+        type="button"
+        class="btn btn-default btn-light mx-1"
+      >
         <font-awesome-icon icon="trash" class="mr-md-1" />
         <span class="text-muted">Remove</span>
       </button>
@@ -33,17 +40,29 @@
       <div class="form-row">
         <div class="form-group col-8 col-md-5">
           <label>Username</label>
-          <input type="text" :readonly="!isEdit"
-                 :class="{'form-control-plaintext':!isEdit, 'form-control': isEdit}"
-                 @input="$emit('update',[$event.target]),
-                   (inputForm.username = $event.target.value)"
-                 :value="info.username" :placeholder="hasUsername"
-                 id="username" />
+          <input
+            type="text"
+            :readonly="!isEdit"
+            :class="{
+              'form-control-plaintext': !isEdit,
+              'form-control': isEdit,
+            }"
+            @input="
+              $emit('update', [$event.target]),
+                (inputForm.username = $event.target.value)
+            "
+            :value="info.username"
+            :placeholder="hasUsername"
+            id="username"
+          />
         </div>
         <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
-          <button :disabled="isUser"
-                  @click="toClipboard(info.username, 'isUser')" type="button"
-                  class="btn btn-default btn-light px-lg-4">
+          <button
+            :disabled="isUser"
+            @click="toClipboard(info.username, 'isUser')"
+            type="button"
+            class="btn btn-default btn-light px-lg-4"
+          >
             <font-awesome-icon icon="copy" class="mr-1" />
             <span v-if="isUser" class="text-muted">Copied!</span>
             <span v-if="!isUser" class="text-muted">Copy</span>
@@ -54,19 +73,32 @@
       <div class="form-row">
         <div class="form-group col-8 col-md-5">
           <label>Password</label>
-          <input :type="inputType" :readonly="!isEdit"
-                 :class="{'is-invalid': isError,'form-control-plaintext': !isEdit, 'form-control': isEdit}"
-                 @input="$emit('update',[$event.target]),
-                   (inputForm.password = $event.target.value)"
-                 :value="info.password" id="password" />
+          <input
+            :type="inputType"
+            :readonly="!isEdit"
+            :class="{
+              'is-invalid': isError,
+              'form-control-plaintext': !isEdit,
+              'form-control': isEdit,
+            }"
+            @input="
+              $emit('update', [$event.target]),
+                (inputForm.password = $event.target.value)
+            "
+            :value="info.password"
+            id="password"
+          />
           <div v-if="isEdit && isError" class="invalid-feedback">
             Your password is required.
           </div>
         </div>
         <div v-if="!isEdit" class="form-group col-4 col-md-5 align-self-end">
-          <button :disabled="isPass"
-                  @click="toClipboard(info.password, 'isPass')" type="button"
-                  class="btn btn-default btn-light px-lg-4">
+          <button
+            :disabled="isPass"
+            @click="toClipboard(info.password, 'isPass')"
+            type="button"
+            class="btn btn-default btn-light px-lg-4"
+          >
             <font-awesome-icon icon="copy" class="mr-1" />
             <span v-if="isPass" class="text-muted">Copied!</span>
             <span v-if="!isPass" class="text-muted">Copy</span>
@@ -74,13 +106,23 @@
         </div>
       </div>
       <div v-if="isEdit" class="acct-edit_buttons">
-        <button @click="editAcct(info.id)" type="button"
-                class="btn btn-default btn-light mr-1">Save</button>
-        <button @click="onEdit(info.id)" type="button"
-                class="btn btn-default btn-light ml-1">Cancel</button>
+        <button
+          @click="editAcct(info.id)"
+          type="button"
+          class="btn btn-default btn-light mr-1"
+        >
+          Save
+        </button>
+        <button
+          @click="onEdit(info.id)"
+          type="button"
+          class="btn btn-default btn-light ml-1"
+        >
+          Cancel
+        </button>
       </div>
     </form>
-    <hr class="mx-0" style="width:40px" />
+    <hr class="mx-0" style="width: 40px" />
     <div class="acct-info_date">
       <p>Created: {{ info.created }}</p>
       <p>Last modified: {{ info.last_modified }}</p>
@@ -90,10 +132,10 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import { store } from '../../../store.js';
 
 export default {
-  name: "AcctInfo",
+  name: 'AcctInfo',
   props: ['info'],
   data() {
     return {
@@ -104,53 +146,55 @@ export default {
       isIcon: 'eye',
       inputForm: { username: '', password: '' },
       inputType: 'password',
-      hasUsername: ''
-    }
+      hasUsername: '',
+    };
   },
 
   beforeUpdate() {
-    for (let input in this.inputForm)
-      this.inputForm[input] = this.info[input]
+    for (let input in this.inputForm) this.inputForm[input] = this.info[input];
   },
   watch: {
     info(newData, oldData) {
-      if (newData.id != oldData.id) this.resetData()
-      this.hasUsername = newData.username == '' ? '(no username)' : ''
-    }
+      if (newData.id != oldData.id) this.resetData();
+      this.hasUsername = newData.username == '' ? '(no username)' : '';
+    },
   },
   methods: {
     toClipboard(info, bool) {
-      this[bool] = true
-      navigator.clipboard.writeText(info)
-        .then(setTimeout(() => { this[bool] = false }, 4000))
+      this[bool] = true;
+      navigator.clipboard.writeText(info).then(
+        setTimeout(() => {
+          this[bool] = false;
+        }, 4000)
+      );
     },
     editAcct(acctId) {
       if (this.inputForm.password == '') {
-        this.isError = true
+        this.isError = true;
       } else {
-        store.editAcct(acctId, this.inputForm)
-        this.onEdit(acctId)
+        store.editAcct(acctId, this.inputForm);
+        this.onEdit(acctId);
       }
     },
     onEdit(acctId) {
-      this.isEdit = !this.isEdit
-      this.isError = false
-      this.$emit('fetch', store.getIndexOfAcct(acctId))
+      this.isEdit = !this.isEdit;
+      this.isError = false;
+      this.$emit('fetch', store.getIndexOfAcct(acctId));
     },
     removeAcct(acctId) {
       // place a condition that will return T or F base on the chosen event
-      this.$EventBus.$emit('removeAcct', acctId)
+      this.$EventBus.$emit('removeAcct', acctId);
       // store.removeAcct(acctId)
       // this.$emit('fetch')
     },
     showPassword() {
-      this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye'
-      this.inputType = this.inputType === 'password' ? 'text' : 'password'
+      this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye';
+      this.inputType = this.inputType === 'password' ? 'text' : 'password';
     },
     resetData() {
-      Object.assign(this.$data, this.$options.data())
-    }
-  }
+      Object.assign(this.$data, this.$options.data());
+    },
+  },
 };
 </script>
 

@@ -4,8 +4,10 @@
     <div class="acct-list_header d-flex align-items-center px-2">
       <span>Sort by:</span>
       <span>
-        <select v-model="sortBy"
-                class="custom-select custom-select-sm border-0">
+        <select
+          v-model="sortBy"
+          class="custom-select custom-select-sm border-0"
+        >
           <option @click="sortAcct(sortBy)">Name (A-Z)</option>
           <option @click="sortAcct(sortBy)">Name (Z-A)</option>
         </select>
@@ -13,12 +15,15 @@
       <span class="ml-auto">{{ totalAcct }} logins</span>
     </div>
     <!-- List acct. -->
-    <div id="acct_list-item" class="d-flex flex-column ">
+    <div id="acct_list-item" class="d-flex flex-column">
       <ol id="acct-lists" class="list-group bg-light">
-        <li class="acct-item d-flex justify-content-start"
-            v-for="(list, index) in acctList.acctData" :key="list.id"
-            @click="$emit('changeFocus', index), setFocus(list.id)"
-            :class="{'active': (list.id === focusId)}">
+        <li
+          class="acct-item d-flex justify-content-start"
+          v-for="(list, index) in acctList.acctData"
+          :key="list.id"
+          @click="$emit('changeFocus', index), setFocus(list.id)"
+          :class="{ active: list.id === focusId }"
+        >
           <font-awesome-icon icon="globe" class="align-self-center mr-3" />
           <div class="d-flex flex-column">
             <span>{{ list.domain }}</span>
@@ -29,8 +34,11 @@
     </div>
     <!-- button -->
     <div class="new-acct p-3">
-      <button @click="$emit('createAcct')" type="button"
-              class="btn btn-secondary btn-block btn-sm">
+      <button
+        @click="$emit('createAcct')"
+        type="button"
+        class="btn btn-secondary btn-block btn-sm"
+      >
         Create New Account
       </button>
     </div>
@@ -38,10 +46,10 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import { store } from '../../../store.js';
 
 export default {
-  name: "Acctlist",
+  name: 'Acctlist',
   props: ['acctList', 'setId'],
   data() {
     return {
@@ -51,28 +59,28 @@ export default {
     };
   },
   mounted() {
-    this.sortAcct(this.sortBy)
+    this.sortAcct(this.sortBy);
   },
   watch: {
     setId(acctId) {
-      this.focusId = acctId
-    }
+      this.focusId = acctId;
+    },
   },
   computed: {
     totalAcct() {
-      return this.acctList.acctData.length
+      return this.acctList.acctData.length;
     },
   },
   methods: {
     sortAcct(sort) {
-      store.sortAcct(sort)
+      store.sortAcct(sort);
     },
     setFocus(id) {
-      this.focusId = id
+      this.focusId = id;
     },
     hasUsername(username) {
-      return username == '' ? '(no username)' : username
-    }
+      return username == '' ? '(no username)' : username;
+    },
   },
 };
 </script>
