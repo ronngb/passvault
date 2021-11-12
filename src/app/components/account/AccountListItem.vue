@@ -1,0 +1,28 @@
+<template>
+	<li class="acct-item d-flex justify-content-start">
+		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
+		<div class="d-flex flex-column">
+			<span>{{ list.domain }}</span>
+			<span class="text-muted">
+				{{ hasUsername(list.username) }}
+			</span>
+		</div>
+	</li>
+	<!-- <li
+		class="acct-item d-flex justify-content-start"
+		v-for="(list, index) in acctList.acctData"
+		:key="list.id"
+		@click="$emit('changeFocus', index), setFocus(list.id)"
+		:class="{ active: list.id === focusId }"
+	>
+		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
+		<div class="d-flex flex-column">
+			<span>{{ list.domain }}</span>
+			<span class="text-muted">{{ hasUsername(list.username) }}</span>
+		</div>
+	</li> -->
+</template>
+
+<script></script>
+
+<style scoped></style>
