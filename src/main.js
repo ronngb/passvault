@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './app/App.vue';
+import { store } from './app/store/store';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,5 +32,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.prototype.$EventBus = new Vue();
 
 new Vue({
+  store,
   render: (h) => h(App),
 }).$mount('#app');
