@@ -1,17 +1,31 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { acctData } from '../data/acct.js';
+// TODO: rename acct to accounts
+import accounts from '../data/acct';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    acctData: [],
+    accounts: [],
   },
+
+  mutations: {
+    GET_ACCT_DATA: (state, payload) => {
+      state.accounts = payload;
+    },
+  },
+
+  actions: {
+    getAcctData: ({ commit }) => {
+      commit('GET_ACCT_DATA', accounts);
+    },
+  },
+
   getters: {
-    getAcctData: (state) => {
-      return (state.acctData = acctData);
+    acctItems: (state) => {
+      return state.accounts;
     },
   },
 });

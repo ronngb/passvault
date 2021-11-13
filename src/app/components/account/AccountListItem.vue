@@ -2,9 +2,10 @@
 	<li class="acct-item d-flex justify-content-start">
 		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
 		<div class="d-flex flex-column">
-			<span>{{ list.domain }}</span>
+			<span>{{ acctItem.domain }}</span>
 			<span class="text-muted">
-				{{ hasUsername(list.username) }}
+				{{ acctItem.username }}
+				<!-- {{ hasUsername(list.username) }} -->
 			</span>
 		</div>
 	</li>
@@ -23,6 +24,10 @@
 	</li> -->
 </template>
 
-<script></script>
+<script>
+export default {
+	props: ['acctItem'],
+};
+</script>
 
 <style scoped></style>

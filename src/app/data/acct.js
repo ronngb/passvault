@@ -1,4 +1,4 @@
-export const acctData = [
+export default [
     {
         id: 4,
         url: 'https://www.lazada.com.ph',
@@ -39,5 +39,4 @@ export const acctData = [
         last_modified: 'April, 19 2021',
         last_used: 'April, 19 2021',
     },
-
-]
+];
