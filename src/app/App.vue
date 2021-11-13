@@ -1,21 +1,26 @@
 <template>
   <div id="app">
-    <SearchItem />
-    <div class="container-fluid">
-      <AccountMain />
-    </div>
+    <header>
+      <SearchItem />
+    </header>
+    <main class="container-fluid">
+      <AccountList> </AccountList>
+      <!-- <AccountMain /> -->
+    </main>
   </div>
 </template>
 <!-- eslint-disable -->
 <script>
 import SearchItem from './components/search/SearchItem.vue';
 import AccountMain from './components/AccountMain.vue';
+import AccountList from './components/account/AccountList.vue';
 
 export default {
   name: 'App',
   components: {
     SearchItem,
     AccountMain,
+    AccountList,
   },
 };
 </script>

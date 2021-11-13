@@ -1,36 +1,31 @@
 <template>
+  <!-- TODO: possible to aside tag -->
+  <!-- TODO: add the vuex now -->
+  <!-- TODO: look in shoping-cart how they did loop in shopping-item -->
   <nav id="acct-list" class="d-flex flex-column col-lg-3 col-sm-4">
     <!-- header -->
     <div class="acct-list_header d-flex align-items-center px-2">
       <span>Sort by:</span>
       <span>
-        <select
-          v-model="sortBy"
-          class="custom-select custom-select-sm border-0"
-        >
-          <option @click="sortAcct(sortBy)">Name (A-Z)</option>
-          <option @click="sortAcct(sortBy)">Name (Z-A)</option>
+        <select class="custom-select custom-select-sm border-0">
+          <!--  <option @click="sortAcct(sortBy)">Name (A-Z)</option>
+          <option @click="sortAcct(sortBy)">Name (Z-A)</option> -->
+          <option v-for="sort in sorts" :key="sort" @click="sortAcct(sort)">
+            {{ sort }}
+          </option>
         </select>
       </span>
-      <span class="ml-auto">{{ totalAcct }} logins</span>
+      <span class="ml-auto">{{ acctCount }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct_list-item" class="d-flex flex-column">
-      <ol id="acct-lists" class="list-group bg-light">
-        <li
-          class="acct-item d-flex justify-content-start"
-          v-for="(list, index) in acctList.acctData"
-          :key="list.id"
-          @click="$emit('changeFocus', index), setFocus(list.id)"
-          :class="{ active: list.id === focusId }"
-        >
-          <font-awesome-icon icon="globe" class="align-self-center mr-3" />
-          <div class="d-flex flex-column">
-            <span>{{ list.domain }}</span>
-            <span class="text-muted">{{ hasUsername(list.username) }}</span>
-          </div>
-        </li>
-      </ol>
+      <ul id="acct-lists" class="list-group bg-light">
+        <AccountListItem
+          v-for="acctItem in acctItems"
+          :key="acctItem.id"
+          :acctItem="acctItem"
+        ></AccountListItem>
+      </ul>
     </div>
     <!-- button -->
     <div class="new-acct p-3">
@@ -46,20 +41,29 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import AccountListItem from './AccountListItem.vue';
 import { store } from '../../../store.js';
 
 export default {
   name: 'Acctlist',
   props: ['acctList', 'setId'],
+  components: {
+    AccountListItem,
+  },
   data() {
     return {
-      sortBy: 'Name (A-Z)',
+      // sortBy: 'Name (A-Z)',
+      sorts: ['Name (A-Z)', 'Name (Z-A)'],
       focusId: this.setId,
       isDisable: '',
     };
   },
+  created() {
+    this.$store.dispatch('getAcctData');
+  },
   mounted() {
-    this.sortAcct(this.sortBy);
+    // this.sortAcct(this.sortBy);
   },
   watch: {
     setId(acctId) {
@@ -67,8 +71,9 @@ export default {
     },
   },
   computed: {
-    totalAcct() {
-      return this.acctList.acctData.length;
+    ...mapGetters(['acctItems']),
+    acctCount() {
+      // return this.$store.getters.acctItems.length;
     },
   },
   methods: {
@@ -90,6 +95,9 @@ export default {
   height: calc(100vh - 60px);
   padding: 0px;
   border-right: 1px solid #dee2e6;
+}
+select {
+  outline: none;
 }
 
 .acct-list_header {
