@@ -1,4 +1,4 @@
-import { acctData } from './app/data/acct.js';
+import acctData from './app/data/acct.js';
 
 export const store = {
     state: {
