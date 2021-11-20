@@ -1,6 +1,7 @@
 <template>
+	<!-- BUGS: not in one row? try uing grid in <main> -->
 	<router-link
-		:to="'/account/d' + acctItem.id"
+		:to="'/account/' + acctItem.id"
 		tag="li"
 		class="acct-item d-flex justify-content-start"
 		active-class="active"

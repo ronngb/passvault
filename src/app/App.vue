@@ -6,6 +6,7 @@
     <main class="container-fluid">
       <AccountList> </AccountList>
       <!-- <AccountMain /> -->
+      <router-view></router-view>
     </main>
   </div>
 </template>

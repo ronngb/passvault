@@ -24,8 +24,6 @@ export const store = new Vuex.Store({
   },
 
   getters: {
-    acctItems: (state) => {
-      return state.accounts;
-    },
+    acctItems: (state) => state.accounts,
   },
 });
