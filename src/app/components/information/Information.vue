@@ -14,20 +14,19 @@
         @update="updateInfo"
         @fetch="hasAcct"
       />
-      <!-- <AccountNew v-if="isBool" @update="hasAcct" /> -->
     </div>
     <!-- <ConfirmDialog @fetch="hasAcct" /> -->
   </div>
 </template>
 <script>
-import AccountInfo from './info/AccountInfo.vue';
-import AccountNew from './info/AccountNew.vue';
-import AccountList from './account/AccountList.vue';
-import ConfirmDialog from './ConfirmDialog.vue';
-import { store } from '../../store.js';
+import AccountInfo from './AccountInfo.vue';
+import AccountNew from './AccountNew.vue';
+import AccountList from '../account/AccountList.vue';
+import ConfirmDialog from '../ConfirmDialog.vue';
+import { store } from '../../../store.js';
 
 export default {
-  name: 'AccountMain',
+  name: 'Information',
   data() {
     return {
       acctList: store.state,

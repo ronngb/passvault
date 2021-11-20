@@ -13,14 +13,14 @@
 <!-- eslint-disable -->
 <script>
 import SearchItem from './components/search/SearchItem.vue';
-import AccountMain from './components/AccountMain.vue';
+import Information from './components/information/Information.vue';
 import AccountList from './components/account/AccountList.vue';
 
 export default {
   name: 'App',
   components: {
     SearchItem,
-    AccountMain,
+    Information,
     AccountList,
   },
 };
