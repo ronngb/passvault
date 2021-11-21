@@ -7,7 +7,7 @@
     /> -->
   <div id="acct-main" class="">
     <h1>{{ $route.params.id }}</h1>
-    <AccountInfo
+    <DetailsForm
       v-if="!isBool"
       :info="getAccountById"
       @update="updateInfo"
@@ -17,7 +17,7 @@
   <!-- <ConfirmDialog @fetch="hasAcct" /> -->
 </template>
 <script>
-import AccountInfo from './AccountInfo.vue';
+import DetailsForm from './DetailsForm.vue';
 import AccountNew from './AccountNew.vue';
 import AccountList from '../account/AccountList.vue';
 import ConfirmDialog from '../ConfirmDialog.vue';
@@ -34,7 +34,7 @@ export default {
     };
   },
   components: {
-    AccountInfo,
+    DetailsForm,
     AccountNew,
     AccountList,
     ConfirmDialog,

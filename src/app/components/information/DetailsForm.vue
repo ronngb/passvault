@@ -135,7 +135,7 @@
 import { store } from '../../../store.js';
 
 export default {
-  name: 'AcctInfo',
+  name: 'DetailsForm',
   props: ['info'],
   data() {
     return {
