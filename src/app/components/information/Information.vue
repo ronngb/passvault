@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <!--  <AccountList
+  <!--  <AccountList
       :acct-list="acctList"
       :set-id="focusId"
       @changeFocus="hasAcct"
       @createAcct="isBool = true"
     /> -->
-    <div id="acct-main" class="col-md-7">
-      <h1>{{ $route.params.id }}</h1>
-      <AccountInfo
-        v-if="!isBool"
-        :info="getAccountById"
-        @update="updateInfo"
-        @fetch="hasAcct"
-      />
-    </div>
-    <!-- <ConfirmDialog @fetch="hasAcct" /> -->
+  <div id="acct-main" class="">
+    <h1>{{ $route.params.id }}</h1>
+    <AccountInfo
+      v-if="!isBool"
+      :info="getAccountById"
+      @update="updateInfo"
+      @fetch="hasAcct"
+    />
   </div>
+  <!-- <ConfirmDialog @fetch="hasAcct" /> -->
 </template>
 <script>
 import AccountInfo from './AccountInfo.vue';
@@ -49,9 +47,7 @@ export default {
       // return this.$store.getters.acctItems.length;
     },
     getAccountById() {
-      return this.$store.state.accounts.find(
-        (account) => account.id == this.$route.params.id
-      );
+      return this.$store.state.accounts.find((account) => account.id == 1);
     },
   },
   methods: {

@@ -2,7 +2,7 @@
   <!-- TODO: possible to aside tag -->
   <!-- TODO: add the vuex now -->
   <!-- TODO: look in shoping-cart how they did loop in shopping-item -->
-  <nav id="acct-list" class="d-flex flex-column col-lg-3 col-sm-4">
+  <nav id="acct-list" class="d-flex flex-column">
     <!-- header -->
     <div class="acct-list_header d-flex align-items-center px-2">
       <span>Sort by:</span>

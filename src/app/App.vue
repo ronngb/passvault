@@ -3,10 +3,10 @@
     <header>
       <SearchItem />
     </header>
-    <main class="container-fluid">
-      <AccountList> </AccountList>
+    <main class="main-passvault">
+      <AccountList />
       <!-- <AccountMain /> -->
-      <router-view></router-view>
+      <Information />
     </main>
   </div>
 </template>
@@ -26,11 +26,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: SF Pro Display;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.main-passvault {
+  display: grid;
+  grid-template-columns: 25% 1fr;
 }
 </style>
