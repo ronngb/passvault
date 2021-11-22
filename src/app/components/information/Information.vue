@@ -5,12 +5,12 @@
       @changeFocus="hasAcct"
       @createAcct="isBool = true"
     /> -->
+  <!-- TODO: Create New Component for creating a new account if there's none -->
   <div id="acct-main" class="">
     <!-- REMIND: This maybe place for router-view -->
-    <!-- <h1>{{ $route.params.id }}</h1> -->
     <!-- <router-view></router-view> -->
     <DetailsForm
-      v-if="!isBool"
+      v-if="hasAccounts"
       :info="getAccountById"
       @update="updateInfo"
       @fetch="hasAcct"
@@ -31,9 +31,7 @@ export default {
     return {
       acctList: store.state,
       acctInfo: {},
-      isBool: '',
       focusId: 1,
-      test: '',
     };
   },
   components: {
@@ -46,8 +44,8 @@ export default {
     // this.hasAcct();
   },
   computed: {
-    acctCount() {
-      // return this.$store.getters.acctItems.length;
+    hasAccounts() {
+      return this.$store.getters.acctItems.length;
     },
     getAccountById() {
       return this.$store.state.accounts.find((account) => {
