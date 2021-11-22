@@ -6,7 +6,9 @@
       @createAcct="isBool = true"
     /> -->
   <div id="acct-main" class="">
-    <h1>{{ $route.params.id }}</h1>
+    <!-- REMIND: This maybe place for router-view -->
+    <!-- <h1>{{ $route.params.id }}</h1> -->
+    <!-- <router-view></router-view> -->
     <DetailsForm
       v-if="!isBool"
       :info="getAccountById"
@@ -31,6 +33,7 @@ export default {
       acctInfo: {},
       isBool: '',
       focusId: 1,
+      test: '',
     };
   },
   components: {
@@ -47,7 +50,11 @@ export default {
       // return this.$store.getters.acctItems.length;
     },
     getAccountById() {
-      return this.$store.state.accounts.find((account) => account.id == 1);
+      return this.$store.state.accounts.find((account) => {
+        return (
+          account.id == (this.$route.params.id ? this.$route.params.id : 1)
+        );
+      });
     },
   },
   methods: {
