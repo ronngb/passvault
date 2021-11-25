@@ -15,11 +15,17 @@ export const store = new Vuex.Store({
     GET_ACCT_DATA: (state, payload) => {
       state.accounts = payload;
     },
+    STORE_ACCT: (state, payload) => {
+      state.accounts.push(payload);
+    },
   },
 
   actions: {
     getAcctData: ({ commit }) => {
       commit('GET_ACCT_DATA', accounts);
+    },
+    storeAccount: ({ commit }, account) => {
+      commit('STORE_ACCT', account);
     },
   },
 
