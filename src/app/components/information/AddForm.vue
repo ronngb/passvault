@@ -20,7 +20,7 @@
         <label>Website address</label>
         <input
           type="text"
-          @blur="autoAppend()"
+          @blur="autoAppend"
           v-model="inputForm.url"
           :class="{ 'form-control': true, 'is-invalid': errors[0] }"
           id="website"
@@ -59,11 +59,9 @@
       <!-- It has to be natural gutter for every div tag -->
       <!-- BUTTON START -->
       <div class="acct-new_button">
-        <button @click="submitForm()" type="button" class="btn mr-1">
-          Save
-        </button>
+        <button @click="submitForm" type="button" class="btn mr-1">Save</button>
         <button
-          @click="cancelForm()"
+          @click="cancelForm"
           :disabled="isDisable"
           type="button"
           class="btn ml-1"
@@ -85,22 +83,28 @@ export default {
   data() {
     return {
       inputForm: { url: '', username: '', password: '' },
-      accountObj: {
-        id: '',
-        domain: '',
-        created: '',
-        last_modified: '',
-        last_used: '',
-      },
       errors: [],
       isIcon: 'eye',
       isDisable: '',
       inputType: 'password',
-      currentID: 5,
+      currentId: '',
     };
   },
+  created() {
+    this.currentId = this.$store.getters.accountCount;
+  },
   mounted() {
-    this.isDisable = store.state.acctData.length == 0 ? true : false;
+    // this.isDisable = store.state.acctData.length == 0 ? true : false;
+  },
+  computed: {
+    // getCurrentId() {
+    //   return Math.max(
+    //     ...this.$store.state.accounts.map((account) => account.id)
+    //   );
+    // },
+    getDomainName() {
+      return this.inputForm.url.replace(/(http(s?)):\/\/|ww(w|3)./gi, '');
+    },
   },
   methods: {
     submitForm() {
@@ -109,27 +113,20 @@ export default {
       Object.values(this.inputForm).forEach((obj) => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       });
-      // LAST CHECKPOINT - HI/LO-GOOD still need to implement
-      // Before proceding commit 1st
-      // TODO: if account.length is != 0 get all the ID and highest number set that in  a variable
 
       if (!this.errors.includes(1)) {
-        this.accountObj.id = this.currentID + 1;
-        this.accountObj.domain = this.getDomainName(this.inputForm.url);
-        this.accountObj.created = dayjs().format('MMMM, D YYYY');
-        this.accountObj.last_modified = dayjs().format('MMMM, D YYYY');
-        this.accountObj.last_used = dayjs().format('MMMM, D YYYY');
+        const accountObj = {
+          ...this.inputForm,
+          id: this.generateId(),
+          domain: this.getDomainName,
+        };
 
-        this.$store.dispatch(
-          'storeAccount',
-          Object.assign(this.accountObj, this.inputForm)
-        );
+        this.$store.dispatch('storeAccount', accountObj);
         this.clearForm();
       }
     },
-    getDomainName(url) {
-      const regex = /(http(s?)):\/\/|ww(w|3)./gi;
-      return url.replace(regex, '');
+    generateId() {
+      return (this.currentId += 1);
     },
     autoAppend() {
       const scheme = 'https://';
@@ -146,7 +143,7 @@ export default {
       this.clearForm();
     },
     clearForm() {
-      for (let input in this.inputForm) this.inputForm[input] = '';
+      for (let input in this.inputForm) delete this.inputForm[input];
     },
   },
 };
