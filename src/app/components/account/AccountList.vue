@@ -1,36 +1,32 @@
 <template>
   <!-- TODO: possible to aside tag -->
-  <!-- TODO: add the vuex now -->
-  <!-- TODO: look in shoping-cart how they did loop in shopping-item -->
   <nav id="acct-list" class="d-flex flex-column">
     <!-- header -->
     <div class="acct-list_header d-flex align-items-center px-2">
       <span>Sort by:</span>
       <span>
         <select class="custom-select custom-select-sm border-0">
-          <!--  <option @click="sortAcct(sortBy)">Name (A-Z)</option>
-          <option @click="sortAcct(sortBy)">Name (Z-A)</option> -->
           <option v-for="sort in sorts" :key="sort" @click="sortAcct(sort)">
             {{ sort }}
           </option>
         </select>
       </span>
-      <span class="ml-auto">{{ acctCount }} logins</span>
+      <span class="ml-auto">{{ accountCount }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct_list-item" class="d-flex flex-column">
       <ul id="acct-lists" class="list-group bg-light">
         <AccountListItem
-          v-for="acctItem in acctItems"
-          :key="acctItem.id"
-          :acctItem="acctItem"
+          v-for="account in accounts"
+          :key="account.id"
+          :acctItem="account"
         ></AccountListItem>
       </ul>
     </div>
     <!-- button -->
     <div class="new-acct p-3">
       <button
-        @click="$emit('createAcct')"
+        @click="$router.push('/account/add')"
         type="button"
         class="btn btn-secondary btn-block btn-sm"
       >
@@ -53,13 +49,13 @@ export default {
   },
   data() {
     return {
-      // sortBy: 'Name (A-Z)',
       sorts: ['Name (A-Z)', 'Name (Z-A)'],
       focusId: this.setId,
       isDisable: '',
     };
   },
   created() {
+    // TODO: move this call on app.vue
     this.$store.dispatch('getAcctData');
   },
   mounted() {
@@ -71,10 +67,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['acctItems']),
-    acctCount() {
-      // return this.$store.getters.acctItems.length;
-    },
+    ...mapGetters(['accounts', 'accountCount']),
   },
   methods: {
     sortAcct(sort) {
@@ -83,6 +76,7 @@ export default {
     setFocus(id) {
       this.focusId = id;
     },
+    // REMIND: this function has been place to AccountListItem
     hasUsername(username) {
       return username == '' ? '(no username)' : username;
     },
