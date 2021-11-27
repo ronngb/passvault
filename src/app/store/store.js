@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import dayjs from 'dayjs';
 
 // TODO: rename acct to accounts
 import accounts from '../data/acct';
@@ -16,7 +17,14 @@ export const store = new Vuex.Store({
       state.accounts = payload;
     },
     STORE_ACCT: (state, payload) => {
-      state.accounts.push(payload);
+      const accountObj = {
+        ...payload,
+        created: dayjs().format('MMMM, D YYYY'),
+        last_modified: dayjs().format('MMMM, D YYYY'),
+        last_used: dayjs().format('MMMM, D YYYY'),
+      };
+
+      state.accounts.push(accountObj);
     },
   },
 
@@ -30,6 +38,9 @@ export const store = new Vuex.Store({
   },
 
   getters: {
-    acctItems: (state) => state.accounts,
+    // TODOL rename acctItems -> accounts
+    accounts: (state) => state.accounts,
+
+    accountCount: (state) => state.accounts.length,
   },
 });
