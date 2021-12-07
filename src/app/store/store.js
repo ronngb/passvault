@@ -19,8 +19,12 @@ export const store = new Vuex.Store({
       state.accounts = payload;
     },
     STORE_ACCT: (state, payload) => {
+      const regex = /(http(s?)):\/\/|ww(w|3)./gi;
+
       const accountObj = {
         ...payload,
+        id: state.accounts.length + 1,
+        domain: payload.url.replace(regex, ''),
         created: dayjs().format('MMMM, D YYYY'),
         last_modified: dayjs().format('MMMM, D YYYY'),
         last_used: dayjs().format('MMMM, D YYYY'),
