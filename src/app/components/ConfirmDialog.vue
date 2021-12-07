@@ -3,11 +3,20 @@
     <div class="">
       <font-awesome-icon icon="exclamation-circle" style="font-size: 3.2em" />
     </div>
-    <div class="dialog-title">Remove this Account?</div>
-    <div class="dialog-description">This action cannot be undone.</div>
+    <div class="dialog-title">
+      <slot name="title">Discard unsaved changes?</slot>
+    </div>
+    <div class="dialog-description">
+      <slot name="description">All unsaved changes will be lost.</slot>
+    </div>
+    <!-- <div class="dialog-title">Remove this Account?</div>
+    <div class="dialog-description">This action cannot be undone.</div> -->
     <div class="confirm-btn">
-      <button type="button" @click="isConfirm = true">Save</button>
-      <button type="button" @click="isConfirm = false">Cancel</button>
+      <!-- <button type="button" @click="isConfirm = true">Save</button> -->
+      <!-- <button type="button" @click="isConfirm = false">Cancel</button> -->
+      <button type="button" @click="resPromise(true)">Discard</button>
+      <!-- TODO: remove the current value of @click Cancel replace with -->
+      <button type="button" @click="isShow = false">Cancel</button>
     </div>
   </div>
 </template>
@@ -21,6 +30,8 @@ export default {
       isShow: false,
       isConfirm: '',
       acctId: '',
+      addObj: {},
+      resPromise: '',
     };
   },
   watch: {
@@ -41,7 +52,18 @@ export default {
       this.removeAcct(acctId);
     });
   },
+
   methods: {
+    // TODO: create a function that if discard the modal will close and clear data
+    discard() {
+      return new Promise((resolve, reject) => {
+        this.isShow = true;
+        this.resPromise = resolve;
+      });
+    },
+    cancelEvent() {
+      this.$store.commit('SHOW_MODAL');
+    },
     removeAcct(acctId) {
       this.isShow = true;
       this.acctId = acctId;
