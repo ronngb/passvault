@@ -21,7 +21,7 @@
         <input
           type="text"
           @blur="autoAppend"
-          v-model="inputForm.url"
+          v-model="accountForm.url"
           :class="{ 'form-control': true, 'is-invalid': errors[0] }"
           id="website"
         />
@@ -32,7 +32,7 @@
         <label>Username</label>
         <input
           type="text"
-          v-model="inputForm.username"
+          v-model="accountForm.username"
           :class="{ 'form-control': true, 'is-invalid': errors[1] }"
           id="username"
         />
@@ -45,14 +45,15 @@
           <div class="form-group pr-1 col-11 col-md-5">
             <input
               :type="inputType"
-              v-model="inputForm.password"
+              v-model="accountForm.password"
               :class="{ 'form-control': true, 'is-invalid': errors[2] }"
               id="password"
             />
             <div class="invalid-feedback">Your password is required.</div>
           </div>
           <div class="form-group col-1 col-md-1" :class="{ 'mb-5': errors[2] }">
-            <font-awesome-icon @click="showPassword" :icon="isIcon" />
+            <!-- <font-awesome-icon @click="showPassword" :icon="isIcon" /> -->
+            <font-awesome-icon :icon="['fa', 'spinner']" swap-opacity />
           </div>
         </div>
       </div>
@@ -60,12 +61,7 @@
       <!-- BUTTON START -->
       <div class="acct-new_button">
         <button @click="submitForm" type="button" class="btn mr-1">Save</button>
-        <button
-          @click="cancelForm"
-          :disabled="isDisable"
-          type="button"
-          class="btn ml-1"
-        >
+        <button @click="cancelForm" type="button" class="btn ml-1">
           Cancel
         </button>
       </div>
@@ -75,6 +71,7 @@
 <!-- eslint-disable -->
 <script>
 import dayjs from 'dayjs';
+import { mapState, mapGetters } from 'vuex';
 import { store } from '../../../store.js';
 
 export default {
@@ -82,68 +79,59 @@ export default {
   // props: ['isDisable'],
   data() {
     return {
-      inputForm: { url: '', username: '', password: '' },
+      accountForm: { url: '', username: '', password: '' },
       errors: [],
       isIcon: 'eye',
       isDisable: '',
       inputType: 'password',
-      currentId: '',
     };
-  },
-  created() {
-    this.currentId = this.$store.getters.accountCount;
   },
   mounted() {
     // this.isDisable = store.state.acctData.length == 0 ? true : false;
   },
   computed: {
-    // getCurrentId() {
-    //   return Math.max(
-    //     ...this.$store.state.accounts.map((account) => account.id)
-    //   );
-    // },
-    getDomainName() {
-      return this.inputForm.url.replace(/(http(s?)):\/\/|ww(w|3)./gi, '');
+    refModal() {
+      return this.$store.state.refModalObj;
+    },
+    acctObjChange() {
+      return !Object.values(this.accountForm).every((value) => value === '');
     },
   },
   methods: {
     submitForm() {
       this.errors = [];
 
-      Object.values(this.inputForm).forEach((obj) => {
+      Object.values(this.accountForm).forEach((obj) => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       });
 
       if (!this.errors.includes(1)) {
-        const accountObj = {
-          ...this.inputForm,
-          id: this.generateId(),
-          domain: this.getDomainName,
-        };
-
-        this.$store.dispatch('storeAccount', accountObj);
+        this.$store.dispatch('storeAccount', this.accountForm);
         this.clearForm();
       }
     },
-    generateId() {
-      return (this.currentId += 1);
-    },
     autoAppend() {
       const scheme = 'https://';
-      if (this.inputForm.url === '') return;
-      if (this.inputForm.url.indexOf(scheme) == -1)
-        this.inputForm.url = scheme.concat(this.inputForm.url);
+      if (this.accountForm.url === '') return;
+      if (this.accountForm.url.indexOf(scheme) == -1)
+        this.accountForm.url = scheme.concat(this.accountForm.url);
     },
     showPassword() {
       this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye';
       this.inputType = this.inputType === 'password' ? 'text' : 'password';
     },
     cancelForm() {
-      this.$emit('update');
-      this.clearForm();
+      if (this.acctObjChange) {
+        this.refModal.discard().then((resolve, reject) => {
+          if (resolve) {
+            this.refModal.isShow = false;
+            this.clearForm();
+          }
+        });
+      }
     },
     clearForm() {
-      for (let input in this.inputForm) delete this.inputForm[input];
+      for (let input in this.accountForm) this.accountForm[input] = '';
     },
   },
 };
