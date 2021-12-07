@@ -10,6 +10,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     accounts: [],
+    addObj: {},
+    refModalObj: {},
   },
 
   mutations: {
@@ -23,11 +25,13 @@ export const store = new Vuex.Store({
         last_modified: dayjs().format('MMMM, D YYYY'),
         last_used: dayjs().format('MMMM, D YYYY'),
       };
-
       state.accounts.push(accountObj);
     },
+    SET_REF_MODAL: (state, payload) => {
+      state.refModalObj = payload;
+    },
   },
-
+  // TODO: How to create a async in actions?
   actions: {
     getAcctData: ({ commit }) => {
       commit('GET_ACCT_DATA', accounts);
@@ -38,7 +42,6 @@ export const store = new Vuex.Store({
   },
 
   getters: {
-    // TODOL rename acctItems -> accounts
     accounts: (state) => state.accounts,
 
     accountCount: (state) => state.accounts.length,
