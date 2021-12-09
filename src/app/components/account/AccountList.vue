@@ -6,7 +6,7 @@
       <span>Sort by:</span>
       <span>
         <select class="custom-select custom-select-sm border-0">
-          <option v-for="sort in sorts" :key="sort" @click="sortAcct(sort)">
+          <option v-for="sort in sorts" :key="sort" @click="sortAccount(sort)">
             {{ sort }}
           </option>
         </select>
@@ -16,7 +16,6 @@
     <!-- List acct. -->
     <div id="acct_list-item" class="d-flex flex-column">
       <ul id="acct-lists" class="list-group bg-light">
-        <!-- TODO: change acctItem to accountItem -->
         <AccountListItem
           v-for="account in accounts"
           :key="account.id"
@@ -39,13 +38,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import AccountListItem from './AccountListItem.vue';
+import { mapGetters, mapActions } from 'vuex';
 import { store } from '../../../store.js';
 
 export default {
   name: 'Acctlist',
-  props: ['acctList', 'setId'],
   components: {
     AccountListItem,
   },
@@ -54,19 +52,13 @@ export default {
       sorts: ['Name (A-Z)', 'Name (Z-A)'],
     };
   },
-  mounted() {
-    // this.sortAcct(this.sortBy);
+  created() {
+    this.$store.dispatch('sortAccount', this.sorts[0]);
   },
-
   computed: {
     ...mapGetters(['accounts', 'accountCount']),
   },
-  methods: {
-    // REMIND: move here from store.js
-    sortAcct(sort) {
-      store.sortAcct(sort);
-    },
-  },
+  methods: mapActions(['sortAccount']),
 };
 </script>
 
