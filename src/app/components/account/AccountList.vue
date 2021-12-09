@@ -16,18 +16,20 @@
     <!-- List acct. -->
     <div id="acct_list-item" class="d-flex flex-column">
       <ul id="acct-lists" class="list-group bg-light">
+        <!-- TODO: change acctItem to accountItem -->
         <AccountListItem
           v-for="account in accounts"
           :key="account.id"
-          :acctItem="account"
+          :accountItem="account"
         ></AccountListItem>
       </ul>
     </div>
     <!-- button -->
     <div class="new-acct p-3">
       <button
-        @click="$router.push('/account/add')"
+        @click="$router.push({ name: 'addForm' })"
         type="button"
+        :disabled="this.$route.name == 'addForm'"
         class="btn btn-secondary btn-block btn-sm"
       >
         Create New Account
@@ -50,35 +52,19 @@ export default {
   data() {
     return {
       sorts: ['Name (A-Z)', 'Name (Z-A)'],
-      focusId: this.setId,
-      isDisable: '',
     };
-  },
-  created() {
-    // TODO: move this call on app.vue
-    this.$store.dispatch('getAcctData');
   },
   mounted() {
     // this.sortAcct(this.sortBy);
   },
-  watch: {
-    setId(acctId) {
-      this.focusId = acctId;
-    },
-  },
+
   computed: {
     ...mapGetters(['accounts', 'accountCount']),
   },
   methods: {
+    // REMIND: move here from store.js
     sortAcct(sort) {
       store.sortAcct(sort);
-    },
-    setFocus(id) {
-      this.focusId = id;
-    },
-    // REMIND: this function has been place to AccountListItem
-    hasUsername(username) {
-      return username == '' ? '(no username)' : username;
     },
   },
 };
