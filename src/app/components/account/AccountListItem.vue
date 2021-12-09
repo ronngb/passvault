@@ -1,25 +1,28 @@
 <template>
 	<!-- BUGS: not in one row? try uing grid in <main> -->
+	<!-- TODO: :to change to Programmatic -->
+	<!-- '/account/' + accountItem.id -->
 	<router-link
-		:to="'/account/' + acctItem.id"
+		:to="{ name: 'addForm', params: { id: accountItem.id } }"
 		tag="li"
 		class="acct-item d-flex justify-content-start"
 		active-class="active"
 	>
 		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
 		<div class="d-flex flex-column">
-			<span>{{ acctItem.domain }}</span>
+			<span>{{ accountItem.domain }}</span>
 			<span class="text-muted">
-				{{ acctItem.username }}
+				<!-- TODO: Try filter on line 15 -->
+				{{ accountItem.username }}
 			</span>
 		</div>
 	</router-link>
 	<!-- <li class="acct-item d-flex justify-content-start">
 		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
 		<div class="d-flex flex-column">
-			<span>{{ acctItem.domain }}</span>
+			<span>{{ accountItem.domain }}</span>
 			<span class="text-muted">
-				{{ acctItem.username }}
+				{{ accountItem.username }}
 				{{ hasUsername(list.username) }}
 			</span>
 		</div>
@@ -41,7 +44,7 @@
 
 <script>
 export default {
-	props: ['acctItem'],
+	props: { accountItem: Object },
 };
 </script>
 
