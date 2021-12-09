@@ -23,6 +23,9 @@ export default {
     Information,
     AccountList,
   },
+  created() {
+    this.$store.dispatch('getAllAccount');
+  },
 };
 </script>
 
