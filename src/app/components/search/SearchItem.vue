@@ -27,14 +27,28 @@
     <!-- ./end -->
     <!-- search input -->
     <div class="col-md-4 px-0 ml-md-5">
-      <input class="form-control" type="search" placeholder="Search" />
+      <input
+        @keyup="SEARCH_ACCT(searchItem)"
+        v-model="searchItem"
+        class="form-control"
+        type="search"
+        placeholder="Search"
+      />
     </div>
   </nav>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
-  name: 'Navbar',
+  name: 'SearchItem',
+  data() {
+    return {
+      searchItem: '',
+    };
+  },
+  methods: mapMutations(['SEARCH_ACCT']),
 };
 </script>
 
