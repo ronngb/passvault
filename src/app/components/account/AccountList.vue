@@ -6,7 +6,7 @@
       <span>Sort by:</span>
       <span>
         <select class="custom-select custom-select-sm border-0">
-          <option v-for="sort in sorts" :key="sort" @click="sortAccount(sort)">
+          <option v-for="sort in sorts" :key="sort" @click="sortBy = sort">
             {{ sort }}
           </option>
         </select>
@@ -39,8 +39,7 @@
 
 <script>
 import AccountListItem from './AccountListItem.vue';
-import { mapGetters, mapActions } from 'vuex';
-import { store } from '../../../store.js';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Acctlist',
@@ -50,15 +49,26 @@ export default {
   data() {
     return {
       sorts: ['Name (A-Z)', 'Name (Z-A)'],
+      sortBy: 'Name (A-Z)',
     };
   },
-  created() {
-    this.$store.dispatch('sortAccount', this.sorts[0]);
-  },
   computed: {
-    ...mapGetters(['accounts', 'accountCount']),
+    ...mapGetters({
+      accountCount: 'accountCount',
+      searchResult: 'getSeachItem',
+    }),
+    // TODO: refactor the sort
+    accounts() {
+      return this.searchResult.sort((a, b) => {
+        switch (this.sortBy) {
+          case 'Name (A-Z)':
+            return a.domain > b.domain ? 1 : -1;
+          case 'Name (Z-A)':
+            return a.domain < b.domain ? 1 : -1;
+        }
+      });
+    },
   },
-  methods: mapActions(['sortAccount']),
 };
 </script>
 
