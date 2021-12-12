@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
   state: {
     accounts: [],
     refModalObj: {},
+    acctToSearch: '',
   },
 
   mutations: {
@@ -31,15 +32,9 @@ export const store = new Vuex.Store({
     SET_REF_MODAL: (state, payload) => {
       state.refModalObj = payload;
     },
-    SORT_ACCT: (state, payload) => {
-      state.accounts.sort((a, b) => {
-        switch (payload) {
-          case 'Name (A-Z)':
-            return a.domain > b.domain ? 1 : -1;
-          case 'Name (Z-A)':
-            return a.domain < b.domain ? 1 : -1;
-        }
-      });
+
+    SEARCH_ACCT: (state, payload) => {
+      state.acctToSearch = payload;
     },
   },
   // TODO: How to create a async in actions?
@@ -50,14 +45,19 @@ export const store = new Vuex.Store({
     storeAccount: ({ commit }, account) => {
       commit('STORE_ACCT', account);
     },
-    sortAccount: ({ commit }, sorts) => {
-      commit('SORT_ACCT', sorts);
-    },
   },
 
   getters: {
-    accounts: (state) => state.accounts,
-
     accountCount: (state) => state.accounts.length,
+
+    getSeachItem: (state) => {
+      return state.accounts.filter((obj) => {
+        if (
+          obj.domain.match(state.acctToSearch) ||
+          obj.username.match(state.acctToSearch)
+        )
+          return true;
+      });
+    },
   },
 });
