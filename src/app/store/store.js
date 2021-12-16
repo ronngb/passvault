@@ -12,6 +12,10 @@ export const store = new Vuex.Store({
   state: {
     // ModalDialog.vue
     refModalObj: {},
+    sorts: [
+      { sort: 'Name A-Z', sortOrder: true, prop: 'domain' },
+      { sort: 'Name Z-A', sortOrder: false, prop: 'domain' },
+    ],
   },
 
   mutations: {

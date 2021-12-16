@@ -6,8 +6,8 @@
       <span>Sort by:</span>
       <span>
         <select class="custom-select custom-select-sm border-0">
-          <option v-for="sort in sorts" :key="sort" @click="sortBy = sort">
-            {{ sort }}
+          <option v-for="sort in sorts" :key="sort.sort" @click="sortBy = sort">
+            {{ sort.sort }}
           </option>
         </select>
       </span>
@@ -48,21 +48,23 @@ export default {
   },
   data() {
     return {
-      sorts: ['Name (A-Z)', 'Name (Z-A)'],
-      sortBy: 'Name (A-Z)',
+      sortBy: '',
     };
+  },
+  mounted() {
+    this.sortBy = this.sorts[0];
   },
   computed: {
     ...mapGetters(['accountCount', 'searchResult']),
-    // TODO: refactor the sort
+    sorts() {
+      return this.$store.state.sorts;
+    },
     accounts() {
-      return this.searchResult.sort((a, b) => {
-        switch (this.sortBy) {
-          case 'Name (A-Z)':
-            return a.domain > b.domain ? 1 : -1;
-          case 'Name (Z-A)':
-            return a.domain < b.domain ? 1 : -1;
-        }
+      return this.searchResult.sort((objA, objB) => {
+        let x = objA[this.sortBy.prop];
+        let y = objB[this.sortBy.prop];
+
+        return this.sortBy.sortOrder ? x > y : x < y;
       });
     },
   },
