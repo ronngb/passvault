@@ -53,10 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      accountCount: 'accountCount',
-      searchResult: 'getSeachItem',
-    }),
+    ...mapGetters(['accountCount', 'searchResult']),
     // TODO: refactor the sort
     accounts() {
       return this.searchResult.sort((a, b) => {

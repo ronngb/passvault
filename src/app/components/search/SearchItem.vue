@@ -28,7 +28,7 @@
     <!-- search input -->
     <div class="col-md-4 px-0 ml-md-5">
       <input
-        @keyup="SEARCH_ACCT(searchItem)"
+        @keyup="SEARCH_ACCOUNT(searchItem)"
         v-model="searchItem"
         class="form-control"
         type="search"
@@ -48,7 +48,7 @@ export default {
       searchItem: '',
     };
   },
-  methods: mapMutations(['SEARCH_ACCT']),
+  methods: mapMutations(['SEARCH_ACCOUNT']),
 };
 </script>
 

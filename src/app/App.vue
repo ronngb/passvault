@@ -24,7 +24,7 @@ export default {
     AccountList,
   },
   created() {
-    this.$store.dispatch('getAllAccount');
+    this.$store.dispatch('loadData');
   },
 };
 </script>
