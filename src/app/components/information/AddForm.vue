@@ -20,11 +20,10 @@
         <label>Website address</label>
         <input
           type="text"
-          @blur="autoAppend"
-          v-model="accountForm.url"
+          @blur="formData.url = autoAppend(formData.url)"
+          v-model="formData.url"
           :class="{ 'form-control': true, 'is-invalid': errors[0] }"
-          id="website"
-        />
+          id="website" />
         <div class="invalid-feedback">Your website address is required.</div>
       </div>
       <!-- USERNAME START -->
@@ -32,10 +31,9 @@
         <label>Username</label>
         <input
           type="text"
-          v-model="accountForm.username"
+          v-model="formData.username"
           :class="{ 'form-control': true, 'is-invalid': errors[1] }"
-          id="username"
-        />
+          id="username" />
         <div class="invalid-feedback">Your username is required.</div>
       </div>
       <!-- PASSWORD START -->
@@ -45,15 +43,20 @@
           <div class="form-group pr-1 col-11 col-md-5">
             <input
               :type="inputType"
-              v-model="accountForm.password"
+              v-model="formData.password"
               :class="{ 'form-control': true, 'is-invalid': errors[2] }"
-              id="password"
-            />
+              id="password" />
             <div class="invalid-feedback">Your password is required.</div>
           </div>
           <div class="form-group col-1 col-md-1" :class="{ 'mb-5': errors[2] }">
-            <!-- <font-awesome-icon @click="showPassword" :icon="isIcon" /> -->
-            <font-awesome-icon :icon="['fa', 'spinner']" swap-opacity />
+            <font-awesome-layers
+              @click="inputType = inputType ? '' : 'password'"
+              style="font-size: 16px">
+              <font-awesome-icon :icon="['fas', 'eye']" />
+              <font-awesome-icon
+                v-if="inputType != 'password'"
+                :icon="['fas', 'slash']" />
+            </font-awesome-layers>
           </div>
         </div>
       </div>
@@ -61,7 +64,11 @@
       <!-- BUTTON START -->
       <div class="acct-new_button">
         <button @click="submitForm" type="button" class="btn mr-1">Save</button>
-        <button @click="cancelForm" type="button" class="btn ml-1">
+        <button
+          @click="cancelForm"
+          :disabled="account.accounts.length <= 0"
+          type="button"
+          class="btn ml-1">
           Cancel
         </button>
       </div>
@@ -72,66 +79,56 @@
 <script>
 import dayjs from 'dayjs';
 import { mapState, mapGetters } from 'vuex';
-import { store } from '../../../store.js';
 
 export default {
   name: 'AccountNew',
-  // props: ['isDisable'],
   data() {
     return {
-      accountForm: { url: '', username: '', password: '' },
+      formData: { url: '', username: '', password: '' },
       errors: [],
-      isIcon: 'eye',
-      isDisable: '',
       inputType: 'password',
     };
   },
-  mounted() {
-    // this.isDisable = store.state.acctData.length == 0 ? true : false;
-  },
   computed: {
-    refModal() {
-      return this.$store.state.refModalObj;
-    },
-    acctObjChange() {
-      return !Object.values(this.accountForm).every((value) => value === '');
+    ...mapState({ refModal: 'refModalObj', account: 'account' }),
+
+    acctFormChange() {
+      return !Object.values(this.formData).every((value) => value === '');
     },
   },
   methods: {
     submitForm() {
       this.errors = [];
 
-      Object.values(this.accountForm).forEach((obj) => {
+      Object.values(this.formData).forEach((obj) => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0);
       });
 
       if (!this.errors.includes(1)) {
-        this.$store.dispatch('storeAccount', this.accountForm);
+        // TODO: Possible to make this async
+        this.$store.dispatch('storeAccount', this.formData);
         this.clearForm();
       }
     },
-    autoAppend() {
+    autoAppend(url) {
       const scheme = 'https://';
-      if (this.accountForm.url === '') return;
-      if (this.accountForm.url.indexOf(scheme) == -1)
-        this.accountForm.url = scheme.concat(this.accountForm.url);
-    },
-    showPassword() {
-      this.isIcon = this.isIcon === 'eye' ? 'eye-slash' : 'eye';
-      this.inputType = this.inputType === 'password' ? 'text' : 'password';
+      return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url;
     },
     cancelForm() {
-      if (this.acctObjChange) {
+      if (this.acctFormChange) {
         this.refModal.discard().then((resolve, reject) => {
           if (resolve) {
             this.refModal.isShow = false;
             this.clearForm();
           }
         });
+      } else {
+        // call route to go back 1 step
+        this.$router.go(-1);
       }
     },
     clearForm() {
-      for (let input in this.accountForm) this.accountForm[input] = '';
+      for (let input in this.formData) this.formData[input] = '';
     },
   },
 };

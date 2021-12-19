@@ -1,14 +1,15 @@
 import Vue from 'vue';
 import App from './app/App.vue';
 import VueRouter from 'vue-router';
-import FontAwesomeIcon from './fontawesome.js';
+import FA from './fontawesome.js';
 import { routes } from './app/routes/routes';
 import { store } from './app/store/store';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('font-awesome-icon', FA.FontAwesomeIcon);
+Vue.component('font-awesome-layers', FA.FontAwesomeLayers);
 
 Vue.use(VueRouter);
 
