@@ -5,14 +5,10 @@
 			<div class="form-group col-8 col-md-5">
 				<label>Username</label>
 				<input
+					id="username"
 					type="text"
 					class="form-control"
-					@input="
-						$emit('update', [$event.target]),
-							(inputForm.username = $event.target.value)
-					"
-					:value="account.username"
-					id="username" />
+					v-model="formData.username" />
 			</div>
 		</div>
 		<!-- Password Start -->
@@ -20,12 +16,11 @@
 			<div class="form-group col-8 col-md-5">
 				<label>Password</label>
 				<input
+					id="password"
 					type="password"
-					:class="{ 'is-invalid': isError, 'form-control': true }"
-					@input="inputForm.password = $event.target.value"
-					:value="account.password"
-					id="password" />
-				<div v-if="isError" class="invalid-feedback">
+					:class="{ 'is-invalid': hasError, 'form-control': true }"
+					v-model="formData.password" />
+				<div v-if="hasError" class="invalid-feedback">
 					Your password is required.
 				</div>
 			</div>
@@ -33,13 +28,13 @@
 		<!-- EDIT BUTTONS -->
 		<div class="acct-edit_buttons">
 			<button
-				@click="editAcct(account.id)"
+				@click="updateAccount(account.id)"
 				type="button"
 				class="btn btn-default btn-light mr-1">
 				Save
 			</button>
 			<button
-				@click="onEdit(account.id)"
+				@click="$router.go(-1)"
 				type="button"
 				class="btn btn-default btn-light ml-1">
 				Cancel
@@ -52,14 +47,33 @@
 export default {
 	data() {
 		return {
-			isError: false,
+			hasError: false,
 			formData: { username: '', password: '' },
 		};
 	},
-
+	mounted() {
+		this.initFormData();
+	},
 	computed: {
 		account() {
 			return this.$store.getters.getAccount(this.$route.params.id);
+		},
+	},
+	methods: {
+		initFormData() {
+			for (let prop in this.formData)
+				this.formData[prop] = this.account[prop];
+		},
+		updateAccount(id) {
+			if (this.formData.password == '') {
+				this.hasError = true;
+			} else {
+				const accountObj = {
+					...this.formData,
+					accountId: id,
+				};
+				this.$store.dispatch('updateAccount', accountObj);
+			}
 		},
 	},
 };
