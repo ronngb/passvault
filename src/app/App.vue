@@ -10,11 +10,10 @@
     </main>
   </div>
 </template>
-<!-- eslint-disable -->
 <script>
 import SearchItem from './components/search/SearchItem.vue';
 import Information from './components/information/Information.vue';
-import AccountList from './components/account/AccountList.vue';
+import AccountList from './components/sidebar/AccountList.vue';
 
 export default {
   name: 'App',

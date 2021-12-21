@@ -1,10 +1,9 @@
 <template>
 	<router-link
-		:to="{ name: 'addForm', params: { id: accountItem.id } }"
+		:to="{ name: 'detail', params: { id: accountItem.id } }"
 		tag="li"
 		class="acct-item d-flex justify-content-start"
-		active-class="active"
-	>
+		active-class="active">
 		<font-awesome-icon icon="globe" class="align-self-center mr-3" />
 		<div class="d-flex flex-column">
 			<span>{{ accountItem.domain }}</span>
