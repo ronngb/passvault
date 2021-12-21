@@ -8,21 +8,16 @@
 					id="username"
 					type="text"
 					class="form-control-plaintext"
-					:value="account.username"
-					placeholder="notSure"
+					:value="account.username | usernameValidate"
 					readonly />
 			</div>
-			<!-- If this div is false the copied button is undisplay -->
-			<!-- @click="toClipboard(account.username, 'isUser')" -->
 			<div class="form-group col-4 col-md-5 align-self-end">
 				<button
-					@click="toClipboard($event.target)"
+					@click="toClipboard(account.username, $event.target)"
 					type="button"
 					class="btn btn-default btn-light px-lg-4">
 					<font-awesome-icon icon="copy" class="mr-1" />
-					<!-- 					<span v-if="isUser" class="text-muted">Copied!</span>
-					<span v-if="!isUser" class="text-muted">Copy</span>
- -->
+					<span class="text-muted">Copy</span>
 				</button>
 			</div>
 		</div>
@@ -32,21 +27,18 @@
 				<label>Password</label>
 				<input
 					id="password"
+					type="password"
 					class="form-control-plaintext"
-					type="text"
-					@input="inputForm.password = $event.target.value"
 					:value="account.password"
 					readonly />
 			</div>
 			<div class="form-group col-4 col-md-5 align-self-end">
-				<!-- TODO: Try passing $event as 2nd arguement toClipboard()-->
 				<button
-					@click="toClipboard(account.password, 'isPass')"
+					@click="toClipboard(account.password, $event.target)"
 					type="button"
 					class="btn btn-default btn-light px-lg-4">
 					<font-awesome-icon icon="copy" class="mr-1" />
-					<!-- <span v-if="isPass" class="text-muted">Copied!</span>
-					<span v-if="!isPass" class="text-muted">Copy</span> -->
+					<span class="text-muted">Copy</span>
 				</button>
 			</div>
 		</div>
@@ -55,9 +47,26 @@
 
 <script>
 export default {
+	filters: {
+		usernameValidate(value) {
+			return value == '' ? '(no username)' : value;
+		},
+	},
 	computed: {
 		account() {
 			return this.$store.getters.getAccount(this.$route.params.id);
+		},
+	},
+	methods: {
+		toClipboard(txtCopied, evt) {
+			evt.disabled = true;
+			evt.children[1].innerText = 'Copied';
+			navigator.clipboard.writeText(txtCopied).then(
+				setTimeout(() => {
+					evt.disabled = false;
+					evt.children[1].innerText = 'Copy';
+				}, 4000)
+			);
 		},
 	},
 };
