@@ -46,30 +46,34 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+	props: ['id'],
 	filters: {
 		usernameValidate(value) {
-			return value == '' ? '(no username)' : value;
+			return value ? value : '(no username)'
 		},
 	},
 	computed: {
+		...mapGetters(['getAccount']),
 		account() {
-			return this.$store.getters.getAccount(this.$route.params.id);
+			return this.getAccount(this.id)
 		},
 	},
 	methods: {
 		toClipboard(txtCopied, evt) {
-			evt.disabled = true;
-			evt.children[1].innerText = 'Copied';
+			evt.disabled = true
+			evt.children[1].innerText = 'Copied'
 			navigator.clipboard.writeText(txtCopied).then(
 				setTimeout(() => {
-					evt.disabled = false;
-					evt.children[1].innerText = 'Copy';
+					evt.disabled = false
+					evt.children[1].innerText = 'Copy'
 				}, 4000)
-			);
+			)
 		},
 	},
-};
+}
 </script>
 
 <style></style>
