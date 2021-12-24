@@ -19,19 +19,18 @@
     /> -->
     <!-- TODO: Save the testModal to $store -->
     <ModalDialog ref="modalDialog">
-      <!-- <template slot="title">Remove this login?</template>
-      <template slot="description">This action cannot be undone.</template> -->
+      <template #title></template>
+      <template #description></template>
     </ModalDialog>
   </div>
   <!-- <ModalDialog @fetch="hasAcct" /> -->
 </template>
 <script>
-import DetailsForm from './DetailsForm.vue';
-import AddForm from './AddForm.vue';
-import AccountList from '../account/AccountList.vue';
-import ModalDialog from '../modal/ModalDialog.vue';
-import { store } from '../../../store.js';
-import { mapGetters } from 'vuex';
+import AddForm from './AddForm.vue'
+import AccountList from '../sidebar/AccountList.vue'
+import ModalDialog from '../modal/ModalDialog.vue'
+import { store } from '../../../store.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Information',
@@ -40,21 +39,20 @@ export default {
       acctList: store.state,
       acctInfo: {},
       focusId: 1,
-    };
+    }
   },
   components: {
-    DetailsForm,
     AddForm,
     AccountList,
     ModalDialog,
   },
   created() {
     // created for $emit
-    this.$EventBus.$on('close', () => (this.showModal = false));
+    this.$EventBus.$on('close', () => (this.showModal = false))
   },
   mounted() {
     // this.hasAcct();
-    this.$store.commit('SET_REF_MODAL', this.$refs.modalDialog);
+    this.$store.commit('SET_REF_MODAL', this.$refs.modalDialog)
   },
   computed: {
     ...mapGetters(['accountCount']),
@@ -64,32 +62,30 @@ export default {
     // },
     getAccountById() {
       return this.$store.state.accounts.find((account) => {
-        return (
-          account.id == (this.$route.params.id ? this.$route.params.id : 1)
-        );
-      });
+        return account.id == (this.$route.params.id ? this.$route.params.id : 1)
+      })
     },
   },
   methods: {
     hasAcct(acctIndex = 0) {
       if (this.acctList.acctData.length == 0) {
         // What isBool for?
-        this.isBool = true;
+        this.isBool = true
       } else {
-        this.isBool = false;
+        this.isBool = false
         // This part is repeated procedure in getAccountId() using Index
         this.acctInfo = JSON.parse(
           JSON.stringify(this.acctList.acctData[acctIndex])
-        );
+        )
         // Not sure for this part, but it will focus a
-        this.focusId = this.acctList.acctData[acctIndex].id;
+        this.focusId = this.acctList.acctData[acctIndex].id
       }
     },
     updateInfo(info) {
-      this.acctInfo[info[0].id] = info[0].value;
+      this.acctInfo[info[0].id] = info[0].value
     },
   },
-};
+}
 </script>
 
 <style>

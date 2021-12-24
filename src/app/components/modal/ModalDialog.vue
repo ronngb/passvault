@@ -21,10 +21,8 @@
   </div>
 </template>
 <script>
-import { store } from '../../store.js';
-
 export default {
-  name: 'ConfirmDialog',
+  name: 'ModalDialog',
   data() {
     return {
       isShow: false,
@@ -32,44 +30,31 @@ export default {
       acctId: '',
       addObj: {},
       resPromise: '',
-    };
-  },
-  watch: {
-    isConfirm(confirm) {
-      if (confirm) {
-        store.removeAcct(this.acctId);
-        this.isShow = false;
-        this.$emit('fetch');
-        this.isConfirm = '';
-      } else {
-        this.isShow = false;
-        this.isConfirm = '';
-      }
-    },
+    }
   },
   created() {
     this.$EventBus.$on('removeAcct', (acctId) => {
-      this.removeAcct(acctId);
-    });
+      this.removeAcct(acctId)
+    })
   },
 
   methods: {
     // TODO: create a function that if discard the modal will close and clear data
     discard() {
       return new Promise((resolve, reject) => {
-        this.isShow = true;
-        this.resPromise = resolve;
-      });
+        this.isShow = true
+        this.resPromise = resolve
+      })
     },
     cancelEvent() {
-      this.$store.commit('SHOW_MODAL');
+      this.$store.commit('SHOW_MODAL')
     },
     removeAcct(acctId) {
-      this.isShow = true;
-      this.acctId = acctId;
+      this.isShow = true
+      this.acctId = acctId
     },
   },
-};
+}
 </script>
 
 <style>
