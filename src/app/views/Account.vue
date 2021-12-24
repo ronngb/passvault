@@ -17,7 +17,7 @@
         <span class="text-muted">Edit</span>
       </button>
       <button
-        @click="removeAcct(account.id)"
+        @click="deleteAccount(account.id)"
         type="button"
         class="btn btn-default btn-light mx-1">
         <font-awesome-icon icon="trash" class="mr-md-1" />
@@ -44,34 +44,29 @@
 </template>
 
 <script>
-import { store } from '../../../store.js';
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'DetailsForm',
-  props: ['info'],
+  name: 'Account',
+  props: ['id'],
   data() {
-    return {
-      isPass: false,
-      isUser: false,
-      isEdit: false,
-      isError: false,
-      isIcon: 'eye',
-      inputForm: { username: '', password: '' },
-      inputType: 'password',
-      hasUsername: '',
-    };
+    return {}
   },
-
-  // beforeUpdate() {
-  //   for (let input in this.inputForm) this.inputForm[input] = this.info[input];
-  // },
   computed: {
+    ...mapGetters(['getAccount']),
     account() {
-      return this.$store.getters.getAccount(this.$route.params.id);
+      return this.getAccount(this.id)
     },
   },
-  methods: {},
-};
+  methods: {
+    deleteAccount(id) {
+      this.$store.dispatch('deleteAccount', id)
+
+      // CHECKPOINT
+      // PROB: how can i manipulate the active account in accountlistitem after i delete the account
+    },
+  },
+}
 </script>
 
 <style>
