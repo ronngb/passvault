@@ -19,10 +19,10 @@ export default {
 	props: { accountItem: Object },
 	filters: {
 		usernameValidate(value) {
-			return value == '' ? '(no username)' : value;
+			return value ? value : '(no username)'
 		},
 	},
-};
+}
 </script>
 
 <style scoped></style>
