@@ -1,23 +1,26 @@
 <template>
-  <div class="dialog-confirm center" :class="{ active: isShow }">
-    <div class="">
-      <font-awesome-icon icon="exclamation-circle" style="font-size: 3.2em" />
-    </div>
-    <div class="dialog-title">
-      <slot name="title">Discard unsaved changes?</slot>
-    </div>
-    <div class="dialog-description">
-      <slot name="description">All unsaved changes will be lost.</slot>
-    </div>
-    <!-- <div class="dialog-title">Remove this Account?</div>
-    <div class="dialog-description">This action cannot be undone.</div> -->
-    <div class="confirm-btn">
-      <!-- <button type="button" @click="isConfirm = true">Save</button> -->
-      <!-- <button type="button" @click="isConfirm = false">Cancel</button> -->
-      <button type="button" @click="resPromise(true)">Discard</button>
-      <!-- TODO: remove the current value of @click Cancel replace with -->
-      <button type="button" @click="isShow = false">Cancel</button>
-    </div>
+  <div class="dialog-confirm center" :class="{ active: isActive }">
+    <slot>
+      <div class="">
+        <font-awesome-icon icon="exclamation-circle" style="font-size: 3.2em" />
+      </div>
+      <div class="dialog-title">
+        <template v-if="toRemove">Remove this Account?</template>
+        <template v-else>Discard unsaved changes?</template>
+      </div>
+      <div class="dialog-description">
+        <template v-if="toRemove">This action cannot be undone</template>
+        <template v-else>All unsaved changes will be lost.</template>
+      </div>
+
+      <div class="confirm-btn">
+        <button type="button" @click="responseTo(true)">
+          <template v-if="toRemove">Remove</template>
+          <template v-else>Discard</template>
+        </button>
+        <button type="button" @click="isActive = false">Cancel</button>
+      </div>
+    </slot>
   </div>
 </template>
 <script>
@@ -25,33 +28,22 @@ export default {
   name: 'ModalDialog',
   data() {
     return {
-      isShow: false,
-      isConfirm: '',
-      acctId: '',
-      addObj: {},
+      toRemove: false,
+      isActive: false,
       resPromise: '',
     }
   },
-  created() {
-    this.$EventBus.$on('removeAcct', (acctId) => {
-      this.removeAcct(acctId)
-    })
-  },
-
   methods: {
-    // TODO: create a function that if discard the modal will close and clear data
-    discard() {
+    modalOn(toRemove = false) {
       return new Promise((resolve, reject) => {
-        this.isShow = true
+        this.isActive = true
+        this.toRemove = toRemove
         this.resPromise = resolve
       })
     },
-    cancelEvent() {
-      this.$store.commit('SHOW_MODAL')
-    },
-    removeAcct(acctId) {
-      this.isShow = true
-      this.acctId = acctId
+    responseTo(res) {
+      this.resPromise(true)
+      this.isActive = false
     },
   },
 }
