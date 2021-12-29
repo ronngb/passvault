@@ -29,12 +29,12 @@ const mutations = {
     data.last_modified = dayjs().format('MMMM, D YYYY')
   },
 
-  DELETE_ACCOUNT: (state, accountId) => {
-    const data = state.accounts.find((acctObj) => acctObj.id == accountId)
-    state.accounts.splice(state.accounts.indexOf(data), 1)
-  },
   SEARCH_ACCOUNT: (state, payload) => {
     state.toSearch = payload
+  },
+
+  DELETE_ACCOUNT: (state, acctObj) => {
+    state.accounts.splice(state.accounts.indexOf(acctObj), 1)
   },
 }
 
@@ -47,8 +47,8 @@ const actions = {
     commit('UPDATE_ACCOUNT', account)
   },
 
-  deleteAccount: ({ commit }, accountId) => {
-    commit('DELETE_ACCOUNT', accountId)
+  deleteAccount({ getters, commit }, accountId) {
+    commit('DELETE_ACCOUNT', getters.getAccount(accountId))
   },
 }
 
@@ -57,6 +57,12 @@ const getters = {
 
   getAccount: (state) => (id) => {
     return state.accounts.find((obj) => obj.id == id)
+  },
+
+  getActiveIndex: (state, getters) => (id) => {
+    const currentIndex = state.accounts.indexOf(getters.getAccount(id))
+
+    return currentIndex ? currentIndex - 1 : currentIndex
   },
 
   searchResult: (state) => {
