@@ -33,7 +33,7 @@
       </div>
     </div>
     <!-- TODO: Prob. in column  -->
-    <router-view></router-view>
+    <router-view />
     <hr class="mx-0" style="width: 40px" />
     <div class="acct-info_date">
       <p>Created: {{ account.created }}</p>
@@ -44,26 +44,32 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Account',
-  props: ['id'],
+  props: ['id', 'refModal'],
   data() {
     return {}
   },
+  mounted() {},
   computed: {
-    ...mapGetters(['getAccount']),
+    ...mapGetters(['getAccount', 'getActiveIndex']),
     account() {
       return this.getAccount(this.id)
     },
   },
   methods: {
     deleteAccount(id) {
-      this.$store.dispatch('deleteAccount', id)
-
-      // CHECKPOINT
-      // PROB: how can i manipulate the active account in accountlistitem after i delete the account
+      this.refModal.modalOn(true).then((res) => {
+        if (res) {
+          this.$router.replace({
+            name: 'detail',
+            params: { id: this.getActiveIndex(id) },
+          })
+          this.$store.dispatch('deleteAccount', id)
+        }
+      })
     },
   },
 }
