@@ -33,7 +33,7 @@
       </div>
     </div>
     <!-- TODO: Prob. in column  -->
-    <router-view />
+    <router-view :ref-modal="refModal" :account="account" />
     <hr class="mx-0" style="width: 40px" />
     <div class="acct-info_date">
       <p>Created: {{ account.created }}</p>
@@ -48,7 +48,16 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Account',
-  props: ['id', 'refModal'],
+  props: {
+    id: {
+      type: [Number, String],
+      required: true,
+    },
+    refModal: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {}
   },
