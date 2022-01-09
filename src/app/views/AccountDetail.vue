@@ -46,19 +46,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-	props: ['id'],
+	name: 'AccountDetail',
+	props: {
+		account: {
+			type: Object,
+			required: true,
+		},
+	},
 	filters: {
 		usernameValidate(value) {
 			return value ? value : '(no username)'
-		},
-	},
-	computed: {
-		...mapGetters(['getAccount']),
-		account() {
-			return this.getAccount(this.id)
 		},
 	},
 	methods: {
