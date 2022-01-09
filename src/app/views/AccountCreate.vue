@@ -65,7 +65,7 @@
       <div class="acct-new_button">
         <button @click="submitForm" type="button" class="btn mr-1">Save</button>
         <button
-          @click="cancelForm"
+          @click="$router.go(-1)"
           :disabled="account.accounts.length <= 0"
           type="button"
           class="btn ml-1">
@@ -77,61 +77,66 @@
 </template>
 <!-- eslint-disable -->
 <script>
-import dayjs from 'dayjs';
-import { mapState, mapGetters } from 'vuex';
+import dayjs from 'dayjs'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'AccountNew',
+  name: 'AccountCreate',
+  props: {
+    refModal: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       formData: { url: '', username: '', password: '' },
       errors: [],
       inputType: 'password',
-    };
+    }
+  },
+  beforeRouteLeave(routeTo, routeFrom, next) {
+    if (this.formDataWatch) {
+      this.refModal.modalOn().then((res) => {
+        if (res) {
+          next()
+        } else {
+          next(false)
+        }
+      })
+    } else {
+      next()
+    }
   },
   computed: {
-    ...mapState({ refModal: 'refModalObj', account: 'account' }),
-
-    acctFormChange() {
-      return !Object.values(this.formData).every((value) => value === '');
+    ...mapState({ account: 'account' }),
+    formDataWatch() {
+      return !Object.values(this.formData).every((value) => value === '')
     },
   },
   methods: {
     submitForm() {
-      this.errors = [];
+      this.errors = []
 
       Object.values(this.formData).forEach((obj) => {
-        obj == 0 ? this.errors.push(1) : this.errors.push(0);
-      });
+        obj == 0 ? this.errors.push(1) : this.errors.push(0)
+      })
 
       if (!this.errors.includes(1)) {
         // TODO: Possible to make this async
-        this.$store.dispatch('storeAccount', this.formData);
-        this.clearForm();
+        this.$store.dispatch('storeAccount', this.formData)
+        this.clearForm()
       }
     },
     autoAppend(url) {
-      const scheme = 'https://';
-      return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url;
-    },
-    cancelForm() {
-      if (this.acctFormChange) {
-        this.refModal.discard().then((resolve, reject) => {
-          if (resolve) {
-            this.refModal.isShow = false;
-            this.clearForm();
-          }
-        });
-      } else {
-        // call route to go back 1 step
-        this.$router.go(-1);
-      }
+      const scheme = 'https://'
+      return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url
     },
     clearForm() {
-      for (let input in this.formData) this.formData[input] = '';
+      for (let input in this.formData) this.formData[input] = ''
     },
   },
-};
+}
 </script>
 
 <style>
