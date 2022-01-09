@@ -44,23 +44,45 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  props: ['id'],
+  name: 'AccountEdit',
+  props: {
+    account: {
+      type: Object,
+      required: true,
+    },
+    refModal: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       hasError: false,
       formData: { username: '', password: '' },
     }
   },
+  beforeRouteLeave(routeTo, routeFrom, next) {
+    if (this.formDataWatch) {
+      this.refModal.modalOn().then((res) => {
+        if (res) {
+          next()
+        } else {
+          next(false)
+        }
+      })
+    } else {
+      next()
+    }
+  },
   mounted() {
     this.initFormData()
   },
   computed: {
-    ...mapGetters(['getAccount']),
-    account() {
-      return this.getAccount(this.id)
+    formDataWatch() {
+      return !Object.values(this.formData).every((value, index) => {
+        return value === this.account[Object.keys(this.formData)[index]]
+      })
     },
   },
   methods: {
