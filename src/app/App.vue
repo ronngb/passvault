@@ -5,27 +5,27 @@
     </header>
     <main class="main-passvault">
       <AccountList />
-      <!-- <AccountMain /> -->
-      <Information />
+      <router-view id="acct-main" :ref-modal="$refs.modalDialog" />
+      <ModalDialog ref="modalDialog" />
     </main>
   </div>
 </template>
 <script>
-import SearchItem from './components/search/SearchItem.vue';
-import Information from './components/information/Information.vue';
-import AccountList from './components/sidebar/AccountList.vue';
+import SearchItem from './components/search/SearchItem.vue'
+import AccountList from './components/sidebar/AccountList.vue'
+import ModalDialog from './components/modal/ModalDialog.vue'
 
 export default {
   name: 'App',
   components: {
     SearchItem,
-    Information,
     AccountList,
+    ModalDialog,
   },
   created() {
-    this.$store.dispatch('loadData');
+    this.$store.dispatch('loadData')
   },
-};
+}
 </script>
 
 <style scoped>
@@ -38,5 +38,9 @@ export default {
 .main-passvault {
   display: grid;
   grid-template-columns: 25% 1fr;
+}
+
+#acct-main {
+  padding: 3rem 3rem;
 }
 </style>
