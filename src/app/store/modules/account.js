@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 const state = {
   accounts: [],
   toSearch: '',
+  sortBy: {},
 }
 
 const mutations = {
@@ -11,7 +12,7 @@ const mutations = {
   },
   STORE_ACCOUNT: (state, payload) => {
     const regex = /(http(s?)):\/\/|ww(w|3)./gi
-
+    // TODO: Make the id random
     const accountObj = {
       ...payload,
       id: state.accounts.length + 1,
@@ -29,8 +30,11 @@ const mutations = {
     data.last_modified = dayjs().format('MMMM, D YYYY')
   },
 
-  SEARCH_ACCOUNT: (state, payload) => {
-    state.toSearch = payload
+  SET_SORT_ORDER: (state, sortBy) => {
+    state.sortBy = sortBy
+  },
+  SEARCH_ACCOUNT: (state, searchAccount) => {
+    state.toSearch = searchAccount
   },
 
   DELETE_ACCOUNT: (state, acctObj) => {
@@ -63,6 +67,15 @@ const getters = {
     const currentIndex = state.accounts.indexOf(getters.getAccount(id))
 
     return currentIndex ? currentIndex - 1 : currentIndex
+  },
+
+  sortAccount: (state, getters) => {
+    return getters.searchResult.sort((objA, objB) => {
+      let x = objA[state.sortBy.prop]
+      let y = objB[state.sortBy.prop]
+
+      return state.sortBy.sortOrder ? x > y : x < y
+    })
   },
 
   searchResult: (state) => {
