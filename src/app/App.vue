@@ -23,7 +23,7 @@ export default {
     ModalDialog,
   },
   created() {
-    this.$store.dispatch('loadData')
+    this.$store.dispatch('fetchData')
   },
 }
 </script>
