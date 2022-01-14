@@ -9,8 +9,8 @@
       </h4>
 
       <button
-        v-if="$route.name != 'edit'"
-        @click="$router.push({ name: 'edit' })"
+        v-if="$route.name != 'account-edit'"
+        @click="$router.push({ name: 'account-edit' })"
         type="button"
         class="btn btn-default btn-light mx-1">
         <font-awesome-icon icon="pencil-alt" class="mr-md-1" />
