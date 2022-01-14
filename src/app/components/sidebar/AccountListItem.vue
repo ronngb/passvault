@@ -1,6 +1,6 @@
 <template>
 	<router-link
-		:to="{ name: 'detail', params: { id: accountItem.id } }"
+		:to="{ name: 'account-detail', params: { id: accountItem.id } }"
 		tag="li"
 		class="acct-item d-flex justify-content-start"
 		active-class="active">
@@ -16,6 +16,7 @@
 
 <script>
 export default {
+	name: 'AccountListItem',
 	props: { accountItem: Object },
 	filters: {
 		usernameValidate(value) {

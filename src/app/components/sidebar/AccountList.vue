@@ -5,13 +5,9 @@
     <div class="acct-list_header d-flex align-items-center px-2">
       <span>Sort by:</span>
       <span>
-        <select class="custom-select custom-select-sm border-0">
-          <option v-for="sort in sorts" :key="sort.sort" @click="sortBy = sort">
-            {{ sort.sort }}
-          </option>
-        </select>
+        <AccountSortSelect />
       </span>
-      <span class="ml-auto">{{ accountCount }} logins</span>
+      <span class="ml-auto">{{ accounts.length }} logins</span>
     </div>
     <!-- List acct. -->
     <div id="acct_list-item" class="d-flex flex-column">
@@ -19,18 +15,16 @@
         <AccountListItem
           v-for="account in accounts"
           :key="account.id"
-          :accountItem="account"
-        ></AccountListItem>
+          :accountItem="account" />
       </ul>
     </div>
     <!-- button -->
     <div class="new-acct p-3">
       <button
-        @click="$router.push({ name: 'addForm' })"
+        @click="$router.push({ name: 'account-create' })"
         type="button"
-        :disabled="this.$route.name == 'addForm'"
-        class="btn btn-secondary btn-block btn-sm"
-      >
+        :disabled="this.$route.name == 'account-create'"
+        class="btn btn-secondary btn-block btn-sm">
         Create New Account
       </button>
     </div>
@@ -38,37 +32,18 @@
 </template>
 
 <script>
-import AccountListItem from './AccountListItem.vue';
-import { mapGetters } from 'vuex';
+import AccountListItem from './AccountListItem.vue'
+import AccountSortSelect from './AccountSortSelect.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Acctlist',
+  name: 'AccountList',
   components: {
     AccountListItem,
+    AccountSortSelect,
   },
-  data() {
-    return {
-      sortBy: '',
-    };
-  },
-  mounted() {
-    this.sortBy = this.sorts[0];
-  },
-  computed: {
-    ...mapGetters(['accountCount', 'searchResult']),
-    sorts() {
-      return this.$store.state.sorts;
-    },
-    accounts() {
-      return this.searchResult.sort((objA, objB) => {
-        let x = objA[this.sortBy.prop];
-        let y = objB[this.sortBy.prop];
-
-        return this.sortBy.sortOrder ? x > y : x < y;
-      });
-    },
-  },
-};
+  computed: mapGetters({ accounts: 'sortAccount' }),
+}
 </script>
 
 <style scoped>
