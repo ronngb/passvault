@@ -1,42 +1,26 @@
 <template>
-  <form class="acct-info__form">
-    <!-- Username Start -->
-    <div class="form-row">
-      <div class="form-group col-8 col-md-5">
-        <label>Username</label>
-        <input
-          id="username"
-          type="text"
-          class="form-control"
-          v-model="formData.username" />
-      </div>
-    </div>
-    <!-- Password Start -->
-    <div class="form-row">
-      <div class="form-group col-8 col-md-5">
-        <label>Password</label>
-        <input
-          id="password"
-          type="password"
-          :class="{ 'is-invalid': hasError, 'form-control': true }"
-          v-model="formData.password" />
-        <div v-if="hasError" class="invalid-feedback">
-          Your password is required.
-        </div>
-      </div>
-    </div>
+  <form class="acct-edit-form">
+    <!-- ERROR: v-model -->
+    <BaseInput v-model="account.url" label="Website" readonly />
+    <BaseInput v-model="formData.username" icon="user" label="Username" />
+    <BaseInput
+      v-model="formData.password"
+      label="Password"
+      icon="lock"
+      :type="'password'"
+      maxlength="22" />
     <!-- EDIT BUTTONS -->
-    <div class="acct-edit_buttons">
+    <div class="buttons-container">
       <button
-        @click="updateAccount(account.id)"
-        type="button"
-        class="btn btn-default btn-light mr-1">
+        @click="animatePressed(account.id, $event)"
+        type="submit"
+        class="btn-lg btn-save">
         Save
       </button>
       <button
-        @click="$router.go(-1)"
+        @click="animatePressed($event)"
         type="button"
-        class="btn btn-default btn-light ml-1">
+        class="btn-lg btn-cancel">
         Cancel
       </button>
     </div>
@@ -44,8 +28,13 @@
 </template>
 
 <script>
+import BaseInput from '../components/base/BaseInput.vue'
+
 export default {
   name: 'AccountEdit',
+  components: {
+    BaseInput,
+  },
   props: {
     account: {
       type: Object,
@@ -75,7 +64,7 @@ export default {
       next()
     }
   },
-  mounted() {
+  created() {
     this.initFormData()
   },
   computed: {
@@ -86,6 +75,18 @@ export default {
     },
   },
   methods: {
+    animatePressed(event, id) {
+      event.target.classList.toggle('active')
+
+      setTimeout(() => {
+        event.target.classList.toggle('active')
+        if (event.target.type == 'submit') {
+          // ERROR
+          return this.updateAccount(id)
+        }
+        this.$router.go(-1)
+      }, 350)
+    },
     initFormData() {
       for (let prop in this.formData) this.formData[prop] = this.account[prop]
     },
@@ -104,4 +105,19 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.acct-edit-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.btn-save {
+  color: $color-secondary;
+  border: 0.0625rem solid #d1d9e6;
+}
+
+.btn-cancel {
+  color: $color-dark-grey;
+}
+</style>

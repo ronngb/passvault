@@ -1,53 +1,37 @@
 <template>
-	<form class="acct-info__form">
-		<!-- Username Start -->
-		<div class="form-row">
-			<div class="form-group col-8 col-md-5">
-				<label>Username</label>
-				<input
-					id="username"
-					type="text"
-					class="form-control-plaintext"
-					:value="account.username | usernameValidate"
-					readonly />
-			</div>
-			<div class="form-group col-4 col-md-5 align-self-end">
-				<button
-					@click="toClipboard(account.username, $event.target)"
-					type="button"
-					class="btn btn-default btn-light px-lg-4">
-					<font-awesome-icon icon="copy" class="mr-1" />
-					<span class="text-muted">Copy</span>
-				</button>
-			</div>
+	<form class="acct-detail-form">
+		<BaseInput v-model="account.url" label="Website" readonly />
+		<div>
+			<BaseInput v-model="account.username" label="Username" readonly />
+			<button
+				class="btn-sm"
+				type="button"
+				@click="toClipboard(account.username, $event)">
+				<font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
+			</button>
 		</div>
-		<!-- Password Start -->
-		<div class="form-row">
-			<div class="form-group col-8 col-md-5">
-				<label>Password</label>
-				<input
-					id="password"
-					type="password"
-					class="form-control-plaintext"
-					:value="account.password"
-					readonly />
-			</div>
-			<div class="form-group col-4 col-md-5 align-self-end">
-				<button
-					@click="toClipboard(account.password, $event.target)"
-					type="button"
-					class="btn btn-default btn-light px-lg-4">
-					<font-awesome-icon icon="copy" class="mr-1" />
-					<span class="text-muted">Copy</span>
-				</button>
-			</div>
+		<div>
+			<BaseInput
+				v-model="account.password"
+				label="Password"
+				:type="'password'"
+				readonly />
+			<button
+				class="btn-sm"
+				type="button"
+				@click="toClipboard(account.password, $event)">
+				<font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
+			</button>
 		</div>
 	</form>
 </template>
 
 <script>
+import BaseInput from '../components/base/BaseInput.vue'
+
 export default {
 	name: 'AccountDetail',
+	components: { BaseInput },
 	props: {
 		account: {
 			type: Object,
@@ -60,13 +44,14 @@ export default {
 		},
 	},
 	methods: {
-		toClipboard(txtCopied, evt) {
+		toClipboard(txtCopied, event) {
+			let evt = event.currentTarget
 			evt.disabled = true
-			evt.children[1].innerText = 'Copied'
+			evt.classList.toggle('active')
 			navigator.clipboard.writeText(txtCopied).then(
 				setTimeout(() => {
 					evt.disabled = false
-					evt.children[1].innerText = 'Copy'
+					evt.classList.toggle('active')
 				}, 4000)
 			)
 		},
@@ -74,4 +59,40 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.acct-detail-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+input {
+	display: inline-block;
+	text-indent: 0;
+}
+button {
+	margin: 0 20px;
+}
+
+.btn-sm:hover .copy-icon {
+	color: $color-primary;
+}
+
+.btn-sm.active .copy-icon {
+	color: $color-primary;
+}
+.slide-fade-enter {
+	transform: translateX(-10px);
+	opacity: 0;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+	transition: all 250ms ease;
+}
+
+.slide-fade-leave-to {
+	transform: translateX(-10px);
+	opacity: 0;
+}
+</style>

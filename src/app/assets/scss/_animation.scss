@@ -1,0 +1,19 @@
+@keyframes inset-rounded {
+  0%,
+  100% {
+    box-shadow: $bsd-rounded-btn;
+  }
+  50% {
+    box-shadow: $bsd-inset-rounded-btn;
+  }
+}
+
+@keyframes inset-primary {
+  0%,
+  100% {
+    box-shadow: $bsd-primary-btn;
+  }
+  50% {
+    box-shadow: $bsd-inset-primary-btn;
+  }
+}

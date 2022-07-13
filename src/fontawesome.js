@@ -1,8 +1,8 @@
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
-} from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+} from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faGlobe,
   faPencilAlt,
@@ -11,7 +11,15 @@ import {
   faCopy,
   faExclamationCircle,
   faSlash,
-} from '@fortawesome/free-solid-svg-icons';
+  faPlus,
+  faChevronDown,
+  faUserPlus,
+  faUser,
+  faLock,
+  faSearch,
+  faCheck,
+  faExclamation,
+} from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faGlobe,
@@ -20,10 +28,18 @@ library.add(
   faEye,
   faCopy,
   faExclamationCircle,
-  faSlash
-);
+  faSlash,
+  faPlus,
+  faChevronDown,
+  faUserPlus,
+  faUser,
+  faLock,
+  faSearch,
+  faCheck,
+  faExclamation
+)
 
 export default {
   FontAwesomeIcon,
   FontAwesomeLayers,
-};
+}

@@ -1,30 +1,15 @@
 <template>
-  <!-- TODO: make the search input center and the icon -->
-  <!-- READ the NAV tag in bootstrap -->
-  <nav
-    class="navbar navbar-light bg-light navbar-expand-md justify-content-md-start px-0 pb-2 border-bottom">
-    <a class="navbar-brand">
-      <img class="img-fluid" style="width: 32px" src="../../assets/logo.png" />
-    </a>
-    <!-- button toggler -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#acct-list">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- ./end -->
-    <!-- search input -->
-    <div class="col-md-4 px-0 ml-md-5">
-      <input
-        @keyup="SEARCH_ACCOUNT(searchItem)"
-        v-model="searchItem"
-        class="form-control"
-        type="search"
-        placeholder="Search" />
-    </div>
-  </nav>
+  <form action="">
+    <label for="Search">Search</label>
+    <input
+      @keyup="SEARCH_ACCOUNT(searchItem)"
+      class="search-input"
+      v-model="searchItem"
+      @focus="setFocus"
+      @blur="setFocus"
+      type="search" />
+    <font-awesome-icon :icon="['fas', 'search']" class="search-icon" />
+  </form>
 </template>
 
 <script>
@@ -37,23 +22,59 @@ export default {
       searchItem: '',
     }
   },
-  methods: mapMutations(['SEARCH_ACCOUNT']),
+  // REFACTOR: the mapMutations must be in computed property
+  // ERROR: if the searchItem is empty after the @blur event the return search is also empty, regardless the searchItem empty  it must return all the accounts
+  methods: {
+    ...mapMutations(['SEARCH_ACCOUNT']),
+    setFocus(event) {
+      event.target.previousSibling.classList.toggle('active')
+      event.target.nextSibling.classList.toggle('active')
+      if (event.type == 'blur') {
+        this.searchItem = ''
+      }
+    },
+  },
 }
 </script>
 
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style lang="scss" scoped>
+form {
+  position: relative;
+  color: $color-light-grey;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+label {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  margin-top: -10.5px;
+  transform: translateX(0);
+  transition: all 250ms ease-in-out 200ms;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+label.active {
+  transform: translateX(-25px);
+  opacity: 0;
 }
-a {
-  color: #42b983;
+
+.search-input {
+  height: 50px;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 4px 4px 6px rgba(187, 195, 206, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.7);
+}
+
+.search-icon {
+  position: absolute;
+  left: 2%;
+  top: 50%;
+  margin-top: -8px;
+  color: #90a4ae;
+  transition: transform 250ms ease-in-out;
+}
+
+.search-icon.active {
+  transform: rotate(90deg);
 }
 </style>

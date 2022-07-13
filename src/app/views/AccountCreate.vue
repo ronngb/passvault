@@ -1,87 +1,59 @@
 <template>
-  <!-- Need to change the attr. ID, Class, name conflict(acct-new) -->
-  <div id="acct-new">
-    <div class="acct-new__header d-lg-flex align-items-center">
-      <!-- this line will new component will be place -->
-      <h4 class="mr-auto mb-0">
-        <font-awesome-icon icon="globe" class="mr-2" />
-        Create New Account
-      </h4>
-      <!-- This <hr> will appear in mobile -->
-      <hr class="d-block d-lg-none" />
-    </div>
-    <!-- Header End -->
-    <hr class="d-none d-lg-block" />
-    <!-- Line Seperator -->
-
-    <form class="acct-new__form">
-      <!-- Website address(URL) Start -->
-      <div class="form-group acct-new_input col-11 col-md-5">
-        <label>Website address</label>
-        <input
-          type="text"
-          @blur="formData.url = autoAppend(formData.url)"
+  <transition name="scale-fade" mode="out-in" appear>
+    <section class="acct-create-section">
+      <header class="acct-create-header">
+        <font-awesome-icon
+          :icon="['fas', 'user-plus']"
+          class="user-plus-icon" />
+        <hgroup class="acct-create-heading">
+          <h1 class="main-heading">New Account</h1>
+          <h2 class="sub-heading">Create</h2>
+        </hgroup>
+        <div class="seperator"></div>
+      </header>
+      <form action="" @click.prevent="">
+        <BaseInput
           v-model="formData.url"
-          :class="{ 'form-control': true, 'is-invalid': errors[0] }"
-          id="website" />
-        <div class="invalid-feedback">Your website address is required.</div>
-      </div>
-      <!-- USERNAME START -->
-      <div class="form-group acct-new_input col-11 col-md-5">
-        <label>Username</label>
-        <input
-          type="text"
+          :valid="valids[0]"
+          :invalid="errors[0]"
+          label="Website"
+          icon="globe" />
+        <BaseInput
           v-model="formData.username"
-          :class="{ 'form-control': true, 'is-invalid': errors[1] }"
-          id="username" />
-        <div class="invalid-feedback">Your username is required.</div>
-      </div>
-      <!-- PASSWORD START -->
-      <div class="form-group acct-new_input">
-        <label>Password</label>
-        <div class="form-row align-items-center">
-          <div class="form-group pr-1 col-11 col-md-5">
-            <input
-              :type="inputType"
-              v-model="formData.password"
-              :class="{ 'form-control': true, 'is-invalid': errors[2] }"
-              id="password" />
-            <div class="invalid-feedback">Your password is required.</div>
-          </div>
-          <div class="form-group col-1 col-md-1" :class="{ 'mb-5': errors[2] }">
-            <font-awesome-layers
-              @click="inputType = inputType ? '' : 'password'"
-              style="font-size: 16px">
-              <font-awesome-icon :icon="['fas', 'eye']" />
-              <font-awesome-icon
-                v-if="inputType != 'password'"
-                :icon="['fas', 'slash']" />
-            </font-awesome-layers>
-          </div>
+          :valid="valids[1]"
+          :invalid="errors[1]"
+          label="Username"
+          icon="user" />
+        <BaseInput
+          v-model="formData.password"
+          :valid="valids[2]"
+          :invalid="errors[2]"
+          label="Password"
+          :type="'password'"
+          icon="lock"
+          maxlength="22" />
+        <div>
+          <button type="submit" class="btn-lg btn-save" @click="animatePressed">
+            Save
+          </button>
+          <button
+            type="button"
+            @click="animatePressed"
+            class="btn-lg btn-cancel">
+            Cancel
+          </button>
         </div>
-      </div>
-      <!-- It has to be natural gutter for every div tag -->
-      <!-- BUTTON START -->
-      <div class="acct-new_button">
-        <button @click="submitForm" type="button" class="btn mr-1">Save</button>
-        <button
-          @click="$router.go(-1)"
-          :disabled="account.accounts.length <= 0"
-          type="button"
-          class="btn ml-1">
-          Cancel
-        </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </section>
+  </transition>
 </template>
-<!-- eslint-disable -->
 <script>
-import dayjs from 'dayjs'
+import BaseInput from '../components/base/BaseInput.vue'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'AccountCreate',
+  components: { BaseInput },
   props: {
     refModal: {
       type: Object,
@@ -92,21 +64,18 @@ export default {
     return {
       formData: { url: '', username: '', password: '' },
       errors: [],
+      valids: [],
       inputType: 'password',
     }
   },
   beforeRouteLeave(routeTo, routeFrom, next) {
     if (this.formDataWatch) {
       this.refModal.modalOn().then((res) => {
-        if (res) {
-          next()
-        } else {
-          next(false)
-        }
+        return res ? next() : next(false)
       })
-    } else {
-      next()
+      return next(false)
     }
+    next()
   },
   computed: {
     ...mapState({ account: 'account' }),
@@ -115,11 +84,24 @@ export default {
     },
   },
   methods: {
+    animatePressed(event) {
+      event.target.classList.toggle('active')
+
+      setTimeout(() => {
+        event.target.classList.toggle('active')
+        if (event.target.type == 'submit') {
+          return this.submitForm()
+        }
+        this.$router.go(-1)
+      }, 350)
+    },
     submitForm() {
       this.errors = []
+      this.valids = []
 
-      Object.values(this.formData).forEach((obj) => {
+      Object.values(this.formData).forEach((obj, index) => {
         obj == 0 ? this.errors.push(1) : this.errors.push(0)
+        this.valids[index] = !this.errors[index]
       })
 
       if (!this.errors.includes(1)) {
@@ -139,45 +121,84 @@ export default {
 }
 </script>
 
-<style>
-/* #acct-new {
-  padding: 3rem 3rem;
-} */
-.acct-new_input {
-  padding-left: 0px !important;
-  padding-right: 5px !important;
-  margin: 2.375rem 0rem;
+<style lang="scss" scoped>
+.acct-create-section {
+  display: grid;
+  grid-template-columns: calc(100vw - 32px);
+  grid-template-rows: max-content 1fr;
+  height: 100%;
+  max-width: 490px;
+  // width: max-content;
 }
 
-.acct-new__input label {
-  margin-bottom: 0rem;
-  font-size: 0.8rem;
+.acct-create-header {
+  display: flex;
+  gap: 5px 8px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.acct-new__input input {
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
+.user-plus-icon {
+  font-size: 2.8em;
+  color: $color-light-grey;
 }
 
-.acct-new_button button {
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
-  margin-top: 2rem;
-  min-width: 100px;
+.acct-create-heading {
+  line-height: 0.9;
 }
 
-.form-check-input {
-  left: 20rem;
+.main-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: $color-dark-grey;
 }
 
-@media (max-width: 768px) {
-  #acct-new {
-    padding: 1.5rem 0.5rem;
-  }
+.sub-heading {
+  color: $color-dark-grey;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+}
 
-  .acct-new_button {
-    display: flex;
-    justify-content: center;
+.acct-create-section form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  /* align-content: center;*/
+  /*border: 1px solid black;*/
+  /*margin: auto 0;*/
+}
+
+.btn-save {
+  color: $color-secondary;
+  border: 0.0625rem solid #d1d9e6;
+}
+
+.btn-cancel {
+  color: $color-dark-grey;
+}
+
+.scale-fade-enter {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.scale-fade-enter-active {
+  transition-delay: 360ms;
+  transition-property: opacity, transform;
+  transition-duration: 45ms, 105ms;
+}
+.scale-fade-leave-active {
+  transition: opacity 75ms linear;
+}
+
+.scale-fade-leave-to {
+  opacity: 0;
+}
+
+@media screen and (min-width: 1200px) {
+  .acct-create-section {
+    grid-template-columns: 1fr;
   }
 }
 </style>
