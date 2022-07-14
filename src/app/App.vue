@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import './assets/scss/main.scss';
+
 #app {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
