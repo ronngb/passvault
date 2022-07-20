@@ -1,0 +1,15 @@
+@function top-shadow($depth) {
+  $primary-offset: nth(3 4 4 4 6 10, $depth) * -1px;
+  $blur: nth(1 2 3 4 5, $depth) * 2px;
+  $color: rgba($clr-top-shadow, nth(0.6 0.6 0.8 0.8 0.9, $depth));
+
+  @return $primary-offset $primary-offset $blur $color;
+}
+
+@function bottom-shadow($depth) {
+  $primary-offset: nth(3 4 4 4 6 10, $depth) * 1px;
+  $blur: nth(1 2 3 4 5, $depth) * 2px;
+  $color: rgba($clr-bot-shadow, nth(0.6 0.6 0.8 0.8 0.9, $depth));
+
+  @return $primary-offset $primary-offset $blur $color;
+}

@@ -1,0 +1,9 @@
+@mixin neumorp-shadow($depth, $inset: null) {
+  @if $depth < 1 {
+    box-shadow: none;
+  } @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` value.";
+  } @else {
+    box-shadow: $inset bottom-shadow($depth), $inset top-shadow($depth);
+  }
+}
