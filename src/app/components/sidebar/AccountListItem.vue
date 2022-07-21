@@ -1,23 +1,26 @@
 <template>
 	<router-link
-		:to="{ name: 'account-detail', params: { id: accountItem.id } }"
+		:to="{ name: 'account-detail', params: { id: account.id } }"
 		tag="li"
-		class="pv-acct-list-item"
+		class="acct-list-item"
 		active-class="active">
-		<font-awesome-icon :icon="['fas', 'globe']" class="globe-icon" />
-		<div class="acct-info">
-			<span class="acct-domain">{{ accountItem.domain }}</span>
-			<span class="acct-username">
-				<small>{{ accountItem.username | usernameValidate }}</small>
-			</span>
-		</div>
+		<BaseIcon :icon="'globe'" :indefault="false" />
+		<h2 class="acct-list-item-heading">
+			<span>{{ account.domain }}</span>
+			<span>{{ account.username | usernameValidate }}</span>
+		</h2>
 	</router-link>
 </template>
 
 <script>
+import BaseIcon from '../base/BaseIcon.vue'
+
 export default {
 	name: 'AccountListItem',
-	props: { accountItem: Object },
+	props: { account: Object },
+	components: {
+		BaseIcon,
+	},
 	filters: {
 		usernameValidate(value) {
 			return value ? value : '(no username)'
@@ -27,43 +30,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pv-acct-list-item {
-	padding: 0.75rem 1.25rem;
-	margin: 10px 0;
+svg {
+	font-size: 4rem;
+}
+
+span {
+	&:nth-child(1) {
+		font-size: 1.8rem;
+	}
+	&:nth-child(2) {
+		display: block;
+		font-family: $nunito-sans;
+	}
+}
+
+.acct-list-item {
 	display: flex;
 	column-gap: 10px;
-	// width: 280px;
-}
-
-.pv-acct-list-item:hover {
+	margin: 10px 0;
+	padding: 1.2rem 1.25rem;
 	border-radius: 10px;
-	box-shadow: 4px 4px 8px rgba(163, 177, 198, 0.8),
-		-4px -4px 8px rgba(255, 255, 255, 0.9);
-	transition: box-shadow 0.6s cubic-bezier(0.49, 0.04, 0, 1.14);
-	cursor: pointer;
-}
 
-.globe-icon {
-	font-size: 2.5em;
-	color: $color-light-grey;
+	&:hover {
+		@include neumorp-shadow(3);
+		transition: box-shadow 0.6s cubic-bezier(0.49, 0.04, 0, 1.14);
+	}
 }
-
-.acct-info {
-	color: $color-dark-grey;
-	line-height: 1.2;
-}
-
-.acct-domain {
-	display: block;
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.acct-username {
-	font-family: 'Nunito Sans', sans-serif;
-	font-weight: bold;
-}
-/*TODO:
-		
-*/
 </style>
