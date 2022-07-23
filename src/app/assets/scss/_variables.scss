@@ -1,3 +1,32 @@
+// FONTS
+$josefin-sans: 'Josefin Sans', sans-serif;
+$nunito-sans: 'Nunito Sans', sans-serif;
+
+// COLORS
+//Dark-grey
+$primary-color: #546e7a;
+//Light-grey
+$secondary-color: #90a4ae;
+//Purple
+$tertiary-color: #9574cd;
+
+// Alert
+$danger: #dd2626;
+$success: #2e9f36;
+
+// Background
+$primary-bg-color: #e6eef8;
+
+// box-shadow
+$top-shadow-color: #fff;
+$bot-shadow-color: #a3b1c6;
+
+// button depth
+$float: 4;
+$contained: 5;
+$mini: 6;
+
+// OLD COLORS
 $color-primary: #2f89ff;
 $color-secondary: #9574cd;
 $color-dark-grey: #546e7a;
@@ -6,14 +35,18 @@ $color-danger: #dd2626;
 $color-success: #2e9f36;
 $color-primary-bg: #e6eef8;
 
+// box-shadow old
+$clr-bot-shadow: #a3b1c6;
+$clr-top-shadow: #fff;
+
 $bsd-rounded-btn: inset 0 0 15px rgba(163, 177, 198, 0),
   inset 0 0 20px rgba(255, 255, 255, 0), -4px -4px 8px rgba(255, 255, 255, 0.6),
-  4px 4px 8px rgba(163, 177, 198, 0.4),
+  4px 4px 8px rgba(163, 177, 198, 0.6),
   inset 0px 0px 4px rgba(255, 255, 255, 0.2);
 
-$bsd-inset-rounded-btn: inset -4px -4px 8px rgba(255, 255, 255, 0.9),
+$bsd-inset-rounded-btn: inset -4px -4px 8px rgba(255, 255, 255, 0.6),
   inset 4px 4px 8px rgba(163, 177, 198, 0.6),
-  0px 0px 5px rgba(255, 255, 255, 0.6);
+  0px 0px 4px rgba(255, 255, 255, 0.2);
 
 $bsd-primary-btn: inset 0 0 15px rgba(163, 177, 198, 0),
   inset 0 0 20px rgba(255, 255, 255, 0), -4px -4px 6px rgba(255, 255, 255, 0.5),
