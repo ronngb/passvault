@@ -13,14 +13,9 @@
 </template>
 
 <script>
-import BaseIcon from '../base/BaseIcon.vue'
-
 export default {
 	name: 'AccountListItem',
 	props: { account: Object },
-	components: {
-		BaseIcon,
-	},
 	filters: {
 		usernameValidate(value) {
 			return value ? value : '(no username)'

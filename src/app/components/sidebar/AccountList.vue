@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: make the Base vue global -->
   <nav class="acct-list-nav">
     <transition-group name="slide" tag="ul">
       <AccountListItem
@@ -20,7 +19,6 @@
 import AccountListItem from './AccountListItem.vue'
 import AccountSortSelect from './AccountSortSelect.vue'
 import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
-import BaseIcon from '../base/BaseIcon.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,7 +26,6 @@ export default {
   components: {
     AccountListItem,
     AccountSortSelect,
-    BaseIcon,
   },
   mixins: [neumorpMixin],
   computed: mapGetters({ accounts: 'sortAccount' }),
