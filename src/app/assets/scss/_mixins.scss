@@ -27,3 +27,15 @@
     box-shadow: neumorp-initial($depth);
   }
 }
+
+@mixin neumorp-keyframes($depth) {
+  @keyframes buttonClicked {
+    0%,
+    100% {
+      box-shadow: neumorp-initial($depth);
+    }
+    50% {
+      box-shadow: neumorp-press($depth);
+    }
+  }
+}
