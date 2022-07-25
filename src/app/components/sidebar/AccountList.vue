@@ -34,8 +34,8 @@ export default {
 
 <style lang="scss" scoped>
 svg {
-  color: $tertiary-color;
-  font-size: 2rem;
+  color: $tertiary-color !important;
+  font-size: 2rem !important;
 }
 
 .acct-list-nav {

@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 svg {
-	font-size: 4rem;
+	font-size: 4rem !important;
 }
 
 span {
