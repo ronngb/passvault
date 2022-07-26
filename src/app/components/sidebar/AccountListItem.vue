@@ -45,6 +45,7 @@ span {
 	margin: 10px 0;
 	padding: 1.2rem 1.25rem;
 	border-radius: 10px;
+	transition: all 0.5s ease;
 
 	&:hover {
 		@include neumorp-shadow(3);

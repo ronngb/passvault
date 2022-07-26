@@ -1,6 +1,6 @@
 <template>
   <nav class="acct-list-nav">
-    <transition-group name="slide" tag="ul">
+    <transition-group name="list-transition" tag="ul" appear>
       <AccountListItem
         v-for="account in accounts"
         :key="account.id"
@@ -61,4 +61,16 @@ svg {
 }
 
 @include neumorp-keyframes($float);
+
+.list-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.list-transition-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.list-transition-leave-active {
+  position: absolute;
+}
 </style>
