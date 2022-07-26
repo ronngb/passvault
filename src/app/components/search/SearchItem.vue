@@ -1,43 +1,29 @@
 <template>
   <form>
-    <label for="Search">Search</label>
+    <label for="search">Search</label>
     <input
-      type="search"
-      class="search-input"
-      v-model="searchItem"
-      @focus="setFocus"
-      @blur="setFocus"
-      @keyup="SEARCH_ACCOUNT(searchItem)" />
+      id="search"
+      v-model="searchAccount"
+      @blur="searchAccount = ''"
+      @keyup="SEARCH_ACCOUNT(searchAccount)" />
     <BaseIcon :icon="'search'" />
   </form>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
-import BaseIcon from '../base/BaseIcon.vue'
 
 export default {
-  name: 'SearchItem',
-  components: {
-    BaseIcon,
-  },
+  name: 'searchAccount',
   data() {
     return {
-      searchItem: '',
+      searchAccount: '',
     }
   },
   // REFACTOR: the mapMutations must be in computed property
-  // ERROR: if the searchItem is empty after the @blur event the return search is also empty, regardless the searchItem empty  it must return all the accounts
+  // ERROR: if the searchAccount is empty after the @blur event the return search is also empty, regardless the searchAccount empty  it must return all the accounts
   methods: {
     ...mapMutations(['SEARCH_ACCOUNT']),
-    setFocus(event) {
-      // REFACTOR: maybe the target api is redundant
-      event.target.previousSibling.classList.toggle('active')
-      event.target.nextSibling.classList.toggle('active')
-      if (event.type == 'blur') {
-        this.searchItem = ''
-      }
-    },
   },
 }
 </script>
@@ -45,6 +31,17 @@ export default {
 <style lang="scss" scoped>
 form {
   position: relative;
+
+  &:focus-within {
+    label {
+      opacity: 0;
+      transform: translateX(-25px);
+    }
+
+    svg {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 label {
@@ -53,27 +50,15 @@ label {
   margin-top: -10.5px;
   transform: translateX(0);
   transition: all 0.25s ease-in-out 0.2s;
+}
 
-  &.active {
-    opacity: 0;
-    transform: translateX(-25px);
-  }
+input {
+  height: 50px;
+  border-radius: 50px;
+  @include neumorp-shadow(2);
 }
 
 svg {
   transition: transform 0.25s ease-in-out;
-
-  &.active {
-    transform: rotate(90deg);
-  }
-}
-
-.search-input {
-  height: 50px;
-  border-radius: 50px;
-  // TODO: make the rgba smaller
-  box-shadow: 4px 4px 6px rgba(187, 195, 206, 0.6),
-    -5px -5px 7px rgba(255, 255, 255, 0.7);
-  // font-weight: 600;
 }
 </style>
