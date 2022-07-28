@@ -1,0 +1,10 @@
+.primary-heading {
+  display: flex;
+  flex-direction: column;
+  &-main {
+    font-size: 2rem;
+  }
+  &-sub {
+    font-family: $nunito-sans;
+  }
+}
