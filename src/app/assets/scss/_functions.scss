@@ -1,19 +1,19 @@
 @use 'sass:list';
 
 @function top-shadow($depth, $inset: null) {
-  $primary-offset: nth(3 4 4 4 6 10, $depth) * -1px;
-  $blur: nth(1 2 3 4 5, $depth) * 2px;
-  $color: rgba($top-shadow-color, nth(0.6 0.6 0.8 0.6 0.9, $depth));
+  $offset: -4px;
+  $blur: nth(2 3 3 4, $depth) * 2px;
+  $color: rgba($top-shadow-color, nth(0.6 0.6 0.5 0.8, $depth));
 
-  @return $inset $primary-offset $primary-offset $blur $color;
+  @return $inset $offset $offset $blur $color;
 }
 
 @function bottom-shadow($depth, $inset: null) {
-  $primary-offset: nth(3 4 4 4 6 10, $depth) * 1px;
-  $blur: nth(1 2 3 4 5, $depth) * 2px;
-  $color: rgba($bot-shadow-color, nth(0.6 0.6 0.8 0.6 0.9, $depth));
+  $offset: 4px;
+  $blur: nth(2 3 3 4, $depth) * 2px;
+  $color: rgba($bot-shadow-color, nth(0.6 0.6 0.5 0.8, $depth));
 
-  @return $inset $primary-offset $primary-offset $blur $color;
+  @return $inset $offset $offset $blur $color;
 }
 
 @function neumorp-initial($depth) {
@@ -32,10 +32,18 @@
 }
 
 @function neumorp-press($depth) {
-  @if $depth < 4 or $depth > 6 {
-    @warn "Invalid $depth `#{$depth}` value, choose from 4 to 6.";
+  @if depth-verify($depth) {
+    @warn "Invalid $depth `#{$depth}` value.";
   } @else {
     @return top-shadow($depth, inset), bottom-shadow($depth, inset),
       0px 0px 4px rgba($top-shadow-color, 0.2);
+  }
+}
+
+@function depth-verify($depth) {
+  @if $depth < 1 or $depth > 4 {
+    @return true;
+  } @else {
+    @return false;
   }
 }

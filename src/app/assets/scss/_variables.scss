@@ -23,8 +23,8 @@ $bot-shadow-color: #a3b1c6;
 
 // button depth
 $float: 4;
-$contained: 5;
-$mini: 6;
+$contained: 3;
+$mini: 3;
 
 // OLD COLORS
 $color-primary: #2f89ff;
@@ -44,14 +44,14 @@ $bsd-rounded-btn: inset 0 0 15px rgba(163, 177, 198, 0),
   4px 4px 8px rgba(163, 177, 198, 0.6),
   inset 0px 0px 4px rgba(255, 255, 255, 0.2);
 
-$bsd-inset-rounded-btn: inset -4px -4px 8px rgba(255, 255, 255, 0.6),
-  inset 4px 4px 8px rgba(163, 177, 198, 0.6),
-  0px 0px 4px rgba(255, 255, 255, 0.2);
-
 $bsd-primary-btn: inset 0 0 15px rgba(163, 177, 198, 0),
   inset 0 0 20px rgba(255, 255, 255, 0), -4px -4px 6px rgba(255, 255, 255, 0.5),
   4px 4px 6px rgba(163, 177, 198, 0.5),
   inset 0px 0px 4px rgba(255, 255, 255, 0.2);
+
+$bsd-inset-rounded-btn: inset -4px -4px 8px rgba(255, 255, 255, 0.6),
+  inset 4px 4px 8px rgba(163, 177, 198, 0.6),
+  0px 0px 4px rgba(255, 255, 255, 0.2);
 
 $bsd-inset-primary-btn: inset -4px -4px 6px rgba(255, 255, 255, 0.5),
   inset 4px 4px 6px rgba(163, 177, 198, 0.5),

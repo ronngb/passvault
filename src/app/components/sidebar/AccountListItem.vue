@@ -48,7 +48,7 @@ span {
 	transition: all 0.5s ease;
 
 	&:hover {
-		@include neumorp-shadow(3);
+		@include neumorp-shadow(2);
 		transition: box-shadow 0.6s cubic-bezier(0.49, 0.04, 0, 1.14);
 	}
 }
