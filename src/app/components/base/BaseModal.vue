@@ -125,20 +125,7 @@ button:nth-child(1) {
 }
 
 // Transition Class
-.scale-fade-enter {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
 .scale-fade-enter-active {
   @extend .center;
-  transition: opacity 45ms 350ms, transform 150ms;
-}
-.scale-fade-leave-active {
-  transition: opacity 75ms linear;
-}
-
-.scale-fade-leave-to {
-  opacity: 0;
 }
 </style>
