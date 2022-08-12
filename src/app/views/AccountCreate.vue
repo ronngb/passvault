@@ -1,31 +1,29 @@
 <template>
   <transition name="scale-fade" mode="out-in" appear>
-    <section class="acct-create-section">
+    <section>
       <header class="acct-create-header">
-        <font-awesome-icon
-          :icon="['fas', 'user-plus']"
-          class="user-plus-icon" />
-        <hgroup class="acct-create-heading">
-          <h1 class="main-heading">New Account</h1>
-          <h2 class="sub-heading">Create</h2>
-        </hgroup>
+        <BaseIcon :icon="'user-plus'" :indefault="false" />
+        <h1 class="primary-heading">
+          <span class="primary-heading-main">New Account</span>
+          <span class="primary-heading-sub">Create</span>
+        </h1>
         <div class="seperator"></div>
       </header>
-      <form action="" @click.prevent="">
+      <form @click.prevent="">
         <BaseInput
-          v-model="formData.url"
+          v-model="acctData.url"
           :valid="valids[0]"
           :invalid="errors[0]"
           label="Website"
           icon="globe" />
         <BaseInput
-          v-model="formData.username"
+          v-model="acctData.username"
           :valid="valids[1]"
           :invalid="errors[1]"
           label="Username"
           icon="user" />
         <BaseInput
-          v-model="formData.password"
+          v-model="acctData.password"
           :valid="valids[2]"
           :invalid="errors[2]"
           label="Password"
@@ -33,44 +31,52 @@
           icon="lock"
           maxlength="22" />
         <div>
-          <button type="submit" class="btn-lg btn-save" @click="animatePressed">
+          <button
+            type="submit"
+            class="btn-save"
+            v-click:contained="() => submitForm()">
             Save
           </button>
           <button
             type="button"
-            @click="animatePressed"
-            class="btn-lg btn-cancel">
+            v-click:contained="() => $router.go(-1)"
+            class="btn-cancel">
             Cancel
           </button>
         </div>
       </form>
+      <BaseModal ref="baseModal">
+        <template #header>Discard unsaved changes?</template>
+        <template #paragraph>All unsaved changes will be lost.</template>
+        Discard
+      </BaseModal>
     </section>
   </transition>
 </template>
 <script>
 import BaseInput from '../components/base/BaseInput.vue'
+import BaseModal from '../components/base/BaseModal.vue'
+import AcctService from '@/app/services/AcctService'
+import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'AccountCreate',
-  components: { BaseInput },
-  props: {
-    refModal: {
-      type: Object,
-      required: true,
-    },
-  },
+  components: { BaseInput, BaseModal },
+  mixins: [neumorpMixin],
+
   data() {
     return {
-      formData: { url: '', username: '', password: '' },
       errors: [],
       valids: [],
       inputType: 'password',
+      acctData: this.initAccountObj(),
     }
   },
+  // NOTE: same hook with AccountEdit
   beforeRouteLeave(routeTo, routeFrom, next) {
-    if (this.formDataWatch) {
-      this.refModal.modalOn().then((res) => {
+    if (this.validateAcctData.includes(0)) {
+      this.$refs.baseModal.confirm().then((res) => {
         return res ? next() : next(false)
       })
       return next(false)
@@ -78,57 +84,77 @@ export default {
     next()
   },
   computed: {
-    ...mapState({ account: 'account' }),
-    formDataWatch() {
-      return !Object.values(this.formData).every((value) => value === '')
+    validateAcctData() {
+      let tempArr = []
+      const objKeys = ['url', 'username', 'password']
+
+      Object.keys(this.acctData).forEach((key) => {
+        if (objKeys.includes(key)) {
+          this.acctData[key] == '' ? tempArr.push(1) : tempArr.push(0)
+        }
+      })
+      return tempArr
     },
   },
   methods: {
-    animatePressed(event) {
-      event.target.classList.toggle('active')
+    initAccountObj() {
+      let date = new Date()
 
-      setTimeout(() => {
-        event.target.classList.toggle('active')
-        if (event.target.type == 'submit') {
-          return this.submitForm()
-        }
-        this.$router.go(-1)
-      }, 350)
-    },
-    submitForm() {
-      this.errors = []
-      this.valids = []
-
-      Object.values(this.formData).forEach((obj, index) => {
-        obj == 0 ? this.errors.push(1) : this.errors.push(0)
-        this.valids[index] = !this.errors[index]
-      })
-
-      if (!this.errors.includes(1)) {
-        // TODO: Possible to make this async
-        this.$store.dispatch('storeAccount', this.formData)
-        this.clearForm()
+      return {
+        url: '',
+        username: '',
+        password: '',
+        favicon: '',
+        dates: {
+          created: date.toISOString(),
+          last_modified: date.toISOString(),
+        },
       }
     },
+    submitForm() {
+      this.errors = this.validateAcctData
+      if (!this.errors.includes(1)) {
+        this.$store
+          .dispatch('storeAccount', {
+            ...this.acctData,
+            domain: this.sanitizeUrl(),
+          })
+          .then((res) => {
+            // TODO: call $router.push()
+            this.acctData = this.initAccountObj()
+          })
+          .catch((err) => console.log(err))
+      }
+    },
+    sanitizeUrl() {
+      const regex = /(http(s?)):\/\/|ww(w|3)./gi
+
+      return this.acctData.url.replace(regex, '')
+    },
+
+    // NOTE: autoAppend must be at input with @blur event
     autoAppend(url) {
       const scheme = 'https://'
       return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url
-    },
-    clearForm() {
-      for (let input in this.formData) this.formData[input] = ''
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.acct-create-section {
-  display: grid;
-  grid-template-columns: calc(100vw - 32px);
-  grid-template-rows: max-content 1fr;
-  height: 100%;
-  max-width: 490px;
-  // width: max-content;
+svg {
+  font-size: 4.48rem !important;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(497.6px - 57.8px);
+}
+
+button:nth-child(1) {
+  color: $tertiary-color;
 }
 
 .acct-create-header {
@@ -138,45 +164,16 @@ export default {
   align-items: center;
 }
 
-.user-plus-icon {
-  font-size: 2.8em;
-  color: $color-light-grey;
-}
-
-.acct-create-heading {
-  line-height: 0.9;
-}
-
-.main-heading {
-  font-size: 20px;
-  font-weight: 700;
-  color: $color-dark-grey;
-}
-
-.sub-heading {
-  color: $color-dark-grey;
-  font-family: 'Nunito Sans', sans-serif;
+.contained-btn {
+  @include neumorp-button(9.5rem, 3.7rem, 10px, $contained);
+  margin: 0 10px;
   font-weight: bold;
-  font-size: 13px;
+  &.clicked {
+    animation: buttonClicked 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  }
 }
 
-.acct-create-section form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  /* align-content: center;*/
-  /*border: 1px solid black;*/
-  /*margin: auto 0;*/
-}
-
-.btn-save {
-  color: $color-secondary;
-  border: 0.0625rem solid #d1d9e6;
-}
-
-.btn-cancel {
-  color: $color-dark-grey;
-}
+@include neumorp-keyframes($contained);
 
 .scale-fade-enter {
   opacity: 0;
@@ -184,21 +181,14 @@ export default {
 }
 
 .scale-fade-enter-active {
-  transition-delay: 360ms;
-  transition-property: opacity, transform;
-  transition-duration: 45ms, 105ms;
+  transition: opacity 45ms 350ms, transform 150ms 350ms ease-out;
 }
+
 .scale-fade-leave-active {
-  transition: opacity 75ms linear;
+  transition: opacity 75ms ease-in;
 }
 
 .scale-fade-leave-to {
   opacity: 0;
-}
-
-@media screen and (min-width: 1200px) {
-  .acct-create-section {
-    grid-template-columns: 1fr;
-  }
 }
 </style>
