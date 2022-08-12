@@ -1,4 +1,6 @@
 import dayjs from 'dayjs'
+import axios from 'axios'
+import AcctService from '@/app/services/AcctService'
 
 const state = {
   accounts: [],
@@ -10,18 +12,8 @@ const mutations = {
   SET_ACCOUNTS: (state, payload) => {
     state.accounts = payload
   },
-  STORE_ACCOUNT: (state, payload) => {
-    const regex = /(http(s?)):\/\/|ww(w|3)./gi
-    // TODO: Make the id random
-    const accountObj = {
-      ...payload,
-      id: state.accounts.length + 1,
-      domain: payload.url.replace(regex, ''),
-      created: dayjs().format('MMMM, D YYYY'),
-      last_modified: dayjs().format('MMMM, D YYYY'),
-      last_used: dayjs().format('MMMM, D YYYY'),
-    }
-    state.accounts.push(accountObj)
+  STORE_ACCOUNT: (state, account) => {
+    state.accounts.push(account)
   },
   UPDATE_ACCOUNT: (state, { accountId, username, password }) => {
     const data = state.accounts.find((acctObj) => acctObj.id == accountId)
@@ -40,11 +32,22 @@ const mutations = {
   DELETE_ACCOUNT: (state, acctObj) => {
     state.accounts.splice(state.accounts.indexOf(acctObj), 1)
   },
+
+  UPDATE_FAVE: (state, favicon) => {
+    console.log(favicon)
+  },
 }
 
 const actions = {
   storeAccount: ({ commit }, account) => {
-    commit('STORE_ACCOUNT', account)
+    return AcctService.storeAccount(account)
+      .then((res) =>
+        commit('STORE_ACCOUNT', {
+          ...account,
+          id: res.data.name,
+        })
+      )
+      .catch((err) => err)
   },
 
   updateAccount: ({ commit }, account) => {
@@ -53,6 +56,24 @@ const actions = {
 
   deleteAccount({ getters, commit }, accountId) {
     commit('DELETE_ACCOUNT', getters.getAccount(accountId))
+  },
+
+  getFavicon({ state, commit }, accountId) {
+    const account = state.accounts.find((account) => account.id == accountId)
+    // TODO: refactor this FN() then commit all done component b4 proceesing with GET API
+    // NOTE: find a way that re request favicon if response is error
+    if (account.favicon == '') {
+      AcctService.getFavicon(account.domain)
+        .then((res) => {
+          const data = {
+            favicon: res[0].src,
+          }
+          AcctService.updateAccount(account.id, data)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+        })
+        .catch((err) => console.log(err))
+    }
   },
 }
 
