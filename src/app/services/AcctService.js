@@ -25,15 +25,18 @@ const getIcons = (obj, index, arr) => {
 }
 
 export default {
+  getAccounts() {
+    return apiClient.get('/acct.json')
+  },
   storeAccount(account) {
     return apiClient.post('/acct.json', account)
+  },
+  updateAccount(id, data) {
+    return apiClient.patch(`acct/${id}.json`, data)
   },
   getFavicon(domain) {
     return axios
       .get(`https://favicongrabber.com/api/grab/${domain}`)
       .then((res) => res.data.icons.filter(getIcons))
-  },
-  updateAccount(id, data) {
-    return apiClient.patch(`acct/${id}.json`, data)
   },
 }

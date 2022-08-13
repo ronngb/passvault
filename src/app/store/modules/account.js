@@ -9,8 +9,16 @@ const state = {
 }
 
 const mutations = {
-  SET_ACCOUNTS: (state, payload) => {
-    state.accounts = payload
+  SET_ACCOUNTS: (state, accounts) => {
+    let acctObj = {}
+
+    for (const key in accounts) {
+      acctObj.id = key
+      for (const prop in accounts[key]) {
+        acctObj[prop] = accounts[key][prop]
+      }
+      state.accounts.push(Object.assign({}, acctObj))
+    }
   },
   STORE_ACCOUNT: (state, account) => {
     state.accounts.push(account)
@@ -33,12 +41,20 @@ const mutations = {
     state.accounts.splice(state.accounts.indexOf(acctObj), 1)
   },
 
-  UPDATE_FAVE: (state, favicon) => {
-    console.log(favicon)
+  UPDATE_V2: (state, account) => {
+    const data = state.accounts.find((acctObj) => acctObj.id == account.id)
+    for (const key in account) {
+      data[key] = account[key]
+    }
   },
 }
 
 const actions = {
+  fetchAccounts: ({ commit }) => {
+    AcctService.getAccounts()
+      .then((res) => commit('SET_ACCOUNTS', res.data))
+      .catch((err) => console.log(err))
+  },
   storeAccount: ({ commit }, account) => {
     return AcctService.storeAccount(account)
       .then((res) =>
@@ -58,22 +74,18 @@ const actions = {
     commit('DELETE_ACCOUNT', getters.getAccount(accountId))
   },
 
-  getFavicon({ state, commit }, accountId) {
-    const account = state.accounts.find((account) => account.id == accountId)
-    // TODO: refactor this FN() then commit all done component b4 proceesing with GET API
+  getFavicon({ state, commit }, account) {
     // NOTE: find a way that re request favicon if response is error
-    if (account.favicon == '') {
-      AcctService.getFavicon(account.domain)
-        .then((res) => {
-          const data = {
-            favicon: res[0].src,
-          }
-          AcctService.updateAccount(account.id, data)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
-        })
-        .catch((err) => console.log(err))
-    }
+    AcctService.getFavicon(account.domain)
+      .then((res) => {
+        commit('UPDATE_V2', { id: account.id, favicon: res[0].src })
+        // PLACE THE COMMIT HERE
+
+        AcctService.updateAccount(account.id, { favicon: res[0].src })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err))
+      })
+      .catch((err) => err)
   },
 }
 
