@@ -4,29 +4,46 @@
 		tag="li"
 		class="acct-list-item"
 		active-class="active">
-		<BaseIcon :icon="'globe'" :indefault="false" />
-		<h2 class="acct-list-item-heading">
-			<span>{{ account.domain }}</span>
-			<span>{{ account.username | usernameValidate }}</span>
+		<img v-if="account.favicon" :src="account.favicon" alt="" />
+		<BaseIcon v-else :icon="'globe'" :indefault="false" />
+		<h2 class="">
+			<span>{{ domain }}</span>
+			<span>{{ username }}</span>
 		</h2>
 	</router-link>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
 	name: 'AccountListItem',
 	props: { account: Object },
-	filters: {
-		usernameValidate(value) {
-			return value ? value : '(no username)'
+	computed: {
+		domain() {
+			let domain = this.account.domain
+			return (
+				domain.charAt(0).toUpperCase() + domain.slice(1, domain.indexOf('.'))
+			)
+		},
+		username() {
+			return this.account.username ? this.account.username : '(no username)'
 		},
 	},
+	mounted() {
+		if (!this.account.favicon) this.getFavicon(this.account)
+	},
+	methods: mapActions(['getFavicon']),
 }
 </script>
 
 <style lang="scss" scoped>
 svg {
-	font-size: 4rem !important;
+	font-size: 3.2rem !important;
+}
+
+img {
+	height: 3.2rem;
 }
 
 span {
