@@ -28,7 +28,8 @@ export default {
     AccountSortSelect,
   },
   mixins: [neumorpMixin],
-  computed: mapGetters({ accounts: 'sortAccount' }),
+  // TODO: change to mapState
+  computed: mapGetters({ accounts: 'getAccounts' }),
 }
 </script>
 

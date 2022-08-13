@@ -1,10 +1,11 @@
 <template>
-  <form>
+  <form @submit.prevent="">
     <label for="search">Search</label>
     <input
       id="search"
       v-model="searchAccount"
-      @blur="searchAccount = ''"
+      @blur="searchAccount = null"
+      @focus="SEARCH_ACCOUNT(searchAccount)"
       @keyup="SEARCH_ACCOUNT(searchAccount)" />
     <BaseIcon :icon="'search'" />
   </form>
@@ -20,11 +21,7 @@ export default {
       searchAccount: '',
     }
   },
-  // REFACTOR: the mapMutations must be in computed property
-  // ERROR: if the searchAccount is empty after the @blur event the return search is also empty, regardless the searchAccount empty  it must return all the accounts
-  methods: {
-    ...mapMutations(['SEARCH_ACCOUNT']),
-  },
+  methods: mapMutations(['SEARCH_ACCOUNT']),
 }
 </script>
 
@@ -55,7 +52,7 @@ label {
 input {
   height: 50px;
   border-radius: 50px;
-  @include neumorp-shadow(2);
+  @include neumorp-shadow(1);
 }
 
 svg {

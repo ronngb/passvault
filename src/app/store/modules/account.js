@@ -23,8 +23,9 @@ const mutations = {
   STORE_ACCOUNT: (state, account) => {
     state.accounts.push(account)
   },
-  UPDATE_ACCOUNT: (state, { accountId, username, password }) => {
-    const data = state.accounts.find((acctObj) => acctObj.id == accountId)
+  UPDATE_ACCOUNT: (state, getters, { accountId, username, password }) => {
+    // const data = state.accounts.find((acctObj) => acctObj.id == accountId)
+    const data = getters.getAccount(accountId)
     data.username = username
     data.password = password
     data.last_modified = dayjs().format('MMMM, D YYYY')
@@ -56,6 +57,8 @@ const actions = {
       .catch((err) => console.log(err))
   },
   storeAccount: ({ commit }, account) => {
+    // BUGS: after adding new account if using search the account list
+    // needs to fetch or set toSearch to null
     return AcctService.storeAccount(account)
       .then((res) =>
         commit('STORE_ACCOUNT', {
@@ -75,11 +78,9 @@ const actions = {
   },
 
   getFavicon({ state, commit }, account) {
-    // NOTE: find a way that re request favicon if response is error
     AcctService.getFavicon(account.domain)
       .then((res) => {
         commit('UPDATE_V2', { id: account.id, favicon: res[0].src })
-        // PLACE THE COMMIT HERE
 
         AcctService.updateAccount(account.id, { favicon: res[0].src })
           .then((res) => console.log(res))
@@ -102,22 +103,24 @@ const getters = {
     return currentIndex ? currentIndex - 1 : currentIndex
   },
 
+  getAccounts: (state) => {
+    return state.accounts.filter((obj) => {
+      if (!state.toSearch) return true
+      if (
+        obj.domain.match(state.toSearch) ||
+        obj.username.match(state.toSearch)
+      ) {
+        return true
+      }
+    })
+  },
+
   sortAccount: (state, getters) => {
     return getters.searchResult.sort((objA, objB) => {
       let x = objA[state.sortBy.prop]
       let y = objB[state.sortBy.prop]
 
       return state.sortBy.sortOrder ? x > y : x < y
-    })
-  },
-
-  searchResult: (state) => {
-    return state.accounts.filter((obj) => {
-      if (
-        obj.domain.match(state.toSearch) ||
-        obj.username.match(state.toSearch)
-      )
-        return true
     })
   },
 }
