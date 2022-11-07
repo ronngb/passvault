@@ -6,9 +6,9 @@
 		active-class="active">
 		<img v-if="account.favicon" :src="account.favicon" alt="" />
 		<BaseIcon v-else :icon="'globe'" :indefault="false" />
-		<h2 class="">
-			<span>{{ domain }}</span>
-			<span>{{ username }}</span>
+		<h2 class="secondary-heading">
+			<span class="secondary-heading-main">{{ domain }}</span>
+			<span class="secondary-heading-sub">{{ username }}</span>
 		</h2>
 	</router-link>
 </template>
@@ -44,16 +44,6 @@ svg {
 
 img {
 	height: 3.2rem;
-}
-
-span {
-	&:nth-child(1) {
-		font-size: 1.8rem;
-	}
-	&:nth-child(2) {
-		display: block;
-		font-family: $nunito-sans;
-	}
 }
 
 .acct-list-item {

@@ -3,8 +3,22 @@
   flex-direction: column;
   &-main {
     font-size: 2rem;
+    font-weight: 700;
   }
   &-sub {
     font-family: $nunito-sans;
+    font-weight: 500;
+  }
+}
+
+.secondary-heading {
+  &-main {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  &-sub {
+    display: block;
+    font-family: $nunito-sans;
+    font-weight: 500;
   }
 }
