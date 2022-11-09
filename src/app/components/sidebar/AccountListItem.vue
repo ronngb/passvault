@@ -5,7 +5,7 @@
 		class="acct-list-item"
 		active-class="active">
 		<img v-if="account.favicon" :src="account.favicon" alt="" />
-		<BaseIcon v-else :icon="'globe'" :indefault="false" />
+		<BaseIcon v-else icon="globe" :classes="['icon-md']" />
 		<h2 class="secondary-heading">
 			<span class="secondary-heading-main">{{ domain }}</span>
 			<span class="secondary-heading-sub">{{ username }}</span>
@@ -38,10 +38,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-svg {
-	font-size: 3.2rem !important;
-}
-
 img {
 	height: 3.2rem;
 }

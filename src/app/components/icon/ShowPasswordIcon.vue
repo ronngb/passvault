@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .eye-slash-layers {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   position: absolute;
   top: 50%;
   right: 10%;

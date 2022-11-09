@@ -7,7 +7,7 @@
       @blur="searchAccount = null"
       @focus="SEARCH_ACCOUNT(searchAccount)"
       @keyup="SEARCH_ACCOUNT(searchAccount)" />
-    <BaseIcon :icon="'search'" />
+    <BaseIcon icon="search" :classes="['search-icon']" />
   </form>
 </template>
 
@@ -42,6 +42,7 @@ form {
 }
 
 label {
+  position: absolute;
   top: 50%;
   left: 5%;
   margin-top: -10.5px;

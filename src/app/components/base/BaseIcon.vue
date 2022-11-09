@@ -1,7 +1,5 @@
 <template>
-  <font-awesome-icon
-    :icon="['fas', icon]"
-    :class="[indefault ? 'default-style' : '']" />
+  <font-awesome-icon :icon="['fas', icon]" :class="classes" />
 </template>
 
 <script>
@@ -11,9 +9,8 @@ export default {
       type: String,
       default: '',
     },
-    indefault: {
-      type: Boolean,
-      default: true,
+    classes: {
+      type: Array,
     },
   },
 }
@@ -22,13 +19,31 @@ export default {
 <style lang="scss" scoped>
 svg {
   color: $color-light-grey;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 }
 
-.default-style {
+.icon-lg {
+  font-size: 4.48rem !important;
+}
+
+.icon-md {
+  font-size: 3.2rem !important;
+}
+
+%position-absolute {
   position: absolute;
-  left: 2%;
   top: 50%;
-  margin-top: -8px;
+  margin-top: -9px;
+}
+
+.search-icon {
+  @extend %position-absolute;
+  left: 2%;
+}
+
+.input-type-icon {
+  @extend %position-absolute;
+  left: 5%;
+  color: inherit !important;
 }
 </style>
