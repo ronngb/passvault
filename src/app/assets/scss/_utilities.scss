@@ -1,3 +1,4 @@
+// NOTE: btn-sm use on accountDetail.vue
 .btn-sm {
   width: 36px;
   height: 36px;
@@ -19,33 +20,38 @@
   transform: translateY(1px);
 }
 
+// NOTE: use in accountDetail buttons
 .icons {
   color: $color-light-grey;
 }
 
-.btn-lg {
-  width: 95px;
-  height: 37px;
-  border: 0;
-  margin: 0 10px;
-  border-radius: 10px;
-  background: $color-primary-bg;
-  font-weight: 700;
-  box-shadow: $bsd-primary-btn;
-}
+// .btn-lg {
+//   width: 95px;
+//   height: 37px;
+//   border: 0;
+//   margin: 0 10px;
+//   border-radius: 10px;
+//   background: $color-primary-bg;
+//   font-weight: 700;
+//   box-shadow: $bsd-primary-btn;
+// }
 
-.btn-lg:hover {
-  cursor: pointer;
-}
+// .btn-lg:hover {
+//   cursor: pointer;
+// }
 
-.btn-lg.active {
-  animation: inset-primary 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
-}
+// .btn-lg.active {
+//   animation: inset-primary 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+// }
 
+// NOTE: Component or just it is
 .seperator {
   width: 100%;
   height: 8px;
   border-radius: 50px;
-  box-shadow: inset 4px 4px 4px rgba(163, 177, 198, 0.6),
-    inset -4px -4px 6px rgba(255, 255, 255, 0.8);
+  @include neumorp-shadow(2, inset);
+}
+
+.border-solid {
+  border: 1px solid black;
 }

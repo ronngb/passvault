@@ -1,4 +1,6 @@
 :root {
+  --webkit-font-smoothing: antialiased;
+  --moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 }
 *,
@@ -7,14 +9,14 @@
   box-sizing: inherit;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 16px;
+  font-family: $josefin-sans;
   line-height: 1.3;
-  background: #e6eef8;
-  height: 100%;
+  background-color: $primary-bg-color;
 }
 
 h1,
@@ -26,31 +28,18 @@ h4 {
   margin: 0;
 }
 
-h1 {
-  font-size: 36px;
-}
-
-h2 {
-  font-size: 24px;
-}
-
-h3 {
-  font-size: 21px;
-}
-
-h4 {
-  font-size: 18px;
+label {
+  color: $secondary-color;
+  font-size: 1.7rem;
 }
 
 input {
-  font-size: inherit;
+  font-size: 1.7rem;
   padding: 4px;
   width: 100%;
   outline: none;
   border: 0;
-  background: #e6eef8;
-  caret-color: #546e7a;
-  color: #546e7a;
+  background-color: $primary-bg-color;
   text-indent: 35px;
 }
 
@@ -59,4 +48,19 @@ ul {
   margin-top: 0;
   margin-bottom: 12px;
   padding-left: 0;
+}
+
+li {
+  cursor: pointer;
+}
+
+span {
+  color: $primary-color;
+  font-size: 1.4rem;
+}
+
+button {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: $primary-color;
 }
