@@ -1,35 +1,40 @@
 <template>
   <transition name="scale-fade" mode="out-in" appear>
-    <section>
-      <header class="acct-create-header">
-        <BaseIcon :icon="'user-plus'" :indefault="false" />
-        <h1 class="primary-heading">
-          <span class="primary-heading-main">New Account</span>
-          <span class="primary-heading-sub">Create</span>
+    <section class="section-acct-create">
+      <header class="header-acct-create">
+        <BaseIcon icon="user-plus" :classes="['icon-lg']" />
+        <h1 class="heading-primary">
+          <span class="heading-primary-main">New Account</span>
+          <span class="heading-primary-sub">Create</span>
         </h1>
-        <div class="seperator"></div>
       </header>
-      <form @click.prevent="">
-        <BaseInput
-          v-model="acctData.url"
-          :valid="valids[0]"
-          :invalid="errors[0]"
+      <div class="seperator"></div>
+      <form class="form-acct-create" @click.prevent>
+        <NeumorpInput
+          id="website"
+          type="text"
           label="Website"
-          icon="globe" />
-        <BaseInput
-          v-model="acctData.username"
-          :valid="valids[1]"
-          :invalid="errors[1]"
+          :invalid="errors[0]"
+          v-model="acctData.url">
+          <BaseIcon icon="globe" :classes="['input-type-icon']" />
+        </NeumorpInput>
+        <NeumorpInput
+          id="username"
+          type="text"
           label="Username"
-          icon="user" />
-        <BaseInput
-          v-model="acctData.password"
-          :valid="valids[2]"
-          :invalid="errors[2]"
+          :invalid="errors[1]"
+          v-model="acctData.username">
+          <BaseIcon icon="user" :classes="['input-type-icon']" />
+        </NeumorpInput>
+        <NeumorpInput
+          id="password"
+          type="password"
           label="Password"
-          :type="'password'"
-          icon="lock"
-          maxlength="22" />
+          :invalid="errors[2]"
+          v-model="acctData.password"
+          maxlength="22">
+          <BaseIcon icon="lock" :classes="['input-type-icon']" />
+        </NeumorpInput>
         <div>
           <button
             type="submit"
@@ -54,7 +59,7 @@
   </transition>
 </template>
 <script>
-import BaseInput from '../components/base/BaseInput.vue'
+import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import BaseModal from '../components/base/BaseModal.vue'
 import AcctService from '@/app/services/AcctService'
 import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
@@ -62,7 +67,7 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'AccountCreate',
-  components: { BaseInput, BaseModal },
+  components: { BaseModal, NeumorpInput },
   mixins: [neumorpMixin],
 
   data() {
@@ -142,26 +147,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-svg {
-  font-size: 4.48rem !important;
+.section-acct-create {
+  width: 500px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: calc(497.6px - 57.8px);
-}
-
-button:nth-child(1) {
-  color: $tertiary-color;
-}
-
-.acct-create-header {
+.header-acct-create {
   display: flex;
   gap: 5px 8px;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.seperator {
+  height: 8px;
+  width: 100%;
+  margin-top: 0.6rem;
+  border-radius: 50px;
+  @include neumorp-shadow(2, inset);
+}
+
+.form-acct-create {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 1.2rem;
+  height: calc(80vh - 57.8px);
+}
+
+button:nth-child(1) {
+  color: $tertiary-color;
 }
 
 .contained-btn {
