@@ -1,5 +1,5 @@
 <template>
-  <font-awesome-icon :icon="['fas', icon]" :class="classes" />
+  <font-awesome-icon :icon="['fas', icon]" />
 </template>
 
 <script>
@@ -8,9 +8,6 @@ export default {
     icon: {
       type: String,
       default: '',
-    },
-    classes: {
-      type: Array,
     },
   },
 }
@@ -45,5 +42,10 @@ svg {
   @extend %position-absolute;
   left: 5%;
   color: inherit !important;
+}
+
+.plus-icon {
+  color: $tertiary-color;
+  font-size: 2rem;
 }
 </style>

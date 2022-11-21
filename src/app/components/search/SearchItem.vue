@@ -7,7 +7,7 @@
       @blur="searchAccount = null"
       @focus="SEARCH_ACCOUNT(searchAccount)"
       @keyup="SEARCH_ACCOUNT(searchAccount)" />
-    <BaseIcon icon="search" :classes="['search-icon']" />
+    <BaseIcon icon="search" class="search-icon" />
   </form>
 </template>
 

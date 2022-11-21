@@ -5,7 +5,7 @@
 		class="acct-list-item"
 		active-class="active">
 		<img v-if="account.favicon" :src="account.favicon" alt="" />
-		<BaseIcon v-else icon="globe" :classes="['icon-md']" />
+		<BaseIcon v-else icon="globe" class="icon-md" />
 		<h2 class="secondary-heading">
 			<span class="secondary-heading-main">{{ domain }}</span>
 			<span class="secondary-heading-sub">{{ username }}</span>
