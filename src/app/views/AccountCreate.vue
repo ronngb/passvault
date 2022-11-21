@@ -2,7 +2,7 @@
   <transition name="scale-fade" mode="out-in" appear>
     <section class="section-acct-create">
       <header class="header-acct-create">
-        <BaseIcon icon="user-plus" :classes="['icon-lg']" />
+        <BaseIcon icon="user-plus" class="icon-lg" />
         <h1 class="heading-primary">
           <span class="heading-primary-main">New Account</span>
           <span class="heading-primary-sub">Create</span>
@@ -16,7 +16,7 @@
           label="Website"
           :invalid="errors[0]"
           v-model="acctData.url">
-          <BaseIcon icon="globe" :classes="['input-type-icon']" />
+          <BaseIcon icon="globe" class="input-type-icon" />
         </NeumorpInput>
         <NeumorpInput
           id="username"
@@ -24,7 +24,7 @@
           label="Username"
           :invalid="errors[1]"
           v-model="acctData.username">
-          <BaseIcon icon="user" :classes="['input-type-icon']" />
+          <BaseIcon icon="user" class="input-type-icon" />
         </NeumorpInput>
         <NeumorpInput
           id="password"
@@ -33,21 +33,21 @@
           :invalid="errors[2]"
           v-model="acctData.password"
           maxlength="22">
-          <BaseIcon icon="lock" :classes="['input-type-icon']" />
+          <BaseIcon icon="lock" class="input-type-icon" />
         </NeumorpInput>
         <div>
-          <button
-            type="submit"
-            class="btn-save"
-            v-click:contained="() => submitForm()">
-            Save
-          </button>
-          <button
+          <NeumorpButton
             type="button"
-            v-click:contained="() => $router.go(-1)"
-            class="btn-cancel">
+            class="btn-submit btn-contained"
+            @click="submitForm">
+            Save
+          </NeumorpButton>
+          <NeumorpButton
+            type="button"
+            class="btn-danger btn-contained"
+            @click="$router.go(-1)">
             Cancel
-          </button>
+          </NeumorpButton>
         </div>
       </form>
       <BaseModal ref="baseModal">
@@ -60,16 +60,14 @@
 </template>
 <script>
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
+import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import BaseModal from '../components/base/BaseModal.vue'
 import AcctService from '@/app/services/AcctService'
-import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'AccountCreate',
-  components: { BaseModal, NeumorpInput },
-  mixins: [neumorpMixin],
-
+  components: { BaseModal, NeumorpInput, NeumorpButton },
   data() {
     return {
       errors: [],
@@ -172,19 +170,6 @@ export default {
   justify-content: space-evenly;
   padding: 0 1.2rem;
   height: calc(80vh - 57.8px);
-}
-
-button:nth-child(1) {
-  color: $tertiary-color;
-}
-
-.contained-btn {
-  @include neumorp-button(9.5rem, 3.7rem, 10px, $contained);
-  margin: 0 10px;
-  font-weight: bold;
-  &.clicked {
-    animation: buttonClicked 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
-  }
 }
 
 @include neumorp-keyframes($contained);

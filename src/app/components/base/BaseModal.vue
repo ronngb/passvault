@@ -5,7 +5,7 @@
       <div class="modal-confirm">
         <div class="modal-body">
           <header>
-            <BaseIcon :icon="'exclamation'" :indefault="false" />
+            <BaseIcon icon="exclamation" class="icon-lg" />
           </header>
           <section>
             <h2 class="modal-header">
@@ -16,18 +16,18 @@
             </p>
           </section>
           <footer>
-            <button
+            <NeumorpButton
               type="button"
-              class="btn-danger"
-              v-click:contained="() => resPromise(true)">
+              class="btn-danger btn-contained"
+              @click="resPromise(true)">
               <slot></slot>
-            </button>
-            <button
+            </NeumorpButton>
+            <NeumorpButton
               type="button"
-              class="btn-cancel"
-              v-click:contained="() => cancel(false)">
+              class="btn-contained"
+              @click="cancel(false)">
               Cancel
-            </button>
+            </NeumorpButton>
           </footer>
         </div>
       </div>
@@ -36,12 +36,11 @@
 </template>
 
 <script>
-import BaseIcon from './BaseIcon.vue'
-import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
+import NeumorpButton from '../neumorp/NeumorpButton.vue'
 
 export default {
   name: 'ModalDialog',
-  mixins: [neumorpMixin],
+  components: { NeumorpButton },
   data() {
     return {
       modalShow: false,
@@ -64,14 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-svg {
-  font-size: 4rem;
-}
-
-button:nth-child(1) {
-  color: $danger;
-}
-
 .modal {
   &-backdrop {
     position: fixed;
@@ -81,10 +72,10 @@ button:nth-child(1) {
     width: 350px;
     height: 300px;
     padding: 30px 20px;
-    background: $color-primary-bg;
     border-radius: 10px;
     text-align: center;
-    @extend .center;
+    background: $color-primary-bg;
+    @extend %align-center;
     @include neumorp-shadow(2);
   }
   &-body {
@@ -106,18 +97,7 @@ button:nth-child(1) {
   }
 }
 
-.contained-btn {
-  @include neumorp-button(9.5rem, 3.7rem, 10px, $contained);
-  margin: 0 10px;
-  font-weight: bold;
-  &.clicked {
-    animation: buttonClicked 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
-  }
-}
-
-@include neumorp-keyframes($contained);
-
-.center {
+%align-center {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -126,6 +106,6 @@ button:nth-child(1) {
 
 // Transition Class
 .scale-fade-enter-active {
-  @extend .center;
+  @extend %align-center;
 }
 </style>

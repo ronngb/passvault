@@ -6,18 +6,20 @@
         :key="account.id"
         :account="account" />
     </transition-group>
-    <button
+    <NeumorpButton
       type="button"
+      class="btn-submit btn-float"
       v-if="$route.name != 'account-create'"
-      v-click:float="() => $router.push({ name: 'account-create' })">
-      <BaseIcon :icon="'plus'" :indefault="false" />
-    </button>
+      @click="$router.push({ name: 'account-create' })">
+      <BaseIcon icon="plus" class="plus-icon" />
+    </NeumorpButton>
   </nav>
 </template>
 
 <script>
 import AccountListItem from './AccountListItem.vue'
 import AccountSortSelect from './AccountSortSelect.vue'
+import NeumorpButton from '../neumorp/NeumorpButton.vue'
 import { neumorpMixin } from '@/app/mixins/neumorpMixin.js'
 import { mapGetters } from 'vuex'
 
@@ -26,19 +28,14 @@ export default {
   components: {
     AccountListItem,
     AccountSortSelect,
+    NeumorpButton,
   },
-  mixins: [neumorpMixin],
   // TODO: change to mapState
   computed: mapGetters({ accounts: 'getAccounts' }),
 }
 </script>
 
 <style lang="scss" scoped>
-svg {
-  color: $tertiary-color !important;
-  font-size: 2rem !important;
-}
-
 .acct-list-nav {
   height: 80vh;
   padding: 0 10px;
@@ -50,18 +47,6 @@ svg {
 ::-webkit-scrollbar {
   display: none;
 }
-
-.float-btn {
-  @include neumorp-button(5.6rem, 5.6rem, 50%, $float);
-  bottom: 30px;
-  left: 20vw;
-  position: fixed;
-  &.clicked {
-    animation: buttonClicked 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
-  }
-}
-
-@include neumorp-keyframes($float);
 
 .list-transition-enter {
   opacity: 0;
