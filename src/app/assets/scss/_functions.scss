@@ -16,22 +16,26 @@
   @return $inset $offset $offset $blur $color;
 }
 
-@function neumorp-initial($depth) {
+@function neumorp-button-initial($depth) {
   $blurs: 4px, 15px, 20px;
   $colors: rgba($top-shadow-color, 0.2), rgba($bot-shadow-color, 0),
     rgba($top-shadow-color, 0);
   $offsets: ();
-  @each $blur in $blurs {
-    $offsets: append(
-      $offsets,
-      0 0 $blur nth($colors, list.index($blurs, $blur)),
-      comma
-    );
+  @if depth-verify($depth) {
+    @warn "Invalid $depth `#{$depth}` value.";
+  } @else {
+    @each $blur in $blurs {
+      $offsets: append(
+        $offsets,
+        0 0 $blur nth($colors, list.index($blurs, $blur)),
+        comma
+      );
+    }
+    @return $offsets, bottom-shadow($depth), top-shadow($depth);
   }
-  @return $offsets, bottom-shadow($depth), top-shadow($depth);
 }
 
-@function neumorp-press($depth) {
+@function neumorp-button-press($depth) {
   @if depth-verify($depth) {
     @warn "Invalid $depth `#{$depth}` value.";
   } @else {

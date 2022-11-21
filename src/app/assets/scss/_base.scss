@@ -62,5 +62,7 @@ span {
 button {
   font-size: 1.6rem;
   cursor: pointer;
+  border: 0;
   color: $primary-color;
+  background-color: $primary-bg-color;
 }

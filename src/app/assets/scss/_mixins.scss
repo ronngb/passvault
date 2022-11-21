@@ -6,26 +6,16 @@
   }
 }
 
-@mixin neumorp-button(
-  $width,
-  $height,
-  $radius,
-  $depth,
-  $bg-color: $primary-bg-color
-) {
-  width: $width;
-  height: $height;
-  border-radius: $radius;
-  border: 0;
-  background-color: $bg-color;
+// NOTE: 21/11 tobe remove
+// @mixin neumorp-button($depth, $state) {
+//   @if depth-verify($depth) {
+//     @warn "Invalid $depth `#{$depth}` value.";
+//   } @else {
+//     box-shadow: neumorp-initial($depth);
+//   }
+// }
 
-  @if depth-verify($depth) {
-    @warn "Invalid $depth `#{$depth}` value.";
-  } @else {
-    box-shadow: neumorp-initial($depth);
-  }
-}
-
+// NOTE: To be remove, but make it sure 1st that this is redundant
 @mixin neumorp-keyframes($depth) {
   @keyframes buttonClicked {
     0%,
@@ -37,3 +27,23 @@
     }
   }
 }
+
+// @mixin neumorp-button(
+//   $width,
+//   $height,
+//   $radius,
+//   $depth,
+//   $bg-color: $primary-bg-color
+// ) {
+//   width: $width;
+//   height: $height;
+//   border-radius: $radius;
+//   border: 0;
+//   background-color: $bg-color;
+//   // TODO: remove the parameter
+//   @if depth-verify($depth) {
+//     @warn "Invalid $depth `#{$depth}` value.";
+//   } @else {
+//     box-shadow: neumorp-initial($depth);
+//   }
+// }
