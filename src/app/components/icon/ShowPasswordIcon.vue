@@ -36,7 +36,7 @@ export default {
   top: 50%;
   right: 10%;
   margin-top: -9px;
-  color: $color-light-grey;
+  color: $secondary-color;
 }
 
 .slash-icon {
