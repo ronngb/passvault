@@ -125,12 +125,12 @@ input {
 }
 
 .is-invalid {
-  border: 1px solid $color-danger;
+  border: 1px solid $danger-color;
   transition: border 200ms ease-in-out;
 }
 
 .is-valid {
-  border: 1px solid $color-success;
+  border: 1px solid $success-color;
   transition: border 200ms ease-in-out;
 }
 
@@ -151,7 +151,7 @@ input {
 }
 
 .slash-icon {
-  color: $color-light-grey;
+  color: $secondary-color;
   transform: scale(0);
 }
 
@@ -166,12 +166,12 @@ input {
   top: 50%;
   right: 5%;
   margin-top: -9px;
-  color: $color-success;
+  color: $success-color;
 }
 
 .is-error {
   position: absolute;
-  color: $color-danger;
+  color: $danger-color;
   left: 2%;
   margin: 0;
   font-family: 'Nunito Sans', sans-serif;

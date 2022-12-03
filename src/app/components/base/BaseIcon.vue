@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 svg {
-  color: $color-light-grey;
+  color: $secondary-color;
   font-size: 1.7rem;
 }
 
@@ -25,6 +25,10 @@ svg {
 
 .icon-md {
   font-size: 3.2rem !important;
+}
+
+.icon-sm {
+  font-size: 1.6rem !important;
 }
 
 %position-absolute {
@@ -47,5 +51,9 @@ svg {
 .plus-icon {
   color: $tertiary-color;
   font-size: 2rem;
+}
+
+.calendar-icon {
+  margin: 0 0.5rem;
 }
 </style>

@@ -62,10 +62,10 @@ div {
   color: $secondary-color;
 
   &.invalid {
-    color: $danger;
+    color: $danger-color;
 
     & input {
-      border: 1px solid $danger;
+      border: 1px solid $danger-color;
       transition: border 200ms ease-in-out;
     }
 
@@ -98,18 +98,38 @@ input {
   border-radius: 16px;
   box-shadow: inset -3px -3px 3px rgba(255, 255, 255, 0.5),
     inset 4px 4px 4px rgba(163, 177, 198, 0.6);
+  transition: box-shadow 150ms ease-out 400ms;
 
   &:focus ~ label,
-  &:not(:focus):valid ~ label {
+  &:not(:focus):valid ~ label,
+  &:read-only ~ label {
     font-size: 1.4rem;
     transform: translate(0);
     transition: font-size 350ms ease-in-out, transform 350ms ease-in-out;
+  }
+
+  &:read-only {
+    color: $secondary-color;
+    box-shadow: unset;
+    transition: color 150ms ease-in-out 200ms, box-shadow 150ms ease-in;
+
+    & ~ svg {
+      color: $primary-color !important;
+      transition: color 150ms ease-in-out 200ms;
+    }
+
+    & ~ label {
+      color: $primary-color;
+      font-weight: bold;
+      font-size: 1.6rem;
+      transition: all 150ms ease-in-out 200ms;
+    }
   }
 }
 
 p {
   position: absolute;
-  color: $danger;
+  color: $danger-color;
   left: 2%;
   margin: 0;
   font-family: $nunito-sans;

@@ -5,8 +5,6 @@ import {
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faGlobe,
-  faPencilAlt,
-  faTrash,
   faEye,
   faCopy,
   faExclamationCircle,
@@ -19,12 +17,13 @@ import {
   faSearch,
   faCheck,
   faExclamation,
+  faCalendarAlt,
+  faUserEdit,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faGlobe,
-  faPencilAlt,
-  faTrash,
   faEye,
   faCopy,
   faExclamationCircle,
@@ -36,7 +35,10 @@ library.add(
   faLock,
   faSearch,
   faCheck,
-  faExclamation
+  faExclamation,
+  faCalendarAlt,
+  faUserEdit,
+  faTrashAlt
 )
 
 export default {

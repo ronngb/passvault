@@ -1,26 +1,27 @@
-import Account from '../views/Account.vue'
 import AccountCreate from '../views/AccountCreate.vue'
 import AccountDetail from '../views/AccountDetail.vue'
 import AccountEdit from '../views/AccountEdit.vue'
+import AccountInfo from '../views/AccountInfo.vue'
+import AccountInfoDates from '../views/AccountInfoDates.vue'
+import AccountInfoButtons from '../views/AccountInfoButtons.vue'
 
-// TODO: rename all name property i.e create -> account-create
 export const routes = [
   { path: '/account/create', name: 'account-create', component: AccountCreate },
   {
-    path: '/account/:id',
-    component: Account,
+    path: '/account/:id/info',
+    component: AccountInfo,
     props: true,
     children: [
       {
         path: '',
-        name: 'account-detail',
-        component: AccountDetail,
+        name: 'account-info',
+        component: AccountInfoDates,
         props: true,
       },
       {
         path: 'edit',
         name: 'account-edit',
-        component: AccountEdit,
+        component: AccountInfoButtons,
         props: true,
       },
     ],

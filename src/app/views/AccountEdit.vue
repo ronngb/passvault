@@ -1,7 +1,10 @@
 <template>
   <form class="acct-edit-form">
     <!-- ERROR: v-model -->
-    <BaseInput v-model="account.url" label="Website" readonly />
+    <NeumorpButton v-model="account.url">
+      <BaseIcon icon="globe" class="input-type-icon" />
+    </NeumorpButton>
+    <!-- <BaseInput v-model="account.url" label="Website" readonly /> -->
     <BaseInput v-model="formData.username" icon="user" label="Username" />
     <BaseInput
       v-model="formData.password"
@@ -29,21 +32,23 @@
 
 <script>
 import BaseInput from '../components/base/BaseInput.vue'
+import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 
 export default {
   name: 'AccountEdit',
   components: {
     BaseInput,
+    NeumorpButton,
   },
   props: {
     account: {
       type: Object,
       required: true,
     },
-    refModal: {
-      type: Object,
-      required: true,
-    },
+    // refModal: {
+    //   type: Object,
+    //   required: true,
+    // },
   },
   data() {
     return {
@@ -113,11 +118,11 @@ export default {
 }
 
 .btn-save {
-  color: $color-secondary;
+  // color: $color-secondary;
   border: 0.0625rem solid #d1d9e6;
 }
 
 .btn-cancel {
-  color: $color-dark-grey;
+  // color: $color-dark-grey;
 }
 </style>
