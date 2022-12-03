@@ -1,15 +1,13 @@
 <template>
-  <div id="app" class="container">
-    <header class="passvault-header">
+  <div id="app">
+    <header class="header-search">
       <SearchItem />
     </header>
-    <aside class="passvault-aside">
+    <aside class="aside-list">
       <AccountList />
     </aside>
-    <main class="passvault-main">
+    <main class="main-content">
       <router-view />
-      <!-- <router-view :ref-modal="$refs.modalDialog" /> -->
-      <!-- <ModalDialog ref="modalDialog" /> -->
     </main>
   </div>
 </template>
@@ -24,7 +22,7 @@ export default {
     AccountList,
   },
   created() {
-    // TODO: use mapActions for clean look
+    // TODO: use mapActions
     this.$store.dispatch('fetchAccounts')
   },
 }

@@ -1,7 +1,7 @@
 <template>
-  <transition name="scale-fade" mode="out-in" appear>
-    <section class="section-acct-create">
-      <header class="header-acct-create">
+  <transition name="fade-through" mode="out-in" appear>
+    <section class="section-create">
+      <header class="header-create">
         <BaseIcon icon="user-plus" class="icon-lg" />
         <h1 class="heading-primary">
           <span class="heading-primary-main">New Account</span>
@@ -9,7 +9,7 @@
         </h1>
       </header>
       <div class="seperator"></div>
-      <form class="form-acct-create" @click.prevent>
+      <form class="form-create" @click.prevent>
         <NeumorpInput
           id="website"
           type="text"
@@ -144,50 +144,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.section-acct-create {
-  width: 500px;
-}
-
-.header-acct-create {
-  display: flex;
-  gap: 5px 8px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.seperator {
-  height: 8px;
-  width: 100%;
-  margin-top: 0.6rem;
-  border-radius: 50px;
-  @include neumorp-shadow(2, inset);
-}
-
-.form-acct-create {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 0 1.2rem;
-  height: calc(80vh - 57.8px);
-}
-
-@include neumorp-keyframes($contained);
-
-.scale-fade-enter {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.scale-fade-enter-active {
-  transition: opacity 45ms 350ms, transform 150ms 350ms ease-out;
-}
-
-.scale-fade-leave-active {
-  transition: opacity 75ms ease-in;
-}
-
-.scale-fade-leave-to {
-  opacity: 0;
-}
-</style>
+<style lang="scss" scoped></style>

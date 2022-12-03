@@ -1,4 +1,4 @@
-.container {
+#app {
   display: grid;
   width: 100%;
   margin: 0 auto;
@@ -8,17 +8,43 @@
   padding: 0 1.2rem;
 }
 
-.passvault {
-  &-header {
-    align-self: center;
-    grid-column: 3 / 11;
+.header-search {
+  align-self: center;
+  grid-column: 3 / 11;
+}
+
+.aside-list {
+  grid-column: 1 / 4;
+}
+
+.main-content {
+  grid-column: 4 / -1;
+
+  section {
+    width: 500px;
   }
 
-  &-aside {
-    grid-column: 1 / 4;
+  header {
+    display: flex;
+    gap: 5px 8px;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
-  &-main {
-    grid-column: 4 / -1;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 0 1.2rem;
+    height: calc(80vh - 57.8px);
   }
+}
+
+.seperator {
+  height: 8px;
+  width: 100%;
+  margin-top: 0.6rem;
+  border-radius: 50px;
+  box-shadow: inset 4px 4px 6px rgba($bot-shadow-color, 0.6),
+    inset -4px -4px 6px rgba($top-shadow-color, 0.6);
 }
