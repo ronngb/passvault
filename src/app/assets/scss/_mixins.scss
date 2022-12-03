@@ -1,3 +1,4 @@
+// NOTE: this is redundant 2/12
 @mixin neumorp-shadow($depth, $inset: null) {
   @if depth-verify($depth) {
     @warn "Invalid $depth `#{$depth}` value.";
@@ -6,44 +7,46 @@
   }
 }
 
-// NOTE: 21/11 tobe remove
-// @mixin neumorp-button($depth, $state) {
-//   @if depth-verify($depth) {
-//     @warn "Invalid $depth `#{$depth}` value.";
-//   } @else {
-//     box-shadow: neumorp-initial($depth);
-//   }
-// }
+@mixin neumorp-button-initial($category) {
+  @if $category == float {
+    box-shadow: 0 0 4px rgba($top-shadow-color, 0.2),
+      0 0 15px rgba($bot-shadow-color, 0), 0 0 20px rgba($top-shadow-color, 0),
+      4px 4px 8px rgba($bot-shadow-color, 0.8),
+      -4px -4px 8px rgba($top-shadow-color, 0.8);
+  }
 
-// NOTE: To be remove, but make it sure 1st that this is redundant
-@mixin neumorp-keyframes($depth) {
-  @keyframes buttonClicked {
-    0%,
-    100% {
-      box-shadow: neumorp-initial($depth);
-    }
-    50% {
-      box-shadow: neumorp-press($depth);
-    }
+  @if $category == contained {
+    box-shadow: 0 0 4px rgba($top-shadow-color, 0.2),
+      0 0 15px rgba($bot-shadow-color, 0), 0 0 20px rgba($top-shadow-color, 0),
+      4px 4px 6px rgba($bot-shadow-color, 0.5),
+      -4px -4px 6px rgba($top-shadow-color, 0.5);
+  }
+
+  @if $category == mini {
+    box-shadow: 4px 4px 6px rgba($bot-shadow-color, 0.5),
+      -4px -4px 6px rgba($top-shadow-color, 0.6),
+      inset 8px 8px 8px rgba($bot-shadow-color, 0),
+      inset -8px -8px 8px rgba($top-shadow-color, 0.2);
   }
 }
 
-// @mixin neumorp-button(
-//   $width,
-//   $height,
-//   $radius,
-//   $depth,
-//   $bg-color: $primary-bg-color
-// ) {
-//   width: $width;
-//   height: $height;
-//   border-radius: $radius;
-//   border: 0;
-//   background-color: $bg-color;
-//   // TODO: remove the parameter
-//   @if depth-verify($depth) {
-//     @warn "Invalid $depth `#{$depth}` value.";
-//   } @else {
-//     box-shadow: neumorp-initial($depth);
-//   }
-// }
+@mixin neumorp-button-active($category) {
+  @if $category == float {
+    box-shadow: inset -4px -4px 8px rgba($top-shadow-color, 0.8),
+      inset 4px 4px 8px rgba($bot-shadow-color, 0.8),
+      0px 0px 4px rgba($top-shadow-color, 0.2);
+  }
+
+  @if $category == contained {
+    box-shadow: inset -4px -4px 6px rgba($top-shadow-color, 0.5),
+      inset 4px 4px 6px rgba($bot-shadow-color, 0.5),
+      0px 0px 4px rgba($top-shadow-color, 0.2);
+  }
+
+  @if $category == mini {
+    box-shadow: 4px 4px 8px rgba($bot-shadow-color, 0.5),
+      -4px -4px 13px rgba($top-shadow-color, 0.6),
+      inset 3px 3px 3px rgba($bot-shadow-color, 0.4),
+      inset -3px -3px 4px rgba($top-shadow-color, 0.6);
+  }
+}
