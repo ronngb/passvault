@@ -1,0 +1,54 @@
+// SLIDE-FADEX
+.slide-fadeX-enter {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.slide-fadeX-enter-active {
+  transition: opacity 140ms ease-out 60ms, transform 200ms ease-in-out;
+}
+
+.slide-fadeX-leave-active {
+  transition: opacity 30ms ease-in, transform 200ms ease-out;
+}
+
+.slide-fadeX-leave-to {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+
+// FADE THROUGH
+.fade-through-enter {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.fade-through-enter-active {
+  transition: opacity 140ms 60ms ease-out, transform 140ms 60ms ease-out;
+}
+
+.fade-through-leave-active {
+  transition: opacity 60ms ease-in;
+}
+
+.fade-through-leave-to {
+  opacity: 0;
+}
+
+// FADE
+.fade-enter {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 45ms linear, transform 150ms ease-out;
+}
+
+.fade-leave-active {
+  transition: opacity 75ms linear;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
