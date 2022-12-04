@@ -1,34 +1,30 @@
 <template>
-  <transition name="scale-fade" mode="out-in" appear>
+  <transition name="fade" mode="out-in">
     <div class="modal" v-if="modalShow">
       <div class="modal-backdrop"></div>
-      <div class="modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <BaseIcon icon="exclamation" class="icon-lg" />
+        </div>
         <div class="modal-body">
-          <header>
-            <BaseIcon icon="exclamation" class="icon-lg" />
-          </header>
-          <section>
-            <h2 class="modal-header">
-              <slot name="header"></slot>
-            </h2>
-            <p class="modal-paragraph">
-              <slot name="paragraph"></slot>
-            </p>
-          </section>
-          <footer>
-            <NeumorpButton
-              type="button"
-              class="btn-danger btn-contained"
-              @click="resPromise(true)">
-              <slot></slot>
-            </NeumorpButton>
-            <NeumorpButton
-              type="button"
-              class="btn-contained"
-              @click="cancel(false)">
-              Cancel
-            </NeumorpButton>
-          </footer>
+          <p class="modal-text">
+            <span class="modal-text-main"><slot name="header"></slot></span>
+            <span class="modal-text-sub"><slot name="paragraph"></slot></span>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <NeumorpButton
+            type="button"
+            class="btn-submit btn-contained"
+            @click="resPromise(true)">
+            <slot></slot>
+          </NeumorpButton>
+          <NeumorpButton
+            type="button"
+            class="btn-danger btn-contained"
+            @click="cancel(false)">
+            Cancel
+          </NeumorpButton>
         </div>
       </div>
     </div>
@@ -64,48 +60,44 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
+  width: 350px;
+  height: 300px;
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  background: $primary-bg-color;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  margin: -150px 0 0 -175px;
+  box-shadow: 4px 4px 6px rgba(163, 177, 198, 0.6),
+    -4px -4px 6px rgba(255, 255, 255, 0.6);
+
   &-backdrop {
+    z-index: -10;
     position: fixed;
     inset: 0;
   }
-  &-confirm {
-    width: 350px;
-    height: 300px;
-    padding: 30px 20px;
-    border-radius: 10px;
-    text-align: center;
-    background: $color-primary-bg;
-    @extend %align-center;
-    @include neumorp-shadow(2);
-  }
-  &-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-  }
-  &-header {
-    font-size: 3rem;
-    color: $primary-color;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  &-paragraph {
-    font-size: 1.6rem;
-    color: $primary-color;
-  }
-}
 
-%align-center {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+  &-text {
+    &-main {
+      display: inline-block;
+      font-size: 3rem;
+      color: $primary-color;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-// Transition Class
-.scale-fade-enter-active {
-  @extend %align-center;
+    &-sub {
+      display: inline-block;
+      font-size: 1.6rem;
+      color: $primary-color;
+    }
+  }
+
+  &-footer {
+    padding: 15px 0;
+  }
 }
 </style>
