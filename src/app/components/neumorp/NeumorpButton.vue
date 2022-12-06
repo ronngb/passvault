@@ -108,7 +108,8 @@ export default {
     }
 
     &.edit.btn-submit,
-    &.edit.btn-info {
+    &.edit.btn-info,
+    &.copy.btn-info {
       transform: scale(0);
       transition: transform 200ms ease-in-out 500ms;
     }

@@ -3,9 +3,9 @@
     <header class="header-info">
       <BaseIcon icon="globe" class="icon-lg" />
       <h1 class="heading-primary">
-        <span class="heading-primary-main">{{ account.domain }}</span>
+        <span class="heading-primary-main">{{ testDomain }}</span>
         <transition name="slide-fadeX" mode="out-in">
-          <span v-if="!routeCheck()" key="login" class="heading-primary-sub">
+          <span v-if="!onEdit()" key="login" class="heading-primary-sub">
             Login
           </span>
           <span v-else key="edit" class="heading-primary-sub">Edit</span>
@@ -21,19 +21,6 @@
         <NeumorpButton type="button" class="btn-danger btn-mini" @click="">
           <BaseIcon icon="trash-alt" class="icon-sm" />
         </NeumorpButton>
-        <!-- TODO: TOBE REMOVE 2/12 -->
-        <!-- @click="$router.push({ name: 'account-edit' })" -->
-        <!--  <button :class="{ 'btn-sm': true, active: routeCheck }" @click="">
-          <font-awesome-icon
-            :icon="['fas', 'pencil-alt']"
-            class="icons pencil-icon" />
-        </button> -->
-        <!-- TODO: TOBE REMOVE 2/12 -->
-        <!-- <button :class="{ 'btn-sm': true }" @click="deleteAccount(account.id)">
-          <font-awesome-icon
-            :icon="['fas', 'trash']"
-            class="icons trash-icon" />
-        </button> -->
       </div>
     </header>
     <div class="seperator"></div>
@@ -46,8 +33,6 @@
         readonly>
         <BaseIcon icon="globe" class="input-type-icon" />
       </NeumorpInput>
-      <!-- TODO: TOBE REMOVE 2/12 -->
-      <!-- <BaseInput v-model="account.url" label="Website" readonly /> -->
       <div>
         <NeumorpInput
           id="username"
@@ -58,18 +43,12 @@
           <BaseIcon icon="user" class="input-type-icon" />
         </NeumorpInput>
         <NeumorpButton
+          ref="username"
           type="button"
           class="btn-info btn-mini"
-          @click="toClipboard(account.username, $event)">
+          @click="toClipboard(account.username, $refs.username)">
           <BaseIcon icon="copy" class="icon-sm" />
         </NeumorpButton>
-        <!-- TODO: TOBE REMOVE 2/12 -->
-        <!-- <button
-          class="btn-sm"
-          type="button"
-          @click="toClipboard(account.username, $event)">
-          <font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
-        </button> -->
       </div>
       <div>
         <NeumorpInput
@@ -82,20 +61,14 @@
           <BaseIcon icon="lock" class="input-type-icon" />
         </NeumorpInput>
         <NeumorpButton
+          ref="password"
           type="button"
           class="btn-info btn-mini"
-          @click="toClipboard(account.password, $event)">
+          @click="toClipboard(account.password, $refs.password)">
           <BaseIcon icon="copy" class="icon-sm" />
         </NeumorpButton>
-        <!-- TODO: TOBE REMOVE 2/12 -->
-        <!-- <button
-          class="btn-sm"
-          type="button"
-          @click="toClipboard(account.password, $event)">
-          <font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
-        </button> -->
       </div>
-      <!-- BUGS: transition not working -->
+
       <transition name="slide-fadeX" mode="out-in">
         <router-view
           v-if="account.dates"
@@ -108,8 +81,6 @@
 </template>
 
 <script>
-// TODO: TOBEREMOVE 5/12
-// import BaseInput from '../components/base/BaseInput.vue'
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import { mapGetters, mapActions, mapState } from 'vuex'
@@ -126,6 +97,7 @@ export default {
   data() {
     return {
       isEdit: true,
+      testDomain: '',
     }
   },
   created() {
@@ -134,17 +106,31 @@ export default {
   beforeUpdate() {
     this.$store.dispatch('getAccount', this.id)
   },
+  watch: {
+    account(val) {
+      console.log(val)
+      this.testDomain =
+        val.domain.charAt(0).toUpperCase() +
+        val.domain.slice(1, val.domain.indexOf('.'))
+    },
+  },
   computed: {
     ...mapState({
       account: (state) => state.account.account,
     }),
   },
   methods: {
-    routeCheck() {
-      if (this.$route.name == 'account-edit') {
-        return true
-      }
-      return false
+    // NOTE: only 1 use this fn()
+    onEdit() {
+      return this.$route.name == 'account-edit' ? true : false
+    },
+    toClipboard(text, el) {
+      el.$el.classList.add('copy')
+      navigator.clipboard.writeText(text).then(
+        setTimeout(() => {
+          el.$el.classList.remove('copy')
+        }, 4000)
+      )
     },
     // deleteAccount(id) {
     //   this.refModal.modalOn(true).then((res) => {
@@ -165,11 +151,7 @@ export default {
 
          * AccountInfo
 
-            - make the acct name capital the 1st letter & remove the .com
-
             - place tooltip when hover on buttons
-
-            - set the Created & Modified date formal
 
             - make the copy functional if use the button should be gone for 5 sec
 
