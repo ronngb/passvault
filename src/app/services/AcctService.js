@@ -28,6 +28,9 @@ export default {
   getAccounts() {
     return apiClient.get('/acct.json')
   },
+  getAccount(id) {
+    return apiClient.get(`acct/${id}.json`)
+  },
   storeAccount(account) {
     return apiClient.post('/acct.json', account)
   },

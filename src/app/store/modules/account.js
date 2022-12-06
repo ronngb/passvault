@@ -4,6 +4,7 @@ import AcctService from '@/app/services/AcctService'
 
 const state = {
   accounts: [],
+  account: {},
   toSearch: '',
   sortBy: {},
 }
@@ -20,6 +21,11 @@ const mutations = {
       state.accounts.push(Object.assign({}, acctObj))
     }
   },
+
+  SET_ACCOUNT: (state, account) => {
+    state.account = account
+  },
+
   STORE_ACCOUNT: (state, account) => {
     state.accounts.push(account)
   },
@@ -52,9 +58,21 @@ const mutations = {
 
 const actions = {
   fetchAccounts: ({ commit }) => {
-    AcctService.getAccounts()
+    return AcctService.getAccounts()
       .then((res) => commit('SET_ACCOUNTS', res.data))
       .catch((err) => console.log(err))
+  },
+
+  getAccount: ({ commit, getters, dispatch }, id) => {
+    const account = getters.getAccount(id)
+
+    if (account) {
+      commit('SET_ACCOUNT', account)
+    } else {
+      AcctService.getAccount(id)
+        .then((res) => commit('SET_ACCOUNT', res.data))
+        .catch((err) => console.log(err))
+    }
   },
   storeAccount: ({ commit }, account) => {
     // BUGS: after adding new account if using search the account list

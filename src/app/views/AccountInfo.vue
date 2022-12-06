@@ -5,7 +5,7 @@
       <h1 class="heading-primary">
         <span class="heading-primary-main">{{ account.domain }}</span>
         <transition name="slide-fadeX" mode="out-in">
-          <span v-if="!routeCheck" key="login" class="heading-primary-sub">
+          <span v-if="!routeCheck()" key="login" class="heading-primary-sub">
             Login
           </span>
           <span v-else key="edit" class="heading-primary-sub">Edit</span>
@@ -95,22 +95,28 @@
           <font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
         </button> -->
       </div>
+      <!-- BUGS: transition not working -->
       <transition name="slide-fadeX" mode="out-in">
-        <router-view :account="account" @submit="" @cancel="$router.go(-1)" />
+        <router-view
+          v-if="account.dates"
+          :account="account.dates"
+          @submit=""
+          @cancel="$router.go(-1)" />
       </transition>
     </form>
   </section>
 </template>
 
 <script>
-import BaseInput from '../components/base/BaseInput.vue'
+// TODO: TOBEREMOVE 5/12
+// import BaseInput from '../components/base/BaseInput.vue'
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Account',
-  components: { BaseInput, NeumorpInput, NeumorpButton },
+  components: { NeumorpInput, NeumorpButton },
   props: {
     id: {
       type: [Number, String],
@@ -122,24 +128,24 @@ export default {
       isEdit: true,
     }
   },
-  mounted() {},
+  created() {
+    this.$store.dispatch('getAccount', this.id)
+  },
+  beforeUpdate() {
+    this.$store.dispatch('getAccount', this.id)
+  },
   computed: {
-    ...mapGetters(['getAccount', 'getActiveIndex']),
-    account() {
-      // console.log(this.getAccount(this.id))
-      // NOTE: error when page 1st load in Account.vue
-      // this.getAccount() return empty 29/11
-      return this.getAccount(this.id)
-    },
-    // REFACTOR: routeCheck to isEdit() 29/11
+    ...mapState({
+      account: (state) => state.account.account,
+    }),
+  },
+  methods: {
     routeCheck() {
       if (this.$route.name == 'account-edit') {
         return true
       }
       return false
     },
-  },
-  methods: {
     // deleteAccount(id) {
     //   this.refModal.modalOn(true).then((res) => {
     //     if (res) {
@@ -153,9 +159,41 @@ export default {
     // },
   },
 }
+/*
+
+        CODE THE LOGIC
+
+         * AccountInfo
+
+            - make the acct name capital the 1st letter & remove the .com
+
+            - place tooltip when hover on buttons
+
+            - set the Created & Modified date formal
+
+            - make the copy functional if use the button should be gone for 5 sec
+
+            - set the Icon in account*/
 </script>
 
 <style lang="scss" scoped>
+.slide-fadeX-enter {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.slide-fadeX-enter-active {
+  transition: opacity 140ms ease-out 60ms, transform 200ms ease-in-out;
+}
+
+.slide-fadeX-leave-active {
+  transition: opacity 30ms ease-in, transform 200ms ease-out;
+}
+
+.slide-fadeX-leave-to {
+  transform: translateX(-10px);
+  opacity: 0;
+}
 // .slide-fade-enter {
 //   transform: translateX(10px);
 //   opacity: 0;
