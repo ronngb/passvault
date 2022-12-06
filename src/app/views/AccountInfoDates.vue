@@ -3,15 +3,15 @@
     <p class="date-paragraph">
       Created:
       <BaseIcon icon="calendar-alt" class="calendar-icon" />
-      <time :datetime="account.dates.created">
-        {{ account.dates.created }}
+      <time :datetime="formatDate(account.created)">
+        {{ formatDate(account.created) }}
       </time>
     </p>
     <p class="date-paragraph">
       Modified:
       <BaseIcon icon="calendar-alt" class="calendar-icon" />
-      <time :datetime="account.dates.last_modified">
-        {{ account.dates.last_modified }}
+      <time :datetime="formatDate(account.last_modified)">
+        {{ formatDate(account.last_modified) }}
       </time>
     </p>
   </div>
@@ -23,6 +23,15 @@ export default {
     account: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    formatDate(date) {
+      return new Date(this.account.created).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
     },
   },
 }
