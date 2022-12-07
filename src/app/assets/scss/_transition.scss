@@ -52,3 +52,22 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+// SLIDE-FADEY
+.slide-fadeY-enter {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.slide-fadeY-enter-active {
+  transition: opacity 140ms ease-out 60ms, transform 200ms ease-in-out;
+}
+
+.slide-fadeY-leave-active {
+  transition: opacity 30ms ease-in, transform 200ms ease-out;
+}
+
+.slide-fadeY-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
