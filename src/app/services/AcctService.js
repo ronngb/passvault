@@ -31,6 +31,9 @@ export default {
   getAccount(id) {
     return apiClient.get(`acct/${id}.json`)
   },
+  deleteAccount(id) {
+    return apiClient.delete(`acct/${id}.json`)
+  },
   storeAccount(account) {
     return apiClient.post('/acct.json', account)
   },

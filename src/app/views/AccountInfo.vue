@@ -19,7 +19,10 @@
             @click="$router.push({ name: 'account-edit' })">
             <BaseIcon icon="user-edit" class="icon-sm" />
           </NeumorpButton>
-          <NeumorpButton type="button" class="btn-danger btn-mini" @click="">
+          <NeumorpButton
+            type="button"
+            class="btn-danger btn-mini"
+            @click="deleteAccount(account.id)">
             <BaseIcon icon="trash-alt" class="icon-sm" />
           </NeumorpButton>
         </div>
@@ -77,6 +80,11 @@
             @cancel="$router.go(-1)" />
         </transition>
       </form>
+      <BaseModal ref="baseModal">
+        <template #header>Remove this account?</template>
+        <template #paragraph>This cannot be undone</template>
+        Remove
+      </BaseModal>
     </section>
   </transition>
 </template>
@@ -84,11 +92,12 @@
 <script>
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
+import BaseModal from '../components/base/BaseModal.vue'
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Account',
-  components: { NeumorpInput, NeumorpButton },
+  components: { BaseModal, NeumorpInput, NeumorpButton },
   props: {
     id: {
       type: [Number, String],
@@ -110,7 +119,6 @@ export default {
   watch: {
     // BUGS: sometime the return is empty
     account(val) {
-      console.log(val)
       this.testDomain =
         val.domain.charAt(0).toUpperCase() +
         val.domain.slice(1, val.domain.indexOf('.'))
@@ -134,17 +142,22 @@ export default {
         }, 4000)
       )
     },
-    // deleteAccount(id) {
-    //   this.refModal.modalOn(true).then((res) => {
-    //     if (res) {
-    //       this.$router.replace({
-    //         name: 'detail',
-    //         params: { id: this.getActiveIndex(id) },
-    //       })
-    //       this.$store.dispatch('deleteAccount', id)
-    //     }
-    //   })
-    // },
+    deleteAccount(id) {
+      this.$refs.baseModal.confirm().then((res) => {
+        if (res) {
+          if (this.$store.getters.accountCount == 1) {
+            this.$router.replace({ name: 'account-create' })
+          } else {
+            this.$router.replace({
+              name: 'account-info',
+              params: { id: this.$store.getters.getActiveId(id) },
+            })
+          }
+          this.$refs.baseModal.cancel(false)
+          this.$store.dispatch('deleteAccount', id)
+        }
+      })
+    },
   },
 }
 </script>

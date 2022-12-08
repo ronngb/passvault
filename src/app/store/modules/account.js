@@ -91,8 +91,12 @@ const actions = {
     commit('UPDATE_ACCOUNT', account)
   },
 
-  deleteAccount({ getters, commit }, accountId) {
-    commit('DELETE_ACCOUNT', getters.getAccount(accountId))
+  deleteAccount({ getters, commit }, id) {
+    commit('DELETE_ACCOUNT', getters.getAccount(id))
+
+    AcctService.deleteAccount(id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
   },
 
   getFavicon({ state, commit }, account) {
@@ -115,10 +119,12 @@ const getters = {
     return state.accounts.find((obj) => obj.id == id)
   },
 
-  getActiveIndex: (state, getters) => (id) => {
+  getActiveId: (state, getters) => (id) => {
     const currentIndex = state.accounts.indexOf(getters.getAccount(id))
 
-    return currentIndex ? currentIndex - 1 : currentIndex
+    return currentIndex
+      ? state.accounts[currentIndex - 1].id
+      : state.accounts[currentIndex + 1].id
   },
 
   getAccounts: (state) => {
