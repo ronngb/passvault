@@ -7,7 +7,7 @@
       <AccountList />
     </aside>
     <main class="main-content">
-      <router-view />
+      <router-view :key="$route.params.id" />
     </main>
   </div>
 </template>
