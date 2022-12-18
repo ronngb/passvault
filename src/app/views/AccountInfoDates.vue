@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return new Date(this.account.created).toLocaleDateString('en-US', {
+      return new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
