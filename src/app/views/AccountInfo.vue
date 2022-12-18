@@ -4,9 +4,14 @@
       <header class="header-info">
         <BaseIcon icon="globe" class="icon-lg" />
         <h1 class="heading-primary">
-          <span class="heading-primary-main">{{ testDomain }}</span>
+          <span class="heading-primary-main">{{
+            account.domain | capitalize
+          }}</span>
           <transition name="slide-fadeX" mode="out-in">
-            <span v-if="!onEdit()" key="login" class="heading-primary-sub">
+            <span
+              v-if="$route.name != 'account-edit'"
+              key="login"
+              class="heading-primary-sub">
               Login
             </span>
             <span v-else key="edit" class="heading-primary-sub">Edit</span>
@@ -28,7 +33,7 @@
         </div>
       </header>
       <div class="seperator"></div>
-      <form class="form-info">
+      <form class="form-info" @click.prevent>
         <NeumorpInput
           id="website"
           v-model="account.url"
@@ -42,7 +47,8 @@
             id="username"
             type="text"
             label="Username"
-            v-model="account.username"
+            v-model="formData.username"
+            :invalid="validateObj.errors[1]"
             :readonly="$route.name != 'account-edit'">
             <BaseIcon icon="user" class="input-type-icon" />
           </NeumorpInput>
@@ -59,7 +65,8 @@
             id="password"
             type="password"
             label="Password"
-            v-model="account.password"
+            v-model="formData.password"
+            :invalid="validateObj.errors[2]"
             maxlength="22"
             :readonly="$route.name != 'account-edit'">
             <BaseIcon icon="lock" class="input-type-icon" />
@@ -73,10 +80,14 @@
           </NeumorpButton>
         </div>
         <transition name="slide-fadeX" mode="out-in">
+          <!-- $router.replace({
+                name: 'account-info',
+                params: { id: account.id },
+              }) -->
           <router-view
             v-if="account.dates"
             :account="account.dates"
-            @submit=""
+            @submit="updateAccount()"
             @cancel="$router.go(-1)" />
         </transition>
       </form>
@@ -84,6 +95,11 @@
         <template #header>Remove this account?</template>
         <template #paragraph>This cannot be undone</template>
         Remove
+      </BaseModal>
+      <BaseModal ref="discardModal">
+        <template #header>Discard unsaved changes?</template>
+        <template #paragraph>All unsaved changes will be lost.</template>
+        Disregard
       </BaseModal>
     </section>
   </transition>
@@ -108,31 +124,94 @@ export default {
     return {
       isEdit: true,
       testDomain: '',
+      errors: [],
+      formData: {
+        id: '',
+        username: '',
+        password: '',
+        dates: '',
+      },
+      validateObj: this.initGuardObj(),
     }
   },
+  beforeRouteLeave(routeTo, routeFrom, next) {
+    if (this.validateObj.hasChange.includes(1)) {
+      this.$refs.discardModal
+        .initial()
+        .then((res) => next())
+        .catch((err) => {})
+    } else next()
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    if (this.validateObj.hasChange.includes(1)) {
+      this.$refs.discardModal
+        .initial()
+        .then((res) => {
+          this.initFormObj()
+          this.validateObj.reset()
+          next()
+        })
+        .catch((err) => {
+          next(false)
+        })
+    } else next()
+  },
+
   created() {
     this.$store.dispatch('getAccount', this.id)
   },
-  beforeUpdate() {
-    this.$store.dispatch('getAccount', this.id)
+  mounted() {
+    this.initFormObj()
   },
-  watch: {
-    // BUGS: sometime the return is empty
-    account(val) {
-      this.testDomain =
-        val.domain.charAt(0).toUpperCase() +
-        val.domain.slice(1, val.domain.indexOf('.'))
+  filters: {
+    capitalize(value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1, value.indexOf('.'))
     },
   },
-  computed: {
-    ...mapState({
-      account: (state) => state.account.account,
-    }),
+  watch: {
+    account(value) {
+      this.initFormObj()
+    },
+    formData: {
+      deep: true,
+      handler(props) {
+        this.validateObj.reset(false)
+        for (let prop in props) {
+          if (!props[prop]) this.validateObj.hasErrors.push(1)
+          else this.validateObj.hasErrors.push(0)
+
+          if (props[prop] != this.account[prop])
+            this.validateObj.hasChange.push(1)
+          else this.validateObj.hasChange.push(0)
+        }
+      },
+    },
   },
+  computed: mapState({ account: (state) => state.account.account }),
   methods: {
-    // NOTE: only 1 use this fn()
-    onEdit() {
-      return this.$route.name == 'account-edit' ? true : false
+    initGuardObj() {
+      return {
+        hasErrors: [],
+        hasChange: [],
+        errors: [],
+        reset(full = true) {
+          this.hasErrors = []
+          this.hasChange = []
+          if (full) {
+            this.errors = []
+          }
+        },
+        setErrors() {
+          this.errors = this.hasErrors
+        },
+      }
+    },
+    initFormObj() {
+      for (let prop in this.formData) {
+        this.formData[prop] = this.account[prop]
+      }
     },
     toClipboard(text, el) {
       el.$el.classList.add('copy')
@@ -142,6 +221,25 @@ export default {
         }, 4000)
       )
     },
+    updateAccount() {
+      if (!this.validateObj.hasErrors.includes(1)) {
+        if (!this.validateObj.hasChange.includes(1)) {
+          this.$router.go(-1)
+        } else {
+          this.$store
+            .dispatch('updateAccount', this.formData)
+            .then((res) => {
+              this.validateObj.reset()
+              this.$router.replace({
+                name: 'account-info',
+                params: { id: this.formData.id },
+              })
+            })
+            .catch((err) => console.log(err))
+        }
+      } else this.validateObj.setErrors()
+    },
+    // TODO: refactor deleteAccount()
     deleteAccount(id) {
       this.$refs.baseModal.confirm().then((res) => {
         if (res) {
