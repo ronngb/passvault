@@ -16,13 +16,13 @@
           <NeumorpButton
             type="button"
             class="btn-submit btn-contained"
-            @click="resPromise(true)">
+            @click="confirm()">
             <slot></slot>
           </NeumorpButton>
           <NeumorpButton
             type="button"
             class="btn-danger btn-contained"
-            @click="cancel(false)">
+            @click="cancel()">
             Cancel
           </NeumorpButton>
         </div>
@@ -41,18 +41,24 @@ export default {
     return {
       modalShow: false,
       resPromise: '',
+      rejPromise: '',
     }
   },
   methods: {
-    confirm(toRemove = false) {
+    initial() {
       return new Promise((resolve, reject) => {
         this.modalShow = true
         this.resPromise = resolve
+        this.rejPromise = reject
       })
     },
-    cancel(res) {
+    confirm() {
       this.modalShow = false
-      this.resPromise(res)
+      this.resPromise(true)
+    },
+    cancel() {
+      this.modalShow = false
+      this.rejPromise(false)
     },
   },
 }
