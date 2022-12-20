@@ -80,10 +80,6 @@
           </NeumorpButton>
         </div>
         <transition name="slide-fadeX" mode="out-in">
-          <!-- $router.replace({
-                name: 'account-info',
-                params: { id: account.id },
-              }) -->
           <router-view
             v-if="account.dates"
             :account="account.dates"
@@ -91,7 +87,7 @@
             @cancel="$router.go(-1)" />
         </transition>
       </form>
-      <BaseModal ref="baseModal">
+      <BaseModal ref="removeModal">
         <template #header>Remove this account?</template>
         <template #paragraph>This cannot be undone</template>
         Remove
@@ -109,7 +105,7 @@
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import BaseModal from '../components/base/BaseModal.vue'
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Account',
@@ -122,9 +118,6 @@ export default {
   },
   data() {
     return {
-      isEdit: true,
-      testDomain: '',
-      errors: [],
       formData: {
         id: '',
         username: '',
@@ -239,10 +232,10 @@ export default {
         }
       } else this.validateObj.setErrors()
     },
-    // TODO: refactor deleteAccount()
     deleteAccount(id) {
-      this.$refs.baseModal.confirm().then((res) => {
-        if (res) {
+      this.$refs.removeModal
+        .initial()
+        .then((res) => {
           if (this.$store.getters.accountCount == 1) {
             this.$router.replace({ name: 'account-create' })
           } else {
@@ -251,10 +244,9 @@ export default {
               params: { id: this.$store.getters.getActiveId(id) },
             })
           }
-          this.$refs.baseModal.cancel(false)
           this.$store.dispatch('deleteAccount', id)
-        }
-      })
+        })
+        .catch((err) => {})
     },
   },
 }

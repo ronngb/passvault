@@ -50,7 +50,7 @@
           </NeumorpButton>
         </div>
       </form>
-      <BaseModal ref="baseModal">
+      <BaseModal ref="discardModal">
         <template #header>Discard unsaved changes?</template>
         <template #paragraph>All unsaved changes will be lost.</template>
         Discard
@@ -71,33 +71,16 @@ export default {
   data() {
     return {
       errors: [],
-      valids: [],
-      inputType: 'password',
       acctData: this.initAccountObj(),
     }
   },
-  // NOTE: same hook with AccountEdit
   beforeRouteLeave(routeTo, routeFrom, next) {
-    if (this.validateAcctData.includes(0)) {
-      this.$refs.baseModal.confirm().then((res) => {
-        return res ? next() : next(false)
-      })
-      return next(false)
-    }
-    next()
-  },
-  computed: {
-    validateAcctData() {
-      let tempArr = []
-      const objKeys = ['url', 'username', 'password']
-
-      Object.keys(this.acctData).forEach((key) => {
-        if (objKeys.includes(key)) {
-          this.acctData[key] == '' ? tempArr.push(1) : tempArr.push(0)
-        }
-      })
-      return tempArr
-    },
+    if (this.validateData().includes(0)) {
+      this.$refs.discardModal
+        .initial()
+        .then((res) => next())
+        .catch((err) => next(false))
+    } else next()
   },
   methods: {
     initAccountObj() {
@@ -114,9 +97,18 @@ export default {
         },
       }
     },
+    validateData() {
+      let valid = []
+      let props = ['url', 'username', 'password']
+
+      for (let prop of props) {
+        if (this.acctData[prop] == '') valid.push(1)
+        else valid.push(0)
+      }
+      return valid
+    },
     submitForm() {
-      this.errors = this.validateAcctData
-      if (!this.errors.includes(1)) {
+      if (!this.validateData().includes(1)) {
         this.$store
           .dispatch('storeAccount', {
             ...this.acctData,
@@ -127,11 +119,10 @@ export default {
             this.acctData = this.initAccountObj()
           })
           .catch((err) => console.log(err))
-      }
+      } else this.errors = this.validateData()
     },
     sanitizeUrl() {
       const regex = /(http(s?)):\/\/|ww(w|3)./gi
-
       return this.acctData.url.replace(regex, '')
     },
 
