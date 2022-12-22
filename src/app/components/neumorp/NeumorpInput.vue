@@ -6,7 +6,7 @@
     <ShowPasswordIcon
       v-if="label.toLowerCase() == 'password'"
       @change-type="inputTypeBool = !inputTypeBool" />
-    <p :class="{ 'has-error': invalid }">
+    <p :class="classErrorObj">
       <font-awesome-icon :icon="['fas', 'exclamation-circle']" />
       {{ `The ${label.toLowerCase()} field is empty` }}
     </p>
@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       inputTypeBool: true,
+      hasError: false,
     }
   },
   props: {
@@ -38,11 +39,20 @@ export default {
     inputTypeBool(value) {
       this.$refs.inputRef.type = value ? 'password' : 'text'
     },
+    invalid(value) {
+      if (value >= 2) {
+        this.hasError = true
+        setTimeout(() => {
+          this.hasError = false
+        }, 1000)
+      }
+    },
   },
   computed: {
-    classObject() {
+    classErrorObj() {
       return {
-        'has-error': this.invalid,
+        'text-error': this.invalid,
+        'has-error': this.hasError,
       }
     },
   },
@@ -140,10 +150,13 @@ p {
   opacity: 0;
   transition: transform 150ms ease-in, opacity 150ms ease-in;
 
-  &.has-error {
+  &.text-error {
     opacity: 1;
     transform: translateX(0);
     transition: transform 150ms ease-in, opacity 150ms ease-in;
+  }
+  &.has-error {
+    animation: shake-horizontal 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
 }
 </style>

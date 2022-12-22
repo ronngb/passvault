@@ -71,16 +71,29 @@ export default {
   data() {
     return {
       errors: [],
+      guard: [0, 0, 0],
+      valid: [0, 0, 0],
       acctData: this.initAccountObj(),
     }
   },
   beforeRouteLeave(routeTo, routeFrom, next) {
-    if (this.validateData().includes(0)) {
+    if (this.validateData('guard')) {
       this.$refs.discardModal
         .initial()
         .then((res) => next())
         .catch((err) => next(false))
     } else next()
+  },
+  computed: {
+    sanitizeUrl() {
+      const regex = /(http(s?)):\/\/|ww(w|3)./gi
+      return this.acctData.url.replace(regex, '')
+    },
+    appendUrl() {
+      let scheme = 'https://'
+      let url = this.acctData.url
+      return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url
+    },
   },
   methods: {
     initAccountObj() {
@@ -97,39 +110,35 @@ export default {
         },
       }
     },
-    validateData() {
-      let valid = []
+    validateData(arr) {
       let props = ['url', 'username', 'password']
 
       for (let prop of props) {
-        if (this.acctData[prop] == '') valid.push(1)
-        else valid.push(0)
+        if (this.acctData[prop] == '') this[arr][props.indexOf(prop)] += 1
+        else this[arr][props.indexOf(prop)] = 0
       }
-      return valid
+
+      return arr == 'guard'
+        ? this[arr].includes(0)
+        : this[arr].reduce((a, b) => a + b, 0)
     },
     submitForm() {
-      if (!this.validateData().includes(1)) {
+      if (!this.validateData('valid')) {
         this.$store
           .dispatch('storeAccount', {
             ...this.acctData,
-            domain: this.sanitizeUrl(),
+            url: this.appendUrl,
+            domain: this.sanitizeUrl,
           })
           .then((res) => {
-            // TODO: call $router.push()
             this.acctData = this.initAccountObj()
+            this.$router.push({
+              name: 'account-info',
+              params: { id: res },
+            })
           })
           .catch((err) => console.log(err))
-      } else this.errors = this.validateData()
-    },
-    sanitizeUrl() {
-      const regex = /(http(s?)):\/\/|ww(w|3)./gi
-      return this.acctData.url.replace(regex, '')
-    },
-
-    // NOTE: autoAppend must be at input with @blur event
-    autoAppend(url) {
-      const scheme = 'https://'
-      return url ? (url.indexOf(scheme) == -1 ? scheme.concat(url) : url) : url
+      } else this.errors = this.valid.slice(0)
     },
   },
 }

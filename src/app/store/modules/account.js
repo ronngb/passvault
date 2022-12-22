@@ -69,15 +69,14 @@ const actions = {
     }
   },
   storeAccount: ({ commit }, account) => {
-    // BUGS: after adding new account if using search the account list
-    // needs to fetch or set toSearch to null
     return AcctService.storeAccount(account)
-      .then((res) =>
+      .then((res) => {
         commit('STORE_ACCOUNT', {
           ...account,
           id: res.data.name,
         })
-      )
+        return res.data.name
+      })
       .catch((err) => err)
   },
 
