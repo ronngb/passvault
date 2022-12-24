@@ -2,7 +2,10 @@
   <transition name="slide-fadeY" mode="out-in" appear>
     <section class="section-info">
       <header class="header-info">
-        <BaseIcon icon="globe" class="icon-lg" />
+        <div class="icon-container">
+          <img v-if="account.favicon" :src="account.favicon" />
+          <BaseIcon v-else icon="globe" class="icon-lg globe-icon" />
+        </div>
         <h1 class="heading-primary">
           <span class="heading-primary-main">{{
             account.domain | capitalize
@@ -252,4 +255,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon-container {
+  position: relative;
+  width: 4.48rem;
+  height: 4.48rem;
+  border-radius: 25%;
+}
+
+img {
+  width: 100%;
+  border-radius: 25%;
+}
+</style>

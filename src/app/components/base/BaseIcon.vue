@@ -56,4 +56,13 @@ svg {
 .calendar-icon {
   margin: 0 0.5rem;
 }
+
+.globe-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 1px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
