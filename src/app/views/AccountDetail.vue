@@ -1,146 +1,278 @@
 <template>
-	<form class="acct-detail-form">
-		<!-- NOTE: possible 2 scenario regarding on input -->
-		<!-- 1: while in readonly mode the background color on input should be darer compared to original -->
-		<!-- 2: while in readonly mode the box-shadow will be outside the input -->
-		<NeumorpInput
-			id="website"
-			type="text"
-			label="Website"
-			v-model="account.url">
-			<BaseIcon icon="globe" class="input-type-icon" />
-		</NeumorpInput>
-		<!-- <BaseInput v-model="account.url" label="Website" readonly /> -->
-		<div>
-			<NeumorpInput
-				id="website"
-				type="text"
-				label="Website"
-				v-model="account.username">
-				<BaseIcon icon="user" class="input-type-icon" />
-			</NeumorpInput>
-			<!-- <BaseInput v-model="account.username" label="Username" readonly /> -->
-			<button
-				class="btn-sm"
-				type="button"
-				@click="toClipboard(account.username, $event)">
-				<font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
-			</button>
-		</div>
-		<div>
-			<NeumorpInput
-				id="password"
-				type="password"
-				label="Password"
-				v-model="account.password"
-				maxlength="22">
-				<BaseIcon icon="lock" class="input-type-icon" />
-			</NeumorpInput>
-			<!-- <BaseInput
-				v-model="account.password"
-				label="Password"
-				:type="'password'"
-				readonly /> -->
-			<button
-				class="btn-sm"
-				type="button"
-				@click="toClipboard(account.password, $event)">
-				<font-awesome-icon :icon="['fas', 'copy']" class="icons copy-icon" />
-			</button>
-		</div>
-		<div class="buttons-container">
-			<button
-				@click="animatePressed(account.id, $event)"
-				type="submit"
-				class="btn-lg btn-save">
-				Save
-			</button>
-			<button
-				@click="animatePressed($event)"
-				type="button"
-				class="btn-lg btn-cancel">
-				Cancel
-			</button>
-		</div>
-	</form>
+  <transition name="slide-fadeY" mode="out-in" appear>
+    <section class="section-detail">
+      <header class="header-detail">
+        <div class="icon-container">
+          <img v-if="account.favicon" :src="account.favicon" />
+          <BaseIcon v-else icon="globe" class="icon-lg globe-icon" />
+        </div>
+        <h1 class="heading-primary">
+          <span class="heading-primary-main">{{
+            account.domain | capitalize
+          }}</span>
+          <transition name="slide-fadeX" mode="out-in">
+            <span
+              v-if="$route.name != 'account-edit'"
+              key="login"
+              class="heading-primary-sub">
+              Login
+            </span>
+            <span v-else key="edit" class="heading-primary-sub">Edit</span>
+          </transition>
+        </h1>
+        <div class="button-group">
+          <NeumorpButton
+            type="button"
+            class="btn-submit btn-mini"
+            @click="$router.push({ name: 'account-edit' })">
+            <BaseIcon icon="user-edit" class="icon-sm" />
+          </NeumorpButton>
+          <NeumorpButton
+            type="button"
+            class="btn-danger btn-mini"
+            @click="deleteAccount(account.id)">
+            <BaseIcon icon="trash-alt" class="icon-sm" />
+          </NeumorpButton>
+        </div>
+      </header>
+      <div class="seperator"></div>
+      <form class="form-detail" autocomplete="off" @click.prevent>
+        <NeumorpInput
+          id="website"
+          v-model="account.url"
+          type="text"
+          label="Website"
+          readonly>
+          <BaseIcon icon="globe" class="input-type-icon" />
+        </NeumorpInput>
+        <div>
+          <NeumorpInput
+            id="username"
+            type="text"
+            label="Username"
+            v-model="formData.username"
+            :invalid="validateObj.errors[1]"
+            :readonly="$route.name != 'account-edit'">
+            <BaseIcon icon="user" class="input-type-icon" />
+          </NeumorpInput>
+          <NeumorpButton
+            ref="username"
+            type="button"
+            class="btn-info btn-mini"
+            @click="toClipboard(account.username, $refs.username)">
+            <BaseIcon icon="copy" class="icon-sm" />
+          </NeumorpButton>
+        </div>
+        <div>
+          <NeumorpInput
+            id="password"
+            type="password"
+            label="Password"
+            v-model="formData.password"
+            :invalid="validateObj.errors[2]"
+            maxlength="22"
+            :readonly="$route.name != 'account-edit'">
+            <BaseIcon icon="lock" class="input-type-icon" />
+          </NeumorpInput>
+          <NeumorpButton
+            ref="password"
+            type="button"
+            class="btn-info btn-mini"
+            @click="toClipboard(account.password, $refs.password)">
+            <BaseIcon icon="copy" class="icon-sm" />
+          </NeumorpButton>
+        </div>
+        <transition name="slide-fadeX" mode="out-in">
+          <component
+            :is="onEdit"
+            v-if="account.dates"
+            :account="account.dates"
+            @submit="updateAccount()"
+            @cancel="$router.go(-1)" />
+        </transition>
+      </form>
+      <BaseModal ref="removeModal">
+        <template #header>Remove this account?</template>
+        <template #paragraph>This cannot be undone</template>
+        Remove
+      </BaseModal>
+      <BaseModal ref="discardModal">
+        <template #header>Discard unsaved changes?</template>
+        <template #paragraph>All unsaved changes will be lost.</template>
+        Disregard
+      </BaseModal>
+    </section>
+  </transition>
 </template>
 
 <script>
-import BaseInput from '../components/base/BaseInput.vue'
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
+import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
+import BaseModal from '../components/base/BaseModal.vue'
+import OnEdit from '../components/detail/OnEdit.vue'
+import OnDetail from '../components/detail/OnDetail.vue'
+import { mapState } from 'vuex'
 
 export default {
-	name: 'AccountDetail',
-	components: { BaseInput, NeumorpInput },
-	props: {
-		account: {
-			type: Object,
-			required: true,
-		},
-	},
-	mounted() {
-		console.log(this.account)
-	},
-	filters: {
-		usernameValidate(value) {
-			return value ? value : '(no username)'
-		},
-	},
-	methods: {
-		toClipboard(txtCopied, event) {
-			let evt = event.currentTarget
-			evt.disabled = true
-			evt.classList.toggle('active')
-			navigator.clipboard.writeText(txtCopied).then(
-				setTimeout(() => {
-					evt.disabled = false
-					evt.classList.toggle('active')
-				}, 4000)
-			)
-		},
-	},
+  name: 'Account',
+  components: { BaseModal, NeumorpInput, NeumorpButton, OnEdit, OnDetail },
+  props: {
+    id: {
+      type: [Number, String],
+      required: true,
+    },
+  },
+  data() {
+    return {
+      formData: {
+        id: '',
+        username: '',
+        password: '',
+        dates: '',
+      },
+      validateObj: this.initGuardObj(),
+    }
+  },
+  beforeRouteLeave(routeTo, routeFrom, next) {
+    if (this.validateObj.hasChange.includes(1)) {
+      this.$refs.discardModal
+        .initial()
+        .then((res) => next())
+        .catch((err) => {})
+    } else next()
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    if (this.validateObj.hasChange.includes(1)) {
+      this.$refs.discardModal
+        .initial()
+        .then((res) => {
+          this.initFormObj()
+          this.validateObj.reset()
+          next()
+        })
+        .catch((err) => {
+          next(false)
+        })
+    } else next()
+  },
+
+  created() {
+    this.$store.dispatch('getAccount', this.id)
+  },
+  mounted() {
+    this.initFormObj()
+  },
+  filters: {
+    capitalize(value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1, value.indexOf('.'))
+    },
+  },
+  watch: {
+    account(value) {
+      this.initFormObj()
+    },
+    formData: {
+      deep: true,
+      handler(props) {
+        this.validateObj.reset(false)
+        for (let prop in props) {
+          if (!props[prop]) this.validateObj.hasErrors.push(1)
+          else this.validateObj.hasErrors.push(0)
+
+          if (props[prop] != this.account[prop])
+            this.validateObj.hasChange.push(1)
+          else this.validateObj.hasChange.push(0)
+        }
+      },
+    },
+  },
+  computed: {
+    ...mapState({ account: (state) => state.account.account }),
+    onEdit() {
+      return this.$route.name == 'account-detail' ? OnDetail : OnEdit
+    },
+  },
+  methods: {
+    initGuardObj() {
+      return {
+        hasErrors: [],
+        hasChange: [],
+        errors: [],
+        reset(full = true) {
+          this.hasErrors = []
+          this.hasChange = []
+          if (full) {
+            this.errors = []
+          }
+        },
+        setErrors() {
+          this.errors = this.hasErrors
+        },
+      }
+    },
+    initFormObj() {
+      for (let prop in this.formData) {
+        this.formData[prop] = this.account[prop]
+      }
+    },
+    toClipboard(text, el) {
+      el.$el.classList.add('copy')
+      navigator.clipboard.writeText(text).then(
+        setTimeout(() => {
+          el.$el.classList.remove('copy')
+        }, 4000)
+      )
+    },
+    updateAccount() {
+      if (!this.validateObj.hasErrors.includes(1)) {
+        if (!this.validateObj.hasChange.includes(1)) {
+          this.$router.go(-1)
+        } else {
+          this.$store
+            .dispatch('updateAccount', this.formData)
+            .then((res) => {
+              this.validateObj.reset()
+              this.$router.replace({
+                name: 'account-detail',
+                params: { id: this.formData.id },
+              })
+            })
+            .catch((err) => console.log(err))
+        }
+      } else this.validateObj.setErrors()
+    },
+    deleteAccount(id) {
+      this.$refs.removeModal
+        .initial()
+        .then((res) => {
+          if (this.$store.getters.accountCount == 1) {
+            this.$router.replace({ name: 'account-create' })
+          } else {
+            this.$router.replace({
+              name: 'account-detail',
+              params: { id: this.$store.getters.getActiveId(id) },
+            })
+          }
+          this.$store.dispatch('deleteAccount', id)
+        })
+        .catch((err) => {})
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.acct-detail-form {
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: space-evenly;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	padding: 0 1.2rem;
-	height: calc(80vh - 57.8px);
+.icon-container {
+  position: relative;
+  width: 4.48rem;
+  height: 4.48rem;
+  border-radius: 25%;
 }
 
-input {
-	// display: inline-block;
-	// text-indent: 0;
-}
-button {
-	margin: 0 20px;
-}
-
-.btn-sm:hover .copy-icon {
-	// color: $color-primary;
-}
-
-.btn-sm.active .copy-icon {
-	// color: $color-primary;
-}
-.slide-fade-enter {
-	transform: translateX(-10px);
-	opacity: 0;
-}
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-	transition: all 250ms ease;
-}
-
-.slide-fade-leave-to {
-	transform: translateX(-10px);
-	opacity: 0;
+img {
+  width: 100%;
+  border-radius: 25%;
 }
 </style>

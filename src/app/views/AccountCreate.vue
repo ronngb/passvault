@@ -9,7 +9,7 @@
         </h1>
       </header>
       <div class="seperator"></div>
-      <form class="form-create" @click.prevent>
+      <form class="form-create" autocomplete="off" @click.prevent>
         <NeumorpInput
           id="website"
           type="text"
@@ -133,7 +133,7 @@ export default {
           .then((res) => {
             this.acctData = this.initAccountObj()
             this.$router.push({
-              name: 'account-info',
+              name: 'account-detail',
               params: { id: res },
             })
           })

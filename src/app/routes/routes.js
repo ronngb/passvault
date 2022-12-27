@@ -1,28 +1,34 @@
 import AccountCreate from '../views/AccountCreate.vue'
 import AccountDetail from '../views/AccountDetail.vue'
 import AccountEdit from '../views/AccountEdit.vue'
-import AccountInfo from '../views/AccountInfo.vue'
-import AccountInfoDates from '../views/AccountInfoDates.vue'
-import AccountInfoButtons from '../views/AccountInfoButtons.vue'
+import AccountHome from '../views/AccountHome.vue'
+import Page404 from '../components/404/404.vue'
 
 export const routes = [
-  { path: '/account/create', name: 'account-create', component: AccountCreate },
+  { path: '/', name: 'home', redirect: { path: '/account' } },
   {
-    path: '/account/:id/info',
-    component: AccountInfo,
+    path: '/account',
+    component: AccountHome,
     props: true,
     children: [
       {
-        path: '',
-        name: 'account-info',
-        component: AccountInfoDates,
-        props: true,
+        path: 'create',
+        name: 'account-create',
+        component: AccountCreate,
       },
       {
-        path: 'edit',
-        name: 'account-edit',
-        component: AccountInfoButtons,
+        path: ':id',
+        name: 'account-detail',
+        component: AccountDetail,
         props: true,
+        children: [
+          {
+            path: 'edit',
+            name: 'account-edit',
+            component: AccountDetail,
+            props: true,
+          },
+        ],
       },
     ],
   },

@@ -12,24 +12,11 @@
       @click="$emit('cancel')">
       Cancel
     </NeumorpButton>
-    <!-- TODO: to remove 25/11 -->
-    <!-- <button
-          @click="animatePressed(account.id, $event)"
-          type="submit"
-          class="btn-lg btn-save">
-          Save
-        </button> -->
-    <!-- <button
-          @click="animatePressed($event)"
-          type="button"
-          class="btn-lg btn-cancel">
-          Cancel
-        </button> -->
   </div>
 </template>
 
 <script>
-import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
+import NeumorpButton from '../neumorp/NeumorpButton.vue'
 
 export default {
   components: { NeumorpButton },

@@ -1,6 +1,6 @@
 <template>
 	<router-link
-		:to="{ name: 'account-info', params: { id: account.id } }"
+		:to="{ name: 'account-detail', params: { id: account.id } }"
 		tag="li"
 		class="account-item"
 		active-class="active">
