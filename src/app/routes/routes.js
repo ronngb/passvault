@@ -32,4 +32,6 @@ export const routes = [
       },
     ],
   },
+  { path: '/404', name: '404', component: Page404 },
+  { path: '*', redirect: { name: '404' } },
 ]
