@@ -27,6 +27,14 @@ export const routes = [
             name: 'account-edit',
             component: AccountDetail,
             props: true,
+            beforeEnter: (routeTo, routeFrom, next) => {
+              if (routeFrom.name != 'account-detail') {
+                next({
+                  name: 'account-detail',
+                  params: { id: routeTo.params.id },
+                })
+              } else next()
+            },
           },
         ],
       },

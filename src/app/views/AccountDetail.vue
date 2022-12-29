@@ -153,6 +153,14 @@ export default {
         .catch((err) => {
           next(false)
         })
+    } else if (
+      routeTo.name == 'account-edit' &&
+      routeFrom.params.id != routeTo.params.id
+    ) {
+      next({
+        name: 'account-detail',
+        params: { id: routeTo.params.id },
+      })
     } else next()
   },
 
