@@ -17,6 +17,9 @@
           :invalid="errors[0]"
           v-model="acctData.url">
           <BaseIcon icon="globe" class="input-type-icon" />
+          <span class="website-tooltip">
+            Make sure to match the exact address of the website
+          </span>
         </NeumorpInput>
         <NeumorpInput
           id="username"
@@ -62,7 +65,6 @@
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import BaseModal from '../components/base/BaseModal.vue'
-import AcctService from '@/app/services/AcctService'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -144,4 +146,33 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.website-tooltip {
+  font-family: $nunito-sans;
+  width: 190px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: -73%;
+  margin-top: -40px;
+  padding: 1.5rem;
+  color: white;
+  background-color: $tertiary-color;
+  border-radius: 25px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+
+  &::before {
+    content: '';
+    top: 40px;
+    margin-top: -15px;
+    position: absolute;
+    border-width: 15px !important;
+    inset-inline-end: 100%;
+    border: solid transparent;
+    border-right-color: $tertiary-color;
+  }
+}
+</style>

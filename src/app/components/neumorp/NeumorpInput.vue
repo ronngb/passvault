@@ -135,6 +135,11 @@ input {
       transition: all 150ms ease-in-out 200ms;
     }
   }
+  &:focus:invalid ~ span {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
 }
 
 p {
