@@ -1,6 +1,5 @@
 import AccountCreate from '../views/AccountCreate.vue'
 import AccountDetail from '../views/AccountDetail.vue'
-import AccountEdit from '../views/AccountEdit.vue'
 import AccountHome from '../views/AccountHome.vue'
 import Page404 from '../components/404/404.vue'
 

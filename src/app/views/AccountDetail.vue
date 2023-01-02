@@ -201,6 +201,12 @@ export default {
     onEdit() {
       return this.$route.name == 'account-detail' ? OnDetail : OnEdit
     },
+    capitalize() {
+      let value = this.account.domain
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1, value.indexOf('.'))
+    },
   },
   methods: {
     initGuardObj() {
@@ -227,6 +233,12 @@ export default {
     },
     toClipboard(text, el) {
       el.$el.classList.add('copy')
+      const toast = {
+        type: 'info',
+        task: 'copied',
+        message: `${el.$vnode.data.ref} copied to clipboard`,
+      }
+      this.$store.dispatch('storeToast', toast)
       navigator.clipboard.writeText(text).then(
         setTimeout(() => {
           el.$el.classList.remove('copy')
@@ -246,6 +258,13 @@ export default {
                 name: 'account-detail',
                 params: { id: this.formData.id },
               })
+
+              const toast = {
+                type: 'success',
+                task: 'update',
+                message: `Successfully update ${this.capitalize} account`,
+              }
+              this.$store.dispatch('storeToast', toast)
             })
             .catch((err) => console.log(err))
         }
@@ -258,12 +277,23 @@ export default {
           if (this.$store.getters.accountCount == 1) {
             this.$router.replace({ name: 'account-create' })
           } else {
-            this.$router.replace({
-              name: 'account-detail',
-              params: { id: this.$store.getters.getActiveId(id) },
-            })
+            //BUGS on getActiveID
+            this.$router
+              .replace({
+                name: 'account-detail',
+                params: { id: this.$store.getters.getActiveId(id) },
+              })
+              .then(() => {
+                //bugs on capitilize- instead of the current the next acct domain will appear on capitilize
+                const toast = {
+                  type: 'success',
+                  task: 'remove',
+                  message: `Successfully remove the ${this.capitalize} account`,
+                }
+                this.$store.dispatch('storeToast', toast)
+              })
           }
-          this.$store.dispatch('deleteAccount', id)
+          // this.$store.dispatch('deleteAccount', id)
         })
         .catch((err) => {})
     },

@@ -84,3 +84,21 @@
 .list-transition-leave-active {
   position: absolute;
 }
+
+.toast-transition-enter {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.toast-transition-enter-active {
+  transition: opacity 140ms ease-out 60ms, transform 200ms ease-in-out;
+}
+
+.toast-transition-leave-active {
+  transition: opacity 140ms ease-in, transform 200ms ease-out;
+}
+
+.toast-transition-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}

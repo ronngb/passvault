@@ -57,12 +57,28 @@ svg {
   margin: 0 0.5rem;
 }
 
-.globe-icon {
+%center-icon {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.globe-icon {
+  @extend %center-icon;
   padding: 1px;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+}
+
+.check-icon {
+  @extend %center-icon;
+  font-size: 2rem;
+  color: $success-color;
+}
+
+.info-icon {
+  @extend %center-icon;
+  font-size: 2rem;
+  color: $info-color;
 }
 </style>
