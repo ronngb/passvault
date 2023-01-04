@@ -1,5 +1,5 @@
 <template>
-  <main class="main-content">
+  <main ref="main" class="main-content">
     <router-view :key="$route.params.id" />
   </main>
 </template>
@@ -8,14 +8,29 @@
 import { mapState } from 'vuex'
 export default {
   name: 'AccountHome',
+  props: {
+    id: {
+      type: [Number, String],
+    },
+  },
   computed: mapState({ accounts: (state) => state.account.accounts }),
+  mounted() {
+    setTimeout(() => this.setActiveAccount(this.accounts), 250)
+  },
   watch: {
-    accounts(acct) {
-      if (acct.length) {
-        this.$router.replace({
-          name: 'account-detail',
-          params: { id: acct[0].id },
-        })
+    accounts(obj) {
+      this.setActiveAccount(obj)
+    },
+  },
+  methods: {
+    setActiveAccount(obj) {
+      if (obj.length) {
+        if (this.id == undefined) {
+          this.$router.replace({
+            name: 'account-detail',
+            params: { id: obj[0].id },
+          })
+        }
       } else this.$router.replace({ name: 'account-create' })
     },
   },
