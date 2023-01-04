@@ -65,7 +65,7 @@
 import NeumorpInput from '../components/neumorp/NeumorpInput.vue'
 import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import BaseModal from '../components/base/BaseModal.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'AccountCreate',
@@ -98,6 +98,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addToast', 'storeAccount']),
     initAccountObj() {
       let date = new Date()
 
@@ -126,17 +127,22 @@ export default {
     },
     submitForm() {
       if (!this.validateData('valid')) {
-        this.$store
-          .dispatch('storeAccount', {
-            ...this.acctData,
-            url: this.appendUrl,
-            domain: this.sanitizeUrl,
-          })
+        this.storeAccount({
+          ...this.acctData,
+          url: this.appendUrl,
+          domain: this.sanitizeUrl,
+        })
           .then((res) => {
             this.acctData = this.initAccountObj()
             this.$router.push({
               name: 'account-detail',
               params: { id: res },
+            })
+
+            this.addToast({
+              type: 'success',
+              task: 'added',
+              message: `Successfully added new account`,
             })
           })
           .catch((err) => console.log(err))

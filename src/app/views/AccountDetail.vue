@@ -7,9 +7,7 @@
           <BaseIcon v-else icon="globe" class="icon-lg globe-icon" />
         </div>
         <h1 class="heading-primary">
-          <span class="heading-primary-main">{{
-            account.domain | capitalize
-          }}</span>
+          <span class="heading-primary-main">{{ capitalizeDomain }}</span>
           <transition name="slide-fadeX" mode="out-in">
             <span
               v-if="$route.name != 'account-edit'"
@@ -111,7 +109,7 @@ import NeumorpButton from '../components/neumorp/NeumorpButton.vue'
 import BaseModal from '../components/base/BaseModal.vue'
 import OnEdit from '../components/detail/OnEdit.vue'
 import OnDetail from '../components/detail/OnDetail.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Account',
@@ -170,13 +168,6 @@ export default {
   mounted() {
     this.initFormObj()
   },
-  filters: {
-    capitalize(value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1, value.indexOf('.'))
-    },
-  },
   watch: {
     account(value) {
       this.initFormObj()
@@ -201,7 +192,7 @@ export default {
     onEdit() {
       return this.$route.name == 'account-detail' ? OnDetail : OnEdit
     },
-    capitalize() {
+    capitalizeDomain() {
       let value = this.account.domain
       if (!value) return ''
       value = value.toString()
@@ -209,6 +200,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addToast']),
     initGuardObj() {
       return {
         hasErrors: [],
@@ -232,13 +224,12 @@ export default {
       }
     },
     toClipboard(text, el) {
-      el.$el.classList.add('copy')
-      const toast = {
+      this.addToast({
         type: 'info',
         task: 'copied',
         message: `${el.$vnode.data.ref} copied to clipboard`,
-      }
-      this.$store.dispatch('storeToast', toast)
+      })
+      el.$el.classList.add('copy')
       navigator.clipboard.writeText(text).then(
         setTimeout(() => {
           el.$el.classList.remove('copy')
@@ -259,12 +250,11 @@ export default {
                 params: { id: this.formData.id },
               })
 
-              const toast = {
+              this.addToast({
                 type: 'success',
                 task: 'update',
-                message: `Successfully update ${this.capitalize} account`,
-              }
-              this.$store.dispatch('storeToast', toast)
+                message: `Successfully update ${this.capitalizeDomain} account`,
+              })
             })
             .catch((err) => console.log(err))
         }
@@ -277,23 +267,18 @@ export default {
           if (this.$store.getters.accountCount == 1) {
             this.$router.replace({ name: 'account-create' })
           } else {
-            //BUGS on getActiveID
-            this.$router
-              .replace({
-                name: 'account-detail',
-                params: { id: this.$store.getters.getActiveId(id) },
-              })
-              .then(() => {
-                //bugs on capitilize- instead of the current the next acct domain will appear on capitilize
-                const toast = {
-                  type: 'success',
-                  task: 'remove',
-                  message: `Successfully remove the ${this.capitalize} account`,
-                }
-                this.$store.dispatch('storeToast', toast)
-              })
+            this.addToast({
+              type: 'success',
+              task: 'remove',
+              message: `Successfully remove the ${this.capitalizeDomain} account`,
+            })
+
+            this.$router.replace({
+              name: 'account-detail',
+              params: { id: this.$store.getters.getActiveId(id) },
+            })
           }
-          // this.$store.dispatch('deleteAccount', id)
+          this.$store.dispatch('deleteAccount', id)
         })
         .catch((err) => {})
     },
