@@ -163,7 +163,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('getAccount', this.id)
+    this.getAccount(this.id)
   },
   mounted() {
     this.initFormObj()
@@ -200,7 +200,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['addToast']),
+    ...mapActions(['addToast', 'getAccount']),
     initGuardObj() {
       return {
         hasErrors: [],

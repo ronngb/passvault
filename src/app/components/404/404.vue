@@ -18,6 +18,9 @@ export default {
   components: {
     HomeButton: NeumorpButton,
   },
+  created() {
+    this.$emit('ready')
+  },
 }
 </script>
 

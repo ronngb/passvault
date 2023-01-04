@@ -5,6 +5,7 @@ import FA from './fontawesome.js'
 import { routes } from './app/routes/routes'
 import { store } from './app/store/store'
 import BaseIcon from './app/components/base/BaseIcon.vue'
+import 'nprogress/nprogress.css'
 
 Vue.component('font-awesome-icon', FA.FontAwesomeIcon)
 Vue.component('font-awesome-layers', FA.FontAwesomeLayers)
