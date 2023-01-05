@@ -35,14 +35,23 @@
       </header>
       <div class="seperator"></div>
       <form class="form-detail" autocomplete="off" @click.prevent>
-        <NeumorpInput
-          id="website"
-          v-model="account.url"
-          type="text"
-          label="Website"
-          readonly>
-          <BaseIcon icon="globe" class="input-type-icon" />
-        </NeumorpInput>
+        <div>
+          <NeumorpInput
+            id="website"
+            v-model="account.domain"
+            type="text"
+            label="Website"
+            readonly>
+            <BaseIcon icon="globe" class="input-type-icon" />
+          </NeumorpInput>
+          <NeumorpButton
+            ref="username"
+            type="button"
+            class="btn-dark btn-mini"
+            @click="openLinkNewTab(account.url)">
+            <BaseIcon icon="link" class="icon-sm" />
+          </NeumorpButton>
+        </div>
         <div>
           <NeumorpInput
             id="username"
@@ -222,6 +231,9 @@ export default {
       for (let prop in this.formData) {
         this.formData[prop] = this.account[prop]
       }
+    },
+    openLinkNewTab(url) {
+      window.open(url, '_blank')
     },
     toClipboard(text, el) {
       this.addToast({

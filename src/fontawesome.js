@@ -22,6 +22,7 @@ import {
   faUserEdit,
   faTrashAlt,
   faInfo,
+  faLink,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -42,7 +43,8 @@ library.add(
   faCalendarAlt,
   faUserEdit,
   faTrashAlt,
-  faInfo
+  faInfo,
+  faLink
 )
 
 export default {

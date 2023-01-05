@@ -56,6 +56,12 @@ export default {
       transition: color 180ms ease-in-out 100ms;
     }
   }
+  &-dark {
+    &:hover > svg {
+      color: $primary-color;
+      transition: color 180ms ease-in-out 100ms;
+    }
+  }
 
   &-contained {
     width: 9.5rem;
