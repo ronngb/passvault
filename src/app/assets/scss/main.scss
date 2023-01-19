@@ -1,1 +1,7 @@
-@import 'base', 'transition', 'animation', 'utilities', 'typography', 'layout';
+@import 'base/normalize.scss';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/utilities';
+@import 'base/animation';
+@import 'base/transition';
+@import 'layout/layout';
